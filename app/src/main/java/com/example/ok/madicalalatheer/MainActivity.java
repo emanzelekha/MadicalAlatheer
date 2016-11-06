@@ -15,6 +15,8 @@ Button goal,idea,process,report;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        component();
+        Click();
     }
 
     public void component(){
@@ -22,6 +24,12 @@ Button goal,idea,process,report;
         goal=(Button)findViewById(R.id.goal);
         process=(Button)findViewById(R.id.process);
         report=(Button)findViewById(R.id.report);
+    }
+    public void Click(){
+        idea.setOnClickListener(this);
+        goal.setOnClickListener(this);
+        process.setOnClickListener(this);
+        report.setOnClickListener(this);
     }
 
     @Override
