@@ -9,10 +9,42 @@
     cardview:cardElevation="3dp"
     cardview:cardUseCompatPadding="true">
 
-    <RelativeLayout
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+        <android.support.v7.widget.SwitchCompat
+
+            android:id="@+id/switchcompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:gravity="left"
+           android:textAlignment="gravity" /></RelativeLayout>
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:gravity="right"
+            android:textAlignment="gravity"/>
 
 
-    </RelativeLayout>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
+
+
 </android.support.v7.widget.CardView>
