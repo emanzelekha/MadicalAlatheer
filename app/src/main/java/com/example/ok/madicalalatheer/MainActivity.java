@@ -1,13 +1,51 @@
 package com.example.ok.madicalalatheer;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.ok.madicalalatheer.AddGoal.AddGoal;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+Button goal,idea,process,report;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    public void component(){
+        idea=(Button)findViewById(R.id.idea);
+        goal=(Button)findViewById(R.id.goal);
+        process=(Button)findViewById(R.id.process);
+        report=(Button)findViewById(R.id.report);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        Intent i;
+        switch (view.getId()) {
+
+            case R.id.idea:
+                i = new Intent(MainActivity.this, AddGoal.class);
+                startActivity(i);
+                break;
+            case R.id.goal:
+                i = new Intent(MainActivity.this, AddGoal.class);
+                startActivity(i);
+                break;
+
+            case R.id.process:
+                i = new Intent(MainActivity.this, AddGoal.class);
+                startActivity(i);
+                break;
+            case R.id.report:
+                i = new Intent(MainActivity.this, AddGoal.class);
+                startActivity(i);
+                break;}
     }
 }

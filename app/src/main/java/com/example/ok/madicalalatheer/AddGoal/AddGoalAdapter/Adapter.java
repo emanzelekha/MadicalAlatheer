@@ -1,4 +1,3 @@
-/*
 package com.example.ok.madicalalatheer.AddGoal.AddGoalAdapter;
 
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +11,9 @@ import com.example.ok.madicalalatheer.R;
 
 import java.util.List;
 
-*/
-/**
+/*
  * Created by ok on 06/11/2016.
- *//*
-
+ */
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
@@ -29,7 +26,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adddepartmentrow2, parent, false);
+                .inflate(R.layout.addgoalrow, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -38,7 +35,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         ControlAddGoal disUserControl = displayList.get(position);
-        holder.serial.setText(disUserControl.getSerial1());
+        //holder.serial.setText(disUserControl.getSerial1());
 
     }
 
@@ -59,4 +56,4 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     }
 
 
-}*/
+}
