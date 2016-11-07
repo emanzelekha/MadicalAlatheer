@@ -40,6 +40,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         holder.Code.setText(disUserControl.getSerial1());
         holder.goal.setText(disUserControl.getGoal());
         holder.to.setText(disUserControl.getTo());
+        holder.serial.setText((position+1)+"");
         holder.swt.setChecked(disUserControl.isActive());
 
     }
@@ -50,11 +51,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView Code, goal, to;
+        public TextView Code, goal, to,serial;
         public SwitchCompat swt;
 
         public MyViewHolder(View view) {
             super(view);
+            serial = (TextView) view.findViewById(R.id.serial);
             Code = (TextView) view.findViewById(R.id.Code);
             goal = (TextView) view.findViewById(R.id.goal);
             to = (TextView) view.findViewById(R.id.to);

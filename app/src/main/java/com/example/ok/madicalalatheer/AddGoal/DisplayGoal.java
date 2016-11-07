@@ -26,11 +26,13 @@ public class DisplayGoal extends Fragment {
     private List<ControlAddGoal> disList = new ArrayList<>();
     private RecyclerView recyclerView;
     private Adapter mAdapter;
+
     public DisplayGoal() {
         // Required empty public constructor
     }
 
     View v;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,17 +48,18 @@ public class DisplayGoal extends Fragment {
         prepareMovieData();
         return v;
     }
-    private void prepareMovieData() {
 
+    private void prepareMovieData() {
+        Boolean[] buttons = {true, true, false, false, true};
         Boolean[] active = {true, true, false, false, true};
-        String[] code={"1","2","3","4","5"};
-        String[] to={"عن","عن","عن","عن","عن"};
+        String[] code = {"1", "2", "3", "4", "5"};
+        String[] to = {"عن", "عن", "عن", "عن", "عن"};
         String[] goals = {"احمد عبدالحميد شعبان السلامونى", "احمد عبدالحميد شعبان السلامونى", "احمد عبدالحميد شعبان السلامونى"
                 , "احمد عبدالحميد شعبان السلامونى", "احمد عبدالحميد شعبان السلامونى"};
 
 
         for (int x = 0; x < goals.length; x++) {
-            ControlAddGoal disUserControl = new ControlAddGoal(code[x],goals[x],to[x], active[x]);
+            ControlAddGoal disUserControl = new ControlAddGoal(code[x], goals[x], to[x], active[x], buttons[x]);
             disList.add(disUserControl);
             mAdapter.notifyDataSetChanged();
 

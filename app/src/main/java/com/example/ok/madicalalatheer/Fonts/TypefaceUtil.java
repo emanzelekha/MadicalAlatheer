@@ -34,6 +34,7 @@ public class TypefaceUtil {
                 }else if(v instanceof Button){
                 ((Button) v).setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/DroidKufi-Bold.ttf"));
 
+
             }
 
         } catch (Exception e) {

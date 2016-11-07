@@ -10,14 +10,14 @@ public class ControlAddGoal {
     private String goal;
     private String to;
     private boolean active;
+    private boolean buttons;
 
-
-    public ControlAddGoal(String serial1, String goal, String to, boolean active) {
+    public ControlAddGoal(String serial1, String goal, String to, boolean active, boolean buttons) {
         this.serial1 = serial1;
         this.goal = goal;
         this.to = to;
         this.active = active;
-
+        this.buttons = buttons;
     }
 
     public String getSerial1() {
@@ -52,5 +52,11 @@ public class ControlAddGoal {
         this.active = active;
     }
 
+    public boolean isButtons() {
+        return buttons;
+    }
 
+    public void setButtons(boolean active) {
+        this.buttons = buttons;
+    }
 }

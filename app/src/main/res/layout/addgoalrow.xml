@@ -27,14 +27,14 @@
             android:layout_weight="1"
             >
         <android.support.v7.widget.SwitchCompat
-
             android:id="@+id/Active"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:gravity="left"
-           android:textAlignment="gravity" /></RelativeLayout>
+           /></RelativeLayout>
         <TextView
+            android:id="@+id/serial"
+            android:textColor="@color/colorPrimary"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +61,8 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="كود الهدف"/>
+            android:text="كود الهدف"
+            android:textColor="@color/colorPrimary"/>
     </LinearLayout>
 <LinearLayout
     android:layout_marginBottom="5dp"
@@ -75,6 +76,7 @@
         android:layout_height="wrap_content"
         />
     <TextView
+        android:textColor="@color/colorPrimary"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,6 +93,7 @@
             android:layout_height="wrap_content"
             />
         <TextView
+            android:textColor="@color/colorPrimary"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,21 +103,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-    <Button
+    <TextView
+        android:padding="8dp"
+        android:drawablePadding="10dp"
+        android:layout_margin="5dp"
+        android:textColor="@color/white"
         android:layout_weight="1"
-        android:text="التفاصيل"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-        <Button
+        android:text="تفاصيل"
+        android:drawableRight="@drawable/plus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button" />
+
+        <TextView
+
+            android:padding="8dp"
+            android:drawablePadding="10dp"
+            android:layout_margin="5dp"
+            android:textColor="@color/white"
             android:layout_weight="1"
-            android:text="التفاصيل"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
+            android:text="تعديل"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/edit"
+            android:id="@+id/button"
+            android:background="@drawable/button"/>
+
+        <TextView
+            android:padding="8dp"
+            android:drawablePadding="10dp"
+            android:layout_margin="5dp"
+            android:drawableRight="@drawable/delete"
+            android:textColor="@color/white"
             android:layout_weight="1"
-            android:text="التفاصيل"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:text="حذف"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"/>
 
     </LinearLayout>
 </LinearLayout>
