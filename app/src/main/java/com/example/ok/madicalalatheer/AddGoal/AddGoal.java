@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
 
 import java.util.ArrayList;
@@ -73,4 +74,9 @@ public class AddGoal extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
+
+
+
+
+
 }

@@ -1,12 +1,14 @@
 package com.example.ok.madicalalatheer.AddGoal.AddGoalAdapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ok.madicalalatheer.AddGoal.control.ControlAddGoal;
+import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
 
 import java.util.List;
@@ -27,7 +29,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.addgoalrow, parent, false);
-
+        TypefaceUtil.overrideFonts(parent.getContext(), itemView);
         return new MyViewHolder(itemView);
     }
 
@@ -35,7 +37,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         ControlAddGoal disUserControl = displayList.get(position);
-        //holder.serial.setText(disUserControl.getSerial1());
+        holder.Code.setText(disUserControl.getSerial1());
+        holder.goal.setText(disUserControl.getGoal());
+        holder.to.setText(disUserControl.getTo());
+        holder.swt.setChecked(disUserControl.isActive());
 
     }
 
@@ -45,13 +50,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView serial;
-
+        public TextView Code, goal, to;
+        public SwitchCompat swt;
 
         public MyViewHolder(View view) {
             super(view);
-         //   serial = (TextView) view.findViewById(R.id.muldep);
-
+            Code = (TextView) view.findViewById(R.id.Code);
+            goal = (TextView) view.findViewById(R.id.goal);
+            to = (TextView) view.findViewById(R.id.to);
+            swt = (SwitchCompat) view.findViewById(R.id.Active);
         }
     }
 
