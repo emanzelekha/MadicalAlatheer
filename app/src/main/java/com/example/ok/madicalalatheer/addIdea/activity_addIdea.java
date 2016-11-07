@@ -31,7 +31,7 @@ public class activity_addIdea extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addidea);
+        setContentView(R.layout.addidea);
 
        // typeface = Typeface.createFromAsset(getAssets(), "fonts/DroidKufi-Bold.ttf");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -8,9 +8,14 @@
     cardview:cardCornerRadius="2dp"
     cardview:cardElevation="3dp"
     cardview:cardUseCompatPadding="true"
+
    >
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
 
+    >
 <LinearLayout
     android:padding="7dp"
     android:layout_width="match_parent"
@@ -34,7 +39,7 @@
            /></RelativeLayout>
         <TextView
             android:id="@+id/serial"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="كود الهدف"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/text"/>
     </LinearLayout>
 <LinearLayout
     android:layout_marginBottom="5dp"
@@ -74,9 +79,11 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="gravity"
+        android:gravity="right"
         />
     <TextView
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/text"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,9 +98,11 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="gravity"
+            android:gravity="right"
             />
         <TextView
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -143,6 +152,6 @@
 
     </LinearLayout>
 </LinearLayout>
-
+</RelativeLayout>
 
 </android.support.v7.widget.CardView>
