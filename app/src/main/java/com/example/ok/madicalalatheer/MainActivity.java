@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.ok.madicalalatheer.AddGoal.AddGoal;
+import com.example.ok.madicalalatheer.addIdea.activity_addIdea;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 Button goal,idea,process,report;
@@ -39,7 +40,7 @@ Button goal,idea,process,report;
         switch (view.getId()) {
 
             case R.id.idea:
-                i = new Intent(MainActivity.this, AddGoal.class);
+                i = new Intent(MainActivity.this, activity_addIdea.class);
                 startActivity(i);
                 break;
             case R.id.goal:
