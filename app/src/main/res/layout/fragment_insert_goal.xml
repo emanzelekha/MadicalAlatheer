@@ -1,8 +1,10 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back"
+    android:layoutDirection="ltr"
     tools:context="com.example.ok.madicalalatheer.AddGoal.InsertGoal">
 
     <!-- TODO: Update blank fragment layout -->
@@ -13,30 +15,28 @@
         android:orientation="vertical"
         android:padding="5dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text="1"
-            android:textAlignment="gravity"
-            android:textColor="@color/colorPrimary" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/baclspinner"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
+            android:layoutDirection="rtl"
+            android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatSpinner
-
-                style="@style/Widget.AppCompat.Spinner"
-
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end" />
+                android:layout_weight="1"
+                android:text="كود الهدف"
+
+                android:textColor="@color/text" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="1"
+                android:textAlignment="gravity"
+                android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
@@ -49,7 +49,7 @@
             android:paddingTop="5dp">
 
             <android.support.v7.widget.AppCompatSpinner
-
+                android:id="@+id/s1"
                 style="@style/Widget.AppCompat.Spinner"
 
                 android:layout_width="match_parent"
@@ -58,16 +58,19 @@
         </LinearLayout>
 
         <LinearLayout
+
+            android:id="@+id/Mangment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/baclspinner"
             android:paddingBottom="5dp"
-            android:paddingTop="5dp">
+            android:paddingTop="5dp"
+            android:visibility="gone">
 
             <android.support.v7.widget.AppCompatSpinner
-
+                android:id="@+id/s2"
                 style="@style/Widget.AppCompat.Spinner"
 
                 android:layout_width="match_parent"
@@ -81,11 +84,179 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:layoutDirection="rtl"
             android:orientation="vertical"
+            android:visibility="gone"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/baclspinner"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/s3"
+                style="@style/Widget.AppCompat.Spinner"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end" />
+        </LinearLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textColorHint="@color/text"
+            app:hintTextAppearance="@style/TextLabel"
+
             >
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="نص الهدف"
+                android:inputType="text|textMultiLine"
+                android:padding="5dp" />
+        </android.support.design.widget.TextInputLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="تأمين ترخيص مزاولة الخدمة"
+                android:textColor="@color/text"
+
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/text"
+                    app:hintTextAppearance="@style/TextLabel"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/to2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/calendar"
+                        android:drawablePadding="4dp"
+                        android:focusable="false"
+                        android:gravity="right"
+                        android:hint="الى"
+                        android:inputType="datetime" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/text"
+                    app:hintTextAppearance="@style/TextLabel"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/from2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/calendar"
+                        android:drawablePadding="4dp"
+                        android:focusable="false"
+                        android:gravity="right"
+                        android:hint="من"
+                        android:inputType="datetime" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
         </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textColorHint="@color/text"
+            app:hintTextAppearance="@style/TextLabel"
+
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="قياس الهدف"
+                android:inputType="text|textMultiLine"
+                android:padding="5dp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textColorHint="@color/text"
+            app:hintTextAppearance="@style/TextLabel"
+
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="نبذة عن الهدف"
+                android:inputType="text|textMultiLine"
+                android:padding="5dp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textColorHint="@color/text"
+            app:hintTextAppearance="@style/TextLabel"
+
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="فكرة حول الهدف"
+                android:inputType="text|textMultiLine"
+                android:padding="5dp" />
+        </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
-</FrameLayout>
+</ScrollView>

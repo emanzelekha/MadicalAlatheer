@@ -11,7 +11,9 @@ import com.example.ok.madicalalatheer.AddGoal.control.ControlAddGoal;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 /*
  * Created by ok on 06/11/2016.
@@ -35,12 +37,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-
+        NumberFormat nf= NumberFormat.getInstance(new Locale("ar","EG"));//formate
         ControlAddGoal disUserControl = displayList.get(position);
-        holder.Code.setText(disUserControl.getSerial1());
+        holder.Code.setText(nf.format(Integer.parseInt(disUserControl.getSerial1())));
         holder.goal.setText(disUserControl.getGoal());
         holder.to.setText(disUserControl.getTo());
-        holder.serial.setText((position+1)+"");
+
+        holder.serial.setText(nf.format(position+1));
         holder.swt.setChecked(disUserControl.isActive());
 
     }
