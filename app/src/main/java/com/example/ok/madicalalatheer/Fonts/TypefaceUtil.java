@@ -32,7 +32,7 @@ public class TypefaceUtil {
                 ((EditText) v).setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/DroidKufi-Bold.ttf"));
 
                 }else if(v instanceof Button){
-                ((Button) v).setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/DroidKufi-Bold.ttf"));
+                ((Button) v).setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/DroidKufi.ttf"));
 
 
             }

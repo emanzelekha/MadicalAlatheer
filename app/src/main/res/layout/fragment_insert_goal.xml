@@ -3,11 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+
     android:layoutDirection="ltr"
+    android:background="#E6E6E6"
     tools:context="com.example.ok.madicalalatheer.AddGoal.InsertGoal">
 
     <!-- TODO: Update blank fragment layout -->
+    <android.support.v7.widget.CardView
+        xmlns:cardview="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        cardview:cardCornerRadius="2dp"
+        cardview:cardElevation="3dp"
+        cardview:cardUseCompatPadding="true">
     <LinearLayout
 
         android:layout_width="match_parent"
@@ -26,8 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="كود الهدف"
-
-                android:textColor="@color/text" />
+                android:textColor="@color/text"
+                android:textSize="18dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -257,6 +267,28 @@
                 android:inputType="text|textMultiLine"
                 android:padding="5dp" />
         </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/button"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true">
+
+            <TextView
+
+                android:id="@+id/addgoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/plus"
+                android:padding="8dp"
+                android:text="اضافة هدف"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
 </ScrollView>
