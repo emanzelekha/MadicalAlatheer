@@ -8,4 +8,4 @@
     android:layoutDirection="rtl"
     android:singleLine="true"
     android:textAlignment="inherit"
-    android:textColor="@color/colorPrimary" />
+    android:textColor="@color/text" />

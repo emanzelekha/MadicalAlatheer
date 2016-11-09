@@ -1,12 +1,17 @@
 package com.example.ok.madicalalatheer.AddGoal.AddGoalAdapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.ok.madicalalatheer.AddGoal.DetalsAddGoal;
 import com.example.ok.madicalalatheer.AddGoal.control.ControlAddGoal;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
@@ -19,10 +24,10 @@ import java.util.Locale;
  * Created by ok on 06/11/2016.
  */
 
-public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
+public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implements View.OnClickListener{
 
     private List<ControlAddGoal> displayList;
-
+Context context;
     public Adapter(List<ControlAddGoal> displayList) {
         this.displayList = displayList;
     }
@@ -31,20 +36,21 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.addgoalrow, parent, false);
+        context=itemView.getContext();
         TypefaceUtil.overrideFonts(parent.getContext(), itemView);
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        NumberFormat nf= NumberFormat.getInstance(new Locale("ar","EG"));//formate
+        NumberFormat nf = NumberFormat.getInstance(new Locale("ar", "EG"));//formate
         ControlAddGoal disUserControl = displayList.get(position);
         holder.Code.setText(nf.format(Integer.parseInt(disUserControl.getSerial1())));
         holder.goal.setText(disUserControl.getGoal());
         holder.to.setText(disUserControl.getTo());
-
-        holder.serial.setText(nf.format(position+1));
+        holder.serial.setText(nf.format(position + 1));
         holder.swt.setChecked(disUserControl.isActive());
+        holder.GoalDetails.setOnClickListener(this);
 
     }
 
@@ -53,9 +59,21 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         return displayList.size();
     }
 
+    @Override
+    public void onClick(View view) {
+        Intent i;
+        switch (view.getId()){
+            case R.id.GoalDetails:
+                i=new Intent(context, DetalsAddGoal.class);
+                context.startActivity(i);
+                break;
+        }
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView Code, goal, to,serial;
+        public TextView Code, goal, to, serial, GoalDetails;
         public SwitchCompat swt;
+
 
         public MyViewHolder(View view) {
             super(view);
@@ -64,6 +82,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             goal = (TextView) view.findViewById(R.id.goal);
             to = (TextView) view.findViewById(R.id.to);
             swt = (SwitchCompat) view.findViewById(R.id.Active);
+            GoalDetails = (TextView) view.findViewById(R.id.GoalDetails);
         }
     }
 
