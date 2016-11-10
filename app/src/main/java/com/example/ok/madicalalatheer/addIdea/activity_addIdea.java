@@ -74,8 +74,9 @@ public class activity_addIdea extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new insert_idea(), "اضافة");
         adapter.addFrag(new fragment_idea_dis(), "عرض");
+        adapter.addFrag(new insert_idea(), "اضافة");
+
         viewPager.setAdapter(adapter);
     }
 

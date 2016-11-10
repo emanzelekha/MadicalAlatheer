@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ok.madicalalatheer.Fonts.MySpinnerAdapter;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
 
@@ -111,7 +112,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
             }
 
         }
-        System.out.println(cheak+"999");
+        System.out.println(cheak + "999");
     }
 
     public void component() {
@@ -136,11 +137,12 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         } else {
             arraySpinner = Arrays.copyOf(array1, array1.length);
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                R.layout.spinrtitem, arraySpinner);
-        s.setAdapter(adapter);
+        MySpinnerAdapter adapter = new MySpinnerAdapter(
+                getContext(),
+                R.layout.spinrtitem,
+                Arrays.asList(arraySpinner)
+        );
         adapter.setDropDownViewResource(R.layout.downspinner);
-// Apply the adapter to the spinner
         s.setAdapter(adapter);
     }
 

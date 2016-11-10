@@ -1,21 +1,30 @@
 package com.example.ok.madicalalatheer.addIdea;
 
+import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ok.madicalalatheer.Fonts.MySpinnerAdapter;
+import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
 
 import java.util.ArrayList;
@@ -30,7 +39,8 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
     Spinner spinnermanges;
     Spinner spinneremployer;
     Spinner sp_depart;
-    LinearLayout layout1,layout2;
+    LinearLayout layout1, layout2;
+    CardView Main;
 
     public insert_idea() {
         // Required empty public constructor
@@ -54,6 +64,7 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
         String depart[] = {"القسم 2", "القسم 1"};
 
         View v = inflater.inflate(R.layout.insert_idea, container, false);
+        TypefaceUtil.overrideFonts(getContext(), v);
         Spinner spinner1 = (Spinner) v.findViewById(R.id.sp_choosetarget);
         spinnermanges = (Spinner) v.findViewById(R.id.sp_managment);
         spinneremployer = (Spinner) v.findViewById(R.id.sp_employer);
@@ -64,15 +75,23 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
         SpinnerDate(choose_depart, depart, sp_depart);
         spinnermanges.setOnItemSelectedListener(this);
         sp_depart.setOnItemSelectedListener(this);
-        layout1=(LinearLayout)v.findViewById(R.id.layout1);
-        layout2=(LinearLayout)v.findViewById(R.id.layout2);
-        Button btn_add=(Button) v.findViewById(R.id.btn_add);
+        layout1 = (LinearLayout) v.findViewById(R.id.layout1);
+        layout2 = (LinearLayout) v.findViewById(R.id.layout2);
+        TextView btn_add = (TextView) v.findViewById(R.id.add_btn);
+        btn_add.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi.ttf"));
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"add",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "add", Toast.LENGTH_SHORT).show();
             }
         });
+        Main = (CardView) v.findViewById(R.id.InsertIdea);
+        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        int width = display.getWidth();  // deprecated
+        int height = display.getHeight();  // deprecated
+        Main.setMinimumHeight(height - 310);
+
         return v;
     }
 
@@ -86,11 +105,13 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
         } else {
             arraySpinner = Arrays.copyOf(array1, array1.length);
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                R.layout.spinrtitem, arraySpinner);
-        s.setAdapter(adapter);
+
+        MySpinnerAdapter adapter = new MySpinnerAdapter(
+                getContext(),
+                R.layout.spinrtitem,
+                Arrays.asList(arraySpinner)
+        );
         adapter.setDropDownViewResource(R.layout.downspinner);
-// Apply the adapter to the spinner
         s.setAdapter(adapter);
 
     }
@@ -119,9 +140,6 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                 break;
         }
     }
-
-
-
 
 
     @Override

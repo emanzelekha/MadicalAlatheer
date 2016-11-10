@@ -15,14 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".addIdea.activity_addIdea">
-
-        </activity>
-        <activity android:name=".AddGoal.AddGoal">
-
-        </activity>
-
+        <activity android:name=".addIdea.activity_addIdea"></activity>
+        <activity android:name=".AddGoal.AddGoal"></activity>
         <activity android:name=".procedure.activity_procedure"></activity>
+        <activity android:name=".AddGoal.DetalsAddGoal"></activity>
     </application>
 
 </manifest>

@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl"
-    android:orientation="vertical"
-    android:padding="4dp">
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
 
-    <ScrollView
+    <android.support.v7.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/InsertIdea"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="1dp"
+        cardview:cardCornerRadius="2dp"
+        cardview:cardElevation="3dp"
+        cardview:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/baclspinner"
-                android:layoutDirection="rtl"
                 android:orientation="vertical"
-                android:padding="4dp">
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
                 <android.support.v7.widget.AppCompatSpinner
                     android:id="@+id/sp_choosetarget"
                     style="@style/Widget.AppCompat.Spinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
@@ -35,7 +42,9 @@
                 android:id="@+id/lay_ideacode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -48,7 +57,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="4dp"
-                        android:text="كود الفكرة :" />
+                        android:text="كود الفكرة :"
+                        android:textColor="@color/text"
+                        android:textSize="18dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -61,6 +72,7 @@
                         android:layout_height="wrap_content"
                         android:padding="4dp"
                         android:text="154"
+                        android:textColor="@color/black"
 
                         />
                 </LinearLayout>
@@ -69,16 +81,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/baclspinner"
-                android:layoutDirection="rtl"
                 android:orientation="vertical"
-                android:padding="4dp">
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
                 <android.support.v7.widget.AppCompatSpinner
                     android:id="@+id/sp_managment"
                     style="@style/Widget.AppCompat.Spinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
@@ -86,17 +99,20 @@
                 android:id="@+id/layout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+
+                android:layout_marginBottom="8dp"
+
+                android:layout_marginTop="8dp"
                 android:background="@drawable/baclspinner"
-                android:layoutDirection="rtl"
                 android:orientation="vertical"
-                android:padding="4dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:visibility="gone">
 
                 <android.support.v7.widget.AppCompatSpinner
                     android:id="@+id/sp_depart"
                     style="@style/Widget.AppCompat.Spinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
@@ -104,54 +120,86 @@
                 android:id="@+id/layout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/baclspinner"
-                android:layoutDirection="rtl"
                 android:orientation="vertical"
-                android:padding="4dp"
+                android:paddingBottom="5dp"
+
+                android:paddingTop="5dp"
+
                 android:visibility="gone">
 
                 <android.support.v7.widget.AppCompatSpinner
                     android:id="@+id/sp_employer"
                     style="@style/Widget.AppCompat.Spinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/txt_idea"
+            <android.support.design.widget.TextInputLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:allowUndo="true"
-                android:cursorVisible="true"
-                android:hint="نص الفكرة"
-                android:layoutDirection="rtl"
-                android:maxLines="10"
-                android:textStyle="normal"></android.support.v7.widget.AppCompatEditText>
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:textColorHint="@color/text"
+                app:hintTextAppearance="@style/TextLabel"
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/txt_aboutidea"
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="نص الفكرة"
+                    android:inputType="text|textMultiLine"
+                    android:padding="5dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:allowUndo="true"
-                android:cursorVisible="true"
-                android:hint="نبذه عن الفكرة"
-                android:layoutDirection="rtl"
-                android:maxLines="10"
-                android:textStyle="normal"></android.support.v7.widget.AppCompatEditText>
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:textColorHint="@color/text"
+                app:hintTextAppearance="@style/TextLabel"
+
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="نبذة عن الفكرة"
+                    android:inputType="text|textMultiLine"
+                    android:padding="5dp" />
+            </android.support.design.widget.TextInputLayout>
 
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_add"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/baclspinner"
-                android:src="@drawable/pluscircleoutline"
-                android:text=" اضافة جديد"
-                android:textStyle="italic">
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            </android.support.v7.widget.AppCompatButton>
+                <TextView
+
+                    android:id="@+id/add_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/plus"
+                    android:padding="8dp"
+                    android:text="اضافة فكرة"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </android.support.v7.widget.CardView>
+</ScrollView>
+
