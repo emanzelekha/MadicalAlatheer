@@ -21,6 +21,8 @@
         <activity android:name=".AddGoal.AddGoal">
 
         </activity>
+
+        <activity android:name=".procedure.activity_procedure"></activity>
     </application>
 
 </manifest>
