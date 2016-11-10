@@ -25,8 +25,7 @@ public class activity_addIdea extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     public int[] tabIcons = {
-            R.mipmap.ic_launcher, R.mipmap.ic_launcher
-
+            R.drawable.show, R.drawable.add
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {

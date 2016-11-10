@@ -39,7 +39,6 @@ import java.util.Locale;
 public class InsertGoal extends Fragment implements View.OnClickListener, CheckBox.OnCheckedChangeListener, HijriCalendarView.OnDateSetListener, AdapterView.OnItemSelectedListener {
     Spinner s1, s2, s3;
     EditText from, to;
-    Boolean f1 = true;
     TextView addgoal;
     String[] a1, a2 = null, a3, a4, a5, a6 = null;
     LinearLayout layout, Mangment;
@@ -108,10 +107,11 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                 cheak.add(oName[i]);
             } else if ((compoundButton.getId() == 2000 + i) && b == false) {
                 cheak.remove(oName[i]);
-                System.out.println();
-            }
-        }
 
+            }
+
+        }
+        System.out.println(cheak+"999");
     }
 
     public void component() {
@@ -165,7 +165,6 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
             case R.id.s1:
                 if (parent.getSelectedItem().toString().equals("خاص")) {
                     Mangment.setVisibility(View.VISIBLE);
-
                 } else {
                     Mangment.setVisibility(View.GONE);
                     layout.setVisibility(View.GONE);
@@ -174,28 +173,24 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
 
                 break;
             case R.id.s2:
-                if (parent.getSelectedItem().toString().equals("خاص")) {
-                    if (oName != null && f1) {
-                        f1 = false;
-                        layout.setVisibility(View.VISIBLE);
-                        CheckBox btn[] = new CheckBox[oName.length];
-                        for (int x = 0; x < oName.length; x++) {
-                            btn[x] = new CheckBox(getContext()); // initialize it
-                            btn[x].setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                            btn[x].setText(oName[x]);
-                            btn[x].setTextColor(getContext().getResources().getColor(R.color.text));
-                            btn[x].setId(2000 + x);
-                            btn[x].setOnCheckedChangeListener(this);
-                            layout.addView(btn[x]);
-                        }
-                    } else if (oName != null && f1 == false) {
-                        layout.setVisibility(View.VISIBLE);
-                    } else {
-                        layout.setVisibility(View.GONE);
-
+                if (parent.getSelectedItem().toString().equals("خاص") && oName != null) {
+                    layout.setVisibility(View.VISIBLE);
+                    CheckBox btn[] = new CheckBox[oName.length];
+                    for (int x = 0; x < oName.length; x++) {
+                        btn[x] = new CheckBox(getContext()); // initialize it
+                        btn[x].setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        btn[x].setText(oName[x]);
+                        btn[x].setTextColor(getContext().getResources().getColor(R.color.text));
+                        btn[x].setId(2000 + x);
+                        btn[x].setOnCheckedChangeListener(this);
+                        layout.addView(btn[x]);
                     }
+                } else if (!(parent.getSelectedItem().toString().equals("خاص"))) {
+                    layout.removeAllViews();
+                    layout.setVisibility(View.GONE);
                 }
         }
+
 
     }
 

@@ -27,7 +27,7 @@ import java.util.Locale;
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implements View.OnClickListener{
 
     private List<ControlAddGoal> displayList;
-Context context;
+    Context context;
     public Adapter(List<ControlAddGoal> displayList) {
         this.displayList = displayList;
     }
@@ -65,6 +65,7 @@ Context context;
         switch (view.getId()){
             case R.id.GoalDetails:
                 i=new Intent(context, DetalsAddGoal.class);
+                i.putExtra("Find","goal");
                 context.startActivity(i);
                 break;
         }
