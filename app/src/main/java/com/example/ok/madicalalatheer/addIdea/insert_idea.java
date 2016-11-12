@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
@@ -41,6 +42,8 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
     Spinner sp_depart;
     LinearLayout layout1, layout2;
     CardView Main;
+    TextInputLayout input1, input2;
+    View v;
 
     public insert_idea() {
         // Required empty public constructor
@@ -63,8 +66,10 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
         String choose_depart[] = {"اختر القسم"};
         String depart[] = {"القسم 2", "القسم 1"};
 
-        View v = inflater.inflate(R.layout.insert_idea, container, false);
+        v = inflater.inflate(R.layout.insert_idea, container, false);
         TypefaceUtil.overrideFonts(getContext(), v);
+        commponent();
+        addFont();
         Spinner spinner1 = (Spinner) v.findViewById(R.id.sp_choosetarget);
         spinnermanges = (Spinner) v.findViewById(R.id.sp_managment);
         spinneremployer = (Spinner) v.findViewById(R.id.sp_employer);
@@ -141,6 +146,17 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
         }
     }
 
+    public void commponent() {
+        input1 = (TextInputLayout) v.findViewById(R.id.inputText1);
+        input2 = (TextInputLayout) v.findViewById(R.id.inputText2);
+    }
+    public void addFont() {
+        input1.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi-Bold.ttf"));
+        input2.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi-Bold.ttf"));
+
+
+
+    }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {

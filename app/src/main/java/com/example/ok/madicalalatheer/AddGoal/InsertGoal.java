@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
     List<String> cheak = new ArrayList<String>();
     String oName[] = null;
     HijriCalendarDialog.Builder text;
+    TextInputLayout input1, input2, input3, input4;
 
     public InsertGoal() {
         // Required empty public constructor
@@ -58,8 +60,10 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_insert_goal, container, false);
-        TypefaceUtil.overrideFonts(getContext(), v);
+
         component();
+        TypefaceUtil.overrideFonts(getContext(), v);
+        addFont();
         click();
         a1 = new String[]{"*اختيار نوع الهدف", "عام", "خاص"};
         a5 = new String[]{"*اختر اهمية الهدف", "A", "B", "C"};
@@ -125,6 +129,19 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         to = (EditText) v.findViewById(R.id.to2);
         addgoal = (TextView) v.findViewById(R.id.addgoal);
         addgoal.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi.ttf"));
+        input1 = (TextInputLayout) v.findViewById(R.id.Textinput1);
+        input2 = (TextInputLayout) v.findViewById(R.id.Textinput2);
+        input3 = (TextInputLayout) v.findViewById(R.id.Textinput3);
+        input4 = (TextInputLayout) v.findViewById(R.id.Textinput4);
+    }
+
+    public void addFont() {
+        input1.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi-Bold.ttf"));
+        input2.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi-Bold.ttf"));
+        input3.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi-Bold.ttf"));
+        input4.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi-Bold.ttf"));
+
+
     }
 
     public void SpinnerDate(String[] array1, String[] array2, Spinner s) {
