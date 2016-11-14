@@ -33,10 +33,12 @@ public class fragement_procedure extends Fragment {
 
         TypefaceUtil.overrideFonts(getContext(), v);
         recycler = (RecyclerView) v.findViewById(R.id.main_recycler);
+
         adapter = new PeopleAdapter(getContext());
         adapter.setMode(ExpandableRecyclerAdapter.MODE_ACCORDION);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
+
         return v;
     }
 

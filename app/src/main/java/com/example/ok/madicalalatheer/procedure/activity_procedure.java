@@ -1,6 +1,7 @@
 package com.example.ok.madicalalatheer.procedure;
 
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,20 +11,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.ok.madicalalatheer.R;
-import com.example.ok.madicalalatheer.addIdea.activity_addIdea;
-import com.example.ok.madicalalatheer.addIdea.fragment_idea_dis;
-import com.example.ok.madicalalatheer.addIdea.insert_idea;
-import com.innodroid.expandablerecycler.ExpandableRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +25,7 @@ public class activity_procedure extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     public int[] tabIcons = {
-            R.mipmap.ic_launcher, R.mipmap.ic_launcher
+            R.drawable.show, R.drawable.add
 
     };
     @Override
@@ -77,11 +69,13 @@ public class activity_procedure extends AppCompatActivity {
     private void setupTabIcons() {
 
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
 
     }
     private void setupViewPager(ViewPager viewPager) {
        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new fragement_procedure(), "عرض");
+        adapter.addFrag(new fragement_procedure(), "قائمة البيانات");
+        adapter.addFrag(new InsertProcedure(), "اضافة جديد");
         viewPager.setAdapter(adapter);
     }
     class ViewPagerAdapter extends FragmentPagerAdapter {

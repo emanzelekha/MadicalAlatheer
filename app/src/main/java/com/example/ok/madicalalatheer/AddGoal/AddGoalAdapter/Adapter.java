@@ -72,7 +72,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView Code, goal, to, serial, GoalDetails;
+        public TextView Code, goal, to, serial;
+        public View GoalDetails;
         public SwitchCompat swt;
 
 
@@ -83,7 +84,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
             goal = (TextView) view.findViewById(R.id.goal);
             to = (TextView) view.findViewById(R.id.to);
             swt = (SwitchCompat) view.findViewById(R.id.Active);
-            GoalDetails = (TextView) view.findViewById(R.id.GoalDetails);
+            GoalDetails = view.findViewById(R.id.GoalDetails);
         }
     }
 

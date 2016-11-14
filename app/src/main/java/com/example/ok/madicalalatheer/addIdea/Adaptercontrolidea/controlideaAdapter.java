@@ -70,7 +70,8 @@ public class controlideaAdapter extends RecyclerView.Adapter<controlideaAdapter.
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView Code, goal, suggest, job, serial, details;
+        public TextView Code, goal, suggest, job, serial;
+        View  details;
         public SwitchCompat swt;
 
         public MyViewHolder(View view) {
@@ -81,7 +82,7 @@ public class controlideaAdapter extends RecyclerView.Adapter<controlideaAdapter.
             suggest = (TextView) view.findViewById(R.id.to);
             swt = (SwitchCompat) view.findViewById(R.id.Active);
             job = (TextView) view.findViewById(R.id.job);
-            details = (TextView) view.findViewById(R.id.ideadetails);
+            details = view.findViewById(R.id.ideadetails);
         }
     }
 

@@ -7,11 +7,14 @@ package com.example.ok.madicalalatheer.procedure;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
 import com.innodroid.expandablerecycler.ExpandableRecyclerAdapter;
 
@@ -20,7 +23,7 @@ import java.util.List;
 
 public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.PeopleListItem> {
     public static final int TYPE_PERSON = 1001;
-
+    View context;
     public PeopleAdapter(Context context) {
         super(context);
 
@@ -53,16 +56,16 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
 
         public HeaderViewHolder(View view) {
             super(view, (ImageView) view.findViewById(R.id.item_arrow));
-
             txt_target = (TextView) view.findViewById(R.id.txt_target);
             sort=(TextView)view.findViewById(R.id.num);
         }
 
         public void bind(int position) {
             super.bind(position);
-
             txt_target.setText(visibleItems.get(position).Text);
             sort.setText((String.valueOf(visibleItems.get(position).sort)));
+          /*  txt_target.setTypeface(Typeface.createFromAsset(.getAssets(), "fonts/DroidKufi-Bold.ttf"));
+            sort.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/DroidKufi-Bold.ttf"));*/
         }
     }
 
@@ -71,7 +74,6 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
 
         public PersonViewHolder(View view) {
             super(view);
-
             procedure = (TextView) view.findViewById(R.id.procedure);
             date=(TextView)view.findViewById(R.id.date);
         }
@@ -80,6 +82,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
 
             procedure.setText(visibleItems.get(position).Text);
             date.setText(visibleItems.get(position).date);
+
         }
     }
 
@@ -87,10 +90,14 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case TYPE_HEADER:
-                return new HeaderViewHolder(inflate(R.layout.row_expand_parent, parent));
+                context=inflate(R.layout.row_expand_parent, parent);
+                TypefaceUtil.overrideFonts(parent.getContext(), context);
+                return new HeaderViewHolder(context);
             case TYPE_PERSON:
             default:
-                return new PersonViewHolder(inflate(R.layout.row_expand_child, parent));
+                context=inflate(R.layout.row_expand_child, parent);
+                TypefaceUtil.overrideFonts(parent.getContext(), context);
+                return new PersonViewHolder(context);
         }
     }
 

@@ -17,15 +17,16 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="right"
-    android:background="#673AB7"
+
     >
     <TextView
         android:id="@+id/num"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="1"
+        android:textSize="18dp"
         android:layout_marginBottom="5dp"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/text"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,15 +41,15 @@
             android:text="الهدف :"
             android:layout_gravity="start"
             android:textAlignment="textStart"
-            android:layout_weight="1"
-            android:textColor="#FFFFFF"
+            android:layout_weight="2"
+            android:textColor="@color/text"
             />
         <TextView
             android:id="@+id/txt_target"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/black"
             />
 
     </LinearLayout>
@@ -69,14 +70,14 @@
             android:layout_gravity="start"
             android:textAlignment="textStart"
             android:layout_weight="2"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text"
             />
     </LinearLayout>
     <ImageView android:id="@+id/item_arrow"
         android:layout_width="@dimen/arrow_size"
         android:layout_height="@dimen/arrow_size"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_keyboard_arrow_right_black_36dp"
+        cardview:srcCompat="@drawable/ic_keyboard_arrow_right_black_36dp"
         />
 
 </LinearLayout>
