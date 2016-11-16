@@ -1,6 +1,8 @@
 package com.example.ok.madicalalatheer.AddGoal;
 
+import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,11 +10,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +29,8 @@ public class AddGoal extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +38,8 @@ public class AddGoal extends AppCompatActivity {
         v=findViewById(R.id.activity_add_goal);
         viewPager = (ViewPager) findViewById(R.id.viewpagerAddDepartment);
         setupViewPager(viewPager);
+        /*Drawable drawable1 = MrVector.inflate(getBaseContext().getResources(), R.drawable.show);
+        Drawable drawable2 = MrVector.inflate(getBaseContext().getResources(), R.drawable.add);*/
 
         tabLayout = (TabLayout) findViewById(R.id.tabsAddDepartment);
         TypefaceUtil.overrideFonts(getBaseContext(), v);

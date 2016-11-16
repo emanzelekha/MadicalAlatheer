@@ -281,12 +281,11 @@
             android:clickable="true">
 
             <TextView
-
+                android:drawableRight="@drawable/plus"
                 android:id="@+id/addgoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="10dp"
-                android:drawableRight="@drawable/plus"
                 android:padding="8dp"
                 android:text="اضافة هدف"
                 android:textColor="@color/white" />

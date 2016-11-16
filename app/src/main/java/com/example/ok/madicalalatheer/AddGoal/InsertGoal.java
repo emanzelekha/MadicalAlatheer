@@ -2,9 +2,11 @@ package com.example.ok.madicalalatheer.AddGoal;
 
 
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import com.example.ok.madicalalatheer.Fonts.MySpinnerAdapter;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
+
 
 import net.alhazmy13.hijridatepicker.HijriCalendarDialog;
 import net.alhazmy13.hijridatepicker.HijriCalendarView;
@@ -122,8 +125,12 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         s3 = (Spinner) v.findViewById(R.id.s3);
         from = (EditText) v.findViewById(R.id.from2);
         to = (EditText) v.findViewById(R.id.to2);
+       /* Drawable drawable1 = MrVector.inflate(getContext().getResources(), R.drawable.calendar);
+        Drawable drawable2 = MrVector.inflate(getContext().getResources(), R.drawable.plus);
+        from.setCompoundDrawablesWithIntrinsicBounds(drawable1, null, null, null);
+        to.setCompoundDrawablesWithIntrinsicBounds(drawable1, null, null, null);*/
         addgoal = (TextView) v.findViewById(R.id.addgoal);
-
+       // addgoal.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable2, null);
         addgoal.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi.ttf"));
         input1 = (TextInputLayout) v.findViewById(R.id.Textinput1);
         input2 = (TextInputLayout) v.findViewById(R.id.Textinput2);

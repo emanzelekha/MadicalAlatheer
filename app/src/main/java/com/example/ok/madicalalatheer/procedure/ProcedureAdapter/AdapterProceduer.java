@@ -9,31 +9,35 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.ok.madicalalatheer.AddGoal.DetalsAddGoal;
 import com.example.ok.madicalalatheer.Fonts.MySpinnerAdapter;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
 import com.example.ok.madicalalatheer.procedure.Modle.Controlprocedure;
 
 import net.alhazmy13.hijridatepicker.HijriCalendarDialog;
+import net.alhazmy13.hijridatepicker.HijriCalendarView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /*
  * Created by ok on 06/11/2016.
  */
 
-public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyViewHolder> implements View.OnClickListener {
+public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyViewHolder> implements View.OnClickListener, HijriCalendarView.OnDateSetListener {
     HijriCalendarDialog.Builder text;
     String[] a1, a2;
+    EditText date;
     private List<Controlprocedure> displayList;
     Context context;
-
+    String Date = "";
     public AdapterProceduer(List<Controlprocedure> displayList) {
         this.displayList = displayList;
     }
@@ -55,8 +59,10 @@ public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyVi
         holder.serial.setText(disUserControl.getGoal());
         holder.input1.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/DroidKufi-Bold.ttf"));
         holder.input2.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/DroidKufi-Bold.ttf"));
-        a1 = new String[]{"*قم باختيار الوظف"};
+        date.setOnClickListener(this);
+        holder.input1.setOnClickListener(this);
 
+        a1 = new String[]{"*قم باختيار الوظف"};
         a2 = new String[]{"1", "2", "3", "4", "5"};
         SpinnerDate(a1, a2, holder.s1);
     }
@@ -70,16 +76,27 @@ public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyVi
     public void onClick(View view) {
         Intent i;
         switch (view.getId()) {
-            case R.id.GoalDetails:
-                i = new Intent(context, DetalsAddGoal.class);
-                i.putExtra("Find", "goal");
-                context.startActivity(i);
+
+            case R.id.Date:
+                text = new HijriCalendarDialog.Builder(context).setUILanguage(HijriCalendarDialog.Language.Arabic).setOnDateSetListener(this).show();
                 break;
         }
     }
 
+    @Override
+    public void onDateSet(int year, int month, int day) {
+        NumberFormat nf = NumberFormat.getInstance(new Locale("ar", "EG"));//formate
+        String year1 = nf.format(year);
+        String month1 = nf.format(month + 1);
+        String day1 = nf.format(day);
+        Date = year1 + "/" + month1 + "/" + day1;
+        date.setText(Date);
+
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextInputLayout input1, input2;
+
         public TextView Code, serial;
         public CardView card;
         public Spinner s1;
@@ -92,6 +109,7 @@ public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyVi
             input1 = (TextInputLayout) view.findViewById(R.id.Textinput1p);
             input2 = (TextInputLayout) view.findViewById(R.id.input2Date);
             s1 = (Spinner) view.findViewById(R.id.s1row);
+            date = (EditText) view.findViewById(R.id.Date);
         }
     }
 
@@ -125,8 +143,5 @@ public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyVi
         s.setAdapter(adapter);
     }
 
-    public void Dialog() {
-     //   text = new HijriCalendarDialog.Builder(context).setUILanguage(HijriCalendarDialog.Language.Arabic).setOnDateSetListener(this).show();
 
-    }
 }
