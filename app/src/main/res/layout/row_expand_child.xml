@@ -77,10 +77,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="10dp"
+                android:drawablePadding="2dp"
                 android:drawableRight="@drawable/delete"
                 android:padding="8dp"
-                android:text="خذف"
+                android:text="حذف"
                 android:textColor="@color/white" />
         </LinearLayout>
 
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"
-                android:drawablePadding="10dp"
+                android:drawablePadding="2dp"
                 android:drawableRight="@drawable/edit"
                 android:padding="8dp"
                 android:text="تعديل"

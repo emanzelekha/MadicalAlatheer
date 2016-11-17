@@ -8,24 +8,27 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.ok.madicalalatheer.AddGoal.AddGoal;
+import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.addIdea.activity_addIdea;
 import com.example.ok.madicalalatheer.procedure.activity_procedure;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-Button goal,idea,process,report;
+View goal,idea,process,report,main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         component();
         Click();
+        TypefaceUtil.overrideFonts(getBaseContext(), main);
     }
 
     public void component(){
-        idea=(Button)findViewById(R.id.idea);
-        goal=(Button)findViewById(R.id.goal);
-        process=(Button)findViewById(R.id.process);
-        report=(Button)findViewById(R.id.report);
+        main=findViewById(R.id.activity_main);
+        idea=findViewById(R.id.idea);
+        goal=findViewById(R.id.goal);
+        process=findViewById(R.id.process);
+        report=findViewById(R.id.report);
     }
     public void Click(){
         idea.setOnClickListener(this);
