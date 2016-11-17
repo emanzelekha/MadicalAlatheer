@@ -1,6 +1,7 @@
 package com.example.ok.madicalalatheer.addIdea;
 
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.widget.TextView;
@@ -27,12 +27,13 @@ public class activity_addIdea extends AppCompatActivity {
     public int[] tabIcons = {
             R.drawable.show, R.drawable.add
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addidea);
 
-       // typeface = Typeface.createFromAsset(getAssets(), "fonts/DroidKufi-Bold.ttf");
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/DroidKufi-Bold.ttf");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -108,5 +109,5 @@ public class activity_addIdea extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
-    }
+}
 
