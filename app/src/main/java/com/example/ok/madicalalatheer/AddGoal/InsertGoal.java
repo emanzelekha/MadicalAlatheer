@@ -53,6 +53,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
