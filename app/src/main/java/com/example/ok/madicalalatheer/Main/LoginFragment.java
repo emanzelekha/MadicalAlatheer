@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.ok.madicalalatheer.MainActivity;
 import com.example.ok.madicalalatheer.R;
 import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -29,6 +30,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,18 +65,18 @@ public class LoginFragment extends Fragment {
         t1 = (TextView) view.findViewById(R.id.t1);
 
         button = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DroidKufi-Bold.ttf");
-        go.setTypeface(button);
+
         log.setTypeface(button);
         name.setTypeface(button);
         pass.setTypeface(button);
         t1.setTypeface(button);
 
-        SharedPreferences pref = getActivity().getSharedPreferences("Data",Context.MODE_PRIVATE);
+        SharedPreferences pref = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
         String id = pref.getString("name", "");
         String tests = pref.getString("pass", "");
         name.setText(id);
         pass.setText(tests);
-      //  Toast.makeText(getActivity().getApplicationContext(), tests + id, Toast.LENGTH_LONG).show();
+        //  Toast.makeText(getActivity().getApplicationContext(), tests + id, Toast.LENGTH_LONG).show();
 
 
         log.setOnClickListener(new View.OnClickListener() {
@@ -137,20 +140,19 @@ public class LoginFragment extends Fragment {
                 Log.e("onSuccess", response + "");
                 try {
                     if (response.getInt("code") == 1) {
-                        SharedPreferences sharedPref = getActivity().getSharedPreferences("Data",Context.MODE_PRIVATE);
+                        SharedPreferences sharedPref = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("name", name1);
                         editor.putString("pass", pass1);
-                        editor.putString("UserId",response.getString("message"));
+                        editor.putString("UserId", response.getString("message"));
                         editor.commit();
-                       /* Intent intent = new Intent(getActivity().getApplication(), Add_advert.class);
+                        Intent intent = new Intent(getActivity().getApplication(), MainActivity.class);
                         intent.putExtra("id", response.getString("message"));
                         intent.putExtra("add", 1);
-                        intent.putExtra("map",0);
-                        startActivity(intent);*/
+                        intent.putExtra("map", 0);
+                        startActivity(intent);
 
-                    }
-                    else {
+                    } else {
 
                         Toast.makeText(getActivity().getApplicationContext(), "الاسم او كلمة المرور خظأ", Toast.LENGTH_LONG).show();
 

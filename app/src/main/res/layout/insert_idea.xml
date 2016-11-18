@@ -144,8 +144,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:textColorHint="@color/text"
-               cardview:hintTextAppearance="@style/TextLabel"
-                >
+                cardview:hintTextAppearance="@style/TextLabel">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -163,7 +162,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:textColorHint="@color/text"
-               cardview:hintTextAppearance="@style/TextLabel">
+                cardview:hintTextAppearance="@style/TextLabel">
 
                 <EditText
                     android:id="@+id/editText"

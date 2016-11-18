@@ -30,7 +30,7 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/logologin"
+
             android:layout_gravity="center"
             />
         <EditText
@@ -76,7 +76,7 @@
 
                 <Button
                     android:textColor="#fff"
-                    android:layout_marginLeft="1dp"
+
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:layout_width="match_parent"
@@ -84,7 +84,6 @@
                     android:id="@+id/reg1"
 
 
-                    android:background="@drawable/texted"
 
                     android:text="تسجيل دخول"
                    />
