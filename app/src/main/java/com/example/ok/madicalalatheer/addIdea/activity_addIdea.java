@@ -1,5 +1,8 @@
 package com.example.ok.madicalalatheer.addIdea;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,9 +16,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.View;
 import android.widget.TextView;
 
+import com.example.ok.madicalalatheer.AddGoal.AddGoal;
+import com.example.ok.madicalalatheer.Main.Login;
+import com.example.ok.madicalalatheer.MainActivity;
 import com.example.ok.madicalalatheer.R;
+import com.example.ok.madicalalatheer.Reportes.MainReport;
+import com.example.ok.madicalalatheer.procedure.activity_procedure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +48,7 @@ public class activity_addIdea extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         TextView t = (TextView) toolbar.findViewById(R.id.toolbar_title);
         // t.setTypeface(button);
-        t.setText(Html.fromHtml("<strong>عقـــــاري </strong>"));
+        t.setText(Html.fromHtml("<strong>المركز الطبى </strong>"));
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -58,7 +67,57 @@ public class activity_addIdea extends AppCompatActivity {
         main2.setTypeface(typeface);
         main3.setTypeface(typeface);
         main4.setTypeface(typeface);
+        TextView   main0 = (TextView) navigationView.findViewById(R.id.main0);
+        main0.setTypeface(typeface);
+        main0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(activity_addIdea.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(activity_addIdea.this, activity_addIdea.class);
+                startActivity(i);
+            }
+        });
+        main1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(activity_addIdea.this, activity_procedure.class);
 
+                startActivity(i);
+            }
+        });
+        main2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(activity_addIdea.this, AddGoal.class);
+                startActivity(i);
+            }
+        });
+        main3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(activity_addIdea.this, MainReport.class);
+                startActivity(i);
+            }
+        });
+
+        main4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPref = getSharedPreferences("Data", Context.MODE_PRIVATE);
+                //
+                // SharedPreferences.Editor editor = sharedPref.edit();
+                sharedPref.edit().remove("UserId").commit();
+                // editor.commit();e
+                Intent i = new Intent(activity_addIdea.this, Login.class);
+                startActivity(i);
+            }
+        });
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 

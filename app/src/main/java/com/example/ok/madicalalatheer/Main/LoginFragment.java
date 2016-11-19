@@ -88,8 +88,9 @@ public class LoginFragment extends Fragment {
 
                     try {
                         RequestParams params = new RequestParams();
-                        params.put("UserNme", name1);
-                        params.put("PassWord", pass1);
+                        params.put("request","login");
+                        params.put("username", name1);
+                        params.put("password", pass1);
 
                         AskLogin(params);
                     } catch (Exception ex) {
@@ -123,7 +124,7 @@ public class LoginFragment extends Fragment {
 
     public void AskLogin(RequestParams params) throws JSONException {
 
-        AsyncHttpClient.post("login.php", params, new JsonHttpResponseHandler() {
+        AsyncHttpClient.post("", params, new JsonHttpResponseHandler() {
             ProgressDialog progressDialog;
 
             @Override
@@ -137,22 +138,23 @@ public class LoginFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-                Log.e("onSuccess", response + "");
+
                 try {
-                    if (response.getInt("code") == 1) {
+                    Log.e("onSuccess",response.getInt("message") + "");
+                    if (response.getInt("message") >= 1) {
                         SharedPreferences sharedPref = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("name", name1);
                         editor.putString("pass", pass1);
-                        editor.putString("UserId", response.getString("message"));
+                      //  editor.putString("UserId", response.getString("message"));
                         editor.commit();
                         Intent intent = new Intent(getActivity().getApplication(), MainActivity.class);
-                        intent.putExtra("id", response.getString("message"));
-                        intent.putExtra("add", 1);
-                        intent.putExtra("map", 0);
+                       // intent.putExtra("id", response.getString("message"));
+
                         startActivity(intent);
 
                     } else {
+
 
                         Toast.makeText(getActivity().getApplicationContext(), "الاسم او كلمة المرور خظأ", Toast.LENGTH_LONG).show();
 

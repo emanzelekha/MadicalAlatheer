@@ -1,35 +1,34 @@
-package com.example.ok.madicalalatheer;
+package com.example.ok.madicalalatheer.Reportes;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ok.madicalalatheer.AddGoal.AddGoal;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.Main.Login;
-import com.example.ok.madicalalatheer.Reportes.MainReport;
+import com.example.ok.madicalalatheer.MainActivity;
+import com.example.ok.madicalalatheer.R;
 import com.example.ok.madicalalatheer.addIdea.activity_addIdea;
 import com.example.ok.madicalalatheer.procedure.activity_procedure;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-View goal,idea,process,report,main;
-    Typeface typeface;
+public class MainReport extends AppCompatActivity implements View.OnClickListener {
+    View report, performance,Main;
+Typeface typeface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_report);
         typeface = Typeface.createFromAsset(getAssets(), "fonts/DroidKufi-Bold.ttf");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -49,31 +48,32 @@ View goal,idea,process,report,main;
         TextView main2 = (TextView) navigationView.findViewById(R.id.main2);
         TextView main3 = (TextView) navigationView.findViewById(R.id.main3);
         TextView main4 = (TextView) navigationView.findViewById(R.id.main4);
-        TextView   main0 = (TextView) navigationView.findViewById(R.id.main0);
-        main0.setTypeface(typeface);
-        main0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
+
         main.setTypeface(typeface);
         main1.setTypeface(typeface);
         main2.setTypeface(typeface);
         main3.setTypeface(typeface);
         main4.setTypeface(typeface);
+        TextView   main0 = (TextView) navigationView.findViewById(R.id.main0);
+        main0.setTypeface(typeface);
+        main0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainReport.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
         main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, activity_addIdea.class);
+                Intent i = new Intent(MainReport.this, activity_addIdea.class);
                 startActivity(i);
             }
         });
         main1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, activity_procedure.class);
+                Intent i = new Intent(MainReport.this, activity_procedure.class);
 
                 startActivity(i);
             }
@@ -81,14 +81,14 @@ View goal,idea,process,report,main;
         main2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, AddGoal.class);
+                Intent i = new Intent(MainReport.this, AddGoal.class);
                 startActivity(i);
             }
         });
         main3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, MainReport.class);
+                Intent i = new Intent(MainReport.this, MainReport.class);
                 startActivity(i);
             }
         });
@@ -101,51 +101,38 @@ View goal,idea,process,report,main;
                 // SharedPreferences.Editor editor = sharedPref.edit();
                 sharedPref.edit().remove("UserId").commit();
                 // editor.commit();e
-                Intent i = new Intent(MainActivity.this, Login.class);
+                Intent i = new Intent(MainReport.this, Login.class);
                 startActivity(i);
             }
         });
+        TypefaceUtil.overrideFonts(getBaseContext(), Main);
         component();
-        Click();
-        TypefaceUtil.overrideFonts(getBaseContext(), main);
+        click();
     }
 
-    public void component(){
-        main=findViewById(R.id.activity_main);
-        idea=findViewById(R.id.idea);
-        goal=findViewById(R.id.goal);
-        process=findViewById(R.id.process);
-        report=findViewById(R.id.report);
+    public void component() {
+        report = findViewById(R.id.goalReport);
+        performance = findViewById(R.id.performanceReport);
+        Main=findViewById(R.id.activity_main_report);
     }
-    public void Click(){
-        idea.setOnClickListener(this);
-        goal.setOnClickListener(this);
-        process.setOnClickListener(this);
+
+    public void click() {
         report.setOnClickListener(this);
+        performance.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-
         Intent i;
         switch (view.getId()) {
-
-            case R.id.idea:
-                i = new Intent(MainActivity.this, activity_addIdea.class);
+            case R.id.goalReport:
+                i = new Intent(MainReport.this, TableLayoutGoals.class);
                 startActivity(i);
                 break;
-            case R.id.goal:
-                i = new Intent(MainActivity.this, AddGoal.class);
+            case R.id.performanceReport:
+                i = new Intent(MainReport.this, TableLayoutPerformance.class);
                 startActivity(i);
                 break;
-
-            case R.id.process:
-                i = new Intent(MainActivity.this, activity_procedure.class);
-                startActivity(i);
-                break;
-            case R.id.report:
-                i = new Intent(MainActivity.this, MainReport.class);
-                startActivity(i);
-                break;}
+        }
     }
 }

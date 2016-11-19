@@ -110,127 +110,152 @@
 
             >
 
+            <TextView
+                android:id="@+id/main0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
+                android:layout_centerHorizontal="true"
+
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/homemain"
+                android:foregroundGravity="left|fill_vertical"
+
+                android:text="الرئيسية"
+                android:textColor="@color/text"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/text"></LinearLayout>
 
             <TextView
                 android:id="@+id/main"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
 
                 android:layout_centerHorizontal="true"
+
                 android:layout_gravity="right"
-                android:textSize="18dp"
-                android:drawableRight="@drawable/homemain"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 android:drawablePadding="10dp"
+                android:drawableRight="@drawable/homemain"
                 android:foregroundGravity="left|fill_vertical"
 
-                android:text="الادارة والاقسام"
+                android:text="اضافة فكرة"
                 android:textColor="@color/text"
-                android:layout_marginRight="10dp"
-                />
+                android:textSize="18dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/text"
                 android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"></LinearLayout>
+                android:background="@color/text"></LinearLayout>
 
             <TextView
                 android:id="@+id/main1"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_centerHorizontal="true"
+
                 android:layout_gravity="right"
-                android:textSize="18dp"
-                android:drawableRight="@drawable/homemain"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 android:drawablePadding="10dp"
+                android:drawableRight="@drawable/homemain"
                 android:foregroundGravity="left|fill_vertical"
 
-                android:text="ادارة النظام"
+                android:text="اضافة اجراء"
                 android:textColor="@color/text"
-                android:layout_marginRight="10dp"
-                />
+                android:textSize="18dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/text"
                 android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"></LinearLayout>
+                android:background="@color/text"></LinearLayout>
 
             <TextView
                 android:id="@+id/main2"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="right"
-                android:textSize="18dp"
-                android:drawableRight="@drawable/homemain"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 android:drawablePadding="10dp"
+                android:drawableRight="@drawable/homemain"
                 android:foregroundGravity="left|fill_vertical"
 
-                android:text="عرض الاهداف"
+                android:text="اضافة هدف"
                 android:textColor="@color/text"
-                android:layout_marginRight="10dp"
-                />
+                android:textSize="18dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/text"
                 android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"></LinearLayout>
+                android:background="@color/text"></LinearLayout>
+
             <TextView
                 android:id="@+id/main3"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_centerHorizontal="true"
+
                 android:layout_gravity="right"
-                android:textSize="18dp"
-                android:drawableRight="@drawable/homemain"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 android:drawablePadding="10dp"
+                android:drawableRight="@drawable/homemain"
                 android:foregroundGravity="left|fill_vertical"
 
-                android:text="ادارة الهدف"
+                android:text="التقارير"
                 android:textColor="@color/text"
-                android:layout_marginRight="10dp"
-                />
+                android:textSize="18dp" />
+
             <LinearLayout
-                android:orientation="horizontal"
                 android:id="@+id/main3line"
                 android:layout_width="match_parent"
-                android:background="@color/text"
                 android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"></LinearLayout>
+                android:background="@color/text"
+                android:orientation="horizontal"></LinearLayout>
+
             <TextView
                 android:id="@+id/main4"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_centerHorizontal="true"
+
                 android:layout_gravity="right"
-                android:textSize="18dp"
-                android:drawableRight="@drawable/homemain"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 android:drawablePadding="10dp"
+                android:drawableRight="@drawable/homemain"
                 android:foregroundGravity="left|fill_vertical"
 
-                android:text="الشئون الادارية"
+                android:text="تسجيل خروج"
                 android:textColor="@color/text"
-                android:layout_marginRight="10dp"
-                />
+                android:textSize="18dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/text"
                 android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"></LinearLayout>
+                android:background="@color/text"></LinearLayout>
 
         </LinearLayout>
     </android.support.design.widget.NavigationView>

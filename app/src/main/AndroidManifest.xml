@@ -19,17 +19,18 @@
         <activity android:name=".Main.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".addIdea.activity_addIdea" />
-        <activity android:name=".AddGoal.AddGoal"></activity>
+        <activity android:name=".AddGoal.AddGoal" />
         <activity android:name=".procedure.activity_procedure" />
         <activity android:name=".AddGoal.DetalsAddGoal" />
-
+        <activity android:name=".Reportes.MainReport" />
+        <activity android:name=".Reportes.TableLayoutGoals" />
+        <activity android:name=".Reportes.TableLayoutPerformance"></activity>
     </application>
 
 </manifest>
