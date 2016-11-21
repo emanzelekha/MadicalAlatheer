@@ -11,18 +11,21 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
 import com.example.ok.madicalalatheer.zoom.ZoomableRelativeLayout;
 
 public class TableLayoutPerformance extends AppCompatActivity {
 View v;
+    TextView close;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_layout_performance);
-        v=findViewById(R.id.RelativeLayout1);
+        v=findViewById(R.id.activity_table_layout_performance );
+        TypefaceUtil.overrideFonts(getBaseContext(), v);
         init();
-        final ScaleGestureDetector scaleGestureDetector = new ScaleGestureDetector(this, new OnPinchListener());
+      /*  final ScaleGestureDetector scaleGestureDetector = new ScaleGestureDetector(this, new OnPinchListener());
         v.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
@@ -31,7 +34,15 @@ View v;
                 scaleGestureDetector.onTouchEvent(event);
                 return true;
             }
+        });*/
+        close = (TextView) findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
         });
+
     }
 
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -29,6 +30,7 @@ import static android.support.v7.appcompat.R.id.top;
 
 public class TableLayoutGoals extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 Spinner s1,s2;
+    TextView close;
     View Mangment;
     String[] a1, a2 = null, a3, a4, a5, a6 = null;
     @Override
@@ -36,8 +38,16 @@ Spinner s1,s2;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_layout);
         TypefaceUtil.overrideFonts(getBaseContext(), Mangment);
+        close = (TextView) findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         component();
         click();
+
         init();
         a1 = new String[]{"*اختيار الادارة", "عام", "خاص"};
 

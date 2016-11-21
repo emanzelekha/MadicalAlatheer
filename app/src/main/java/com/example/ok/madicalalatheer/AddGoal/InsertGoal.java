@@ -1,12 +1,17 @@
 package com.example.ok.madicalalatheer.AddGoal;
 
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +26,18 @@ import android.widget.Toast;
 
 import com.example.ok.madicalalatheer.Fonts.MySpinnerAdapter;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
+import com.example.ok.madicalalatheer.MainActivity;
 import com.example.ok.madicalalatheer.R;
+import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 
 import net.alhazmy13.hijridatepicker.HijriCalendarDialog;
 import net.alhazmy13.hijridatepicker.HijriCalendarView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -33,16 +45,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import cz.msebera.android.httpclient.Header;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class InsertGoal extends Fragment implements View.OnClickListener, CheckBox.OnCheckedChangeListener, HijriCalendarView.OnDateSetListener, AdapterView.OnItemSelectedListener {
     Spinner s1, s2, s3;
+    TextView codenumber;
     EditText from, to;
     TextView addgoal;
     String[] a1, a2 = null, a3, a4, a5, a6 = null;
     LinearLayout layout, Mangment;
     View v;
+    String Date="";
     List<String> cheak = new ArrayList<String>();
     String oName[] = null;
     HijriCalendarDialog.Builder text;
@@ -59,7 +75,14 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_insert_goal, container, false);
+        try {
+            RequestParams params = new RequestParams();
+            params.put("request","addgoal");
 
+            Load(params);
+        } catch (Exception ex) {
+            Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+        }
         component();
         TypefaceUtil.overrideFonts(getContext(), v);
         addFont();
@@ -93,9 +116,11 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         switch (view.getId()) {
             case R.id.from2:
                 Dialog();
+                from.setText(Date);
                 break;
             case R.id.to2:
                 Dialog();
+                to.setText(Date);
                 break;
 
         }
@@ -126,6 +151,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         s3 = (Spinner) v.findViewById(R.id.s3);
         from = (EditText) v.findViewById(R.id.from2);
         to = (EditText) v.findViewById(R.id.to2);
+        codenumber=(TextView)v.findViewById(R.id.codenum);
        /* Drawable drawable1 = MrVector.inflate(getContext().getResources(), R.drawable.calendar);
         Drawable drawable2 = MrVector.inflate(getContext().getResources(), R.drawable.plus);
         from.setCompoundDrawablesWithIntrinsicBounds(drawable1, null, null, null);
@@ -174,6 +200,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         String year1 = nf.format(year);
         String month1 = nf.format(month + 1);
         String day1 = nf.format(day);
+        Date = year1 + "/" + month1 + "/" + day1;
     }
 
     public void Dialog() {
@@ -221,4 +248,63 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+    public void Load(RequestParams params) throws JSONException {
+
+        AsyncHttpClient.post("", params, new JsonHttpResponseHandler() {
+            ProgressDialog progressDialog;
+
+            @Override
+            public void onStart() {
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setCancelable(false);
+                progressDialog.setMessage("جارى البحث...");
+                progressDialog.show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+
+                try {
+                    Log.e("onSuccess",response.getInt("message") + "");
+                    if (response.getInt("message") >= 1) {
+                        response.getString("respond");
+                        JSONObject out=response.getJSONObject("respond");
+                        codenumber.setText(out.getString("id") + "");
+                        Log.e("onSuccess",out.getString("id") + "");
+                    } else {
+
+
+
+
+                    }
+                    // String[] items = response.getString("message").split(",");
+
+                } catch (Exception ex) {
+
+                    Toast.makeText(getActivity().getApplicationContext(), "اشاره النت ضغيفه", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(getActivity().getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
+                Log.e("onFailure", "----------" + responseString);
+
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                progressDialog.dismiss();
+            }
+        });
+
+
+    }
+
+
 }

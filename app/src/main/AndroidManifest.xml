@@ -30,7 +30,11 @@
         <activity android:name=".AddGoal.DetalsAddGoal" />
         <activity android:name=".Reportes.MainReport" />
         <activity android:name=".Reportes.TableLayoutGoals" />
-        <activity android:name=".Reportes.TableLayoutPerformance"></activity>
+        <activity
+            android:name=".Reportes.TableLayoutPerformance"
+            android:screenOrientation="landscape">
+
+        </activity>
     </application>
 
 </manifest>
