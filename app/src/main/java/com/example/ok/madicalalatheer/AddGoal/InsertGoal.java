@@ -2,15 +2,10 @@ package com.example.ok.madicalalatheer.AddGoal;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,16 +21,15 @@ import android.widget.Toast;
 
 import com.example.ok.madicalalatheer.Fonts.MySpinnerAdapter;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
-import com.example.ok.madicalalatheer.MainActivity;
 import com.example.ok.madicalalatheer.R;
 import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-
 import net.alhazmy13.hijridatepicker.HijriCalendarDialog;
 import net.alhazmy13.hijridatepicker.HijriCalendarView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,10 +46,11 @@ import cz.msebera.android.httpclient.Header;
  */
 public class InsertGoal extends Fragment implements View.OnClickListener, CheckBox.OnCheckedChangeListener, HijriCalendarView.OnDateSetListener, AdapterView.OnItemSelectedListener {
     Spinner s1, s2, s3;
+    int ClickedDate;
     TextView codenumber;
     EditText from, to;
     TextView addgoal;
-    String[] a1, a2 = null, a3, a4, a5, a6 = null;
+    String[] a1, a2 = null, a3, a4, a5, a6 = null, id, cheackName;
     LinearLayout layout, Mangment;
     View v;
     String Date="";
@@ -90,11 +85,11 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         a1 = new String[]{"*اختيار نوع الهدف", "عام", "خاص"};
         a5 = new String[]{"*اختر اهمية الهدف", "A", "B", "C"};
         a3 = new String[]{"*اختيار الادارة"};
-        a4 = new String[]{"اختيار نوع الهدف", "عام", "خاص"};
+        // a4 = new String[]{"اختيار نوع الهدف", "عام", "خاص"};
         SpinnerDate(a1, a2, s1);
-        SpinnerDate(a3, a4, s2);
+        // SpinnerDate(a3, a4, s2);
         SpinnerDate(a5, a6, s3);
-        oName = new String[]{"x", "2", "3", "4"};//array of cheackbox
+        // oName = new String[]{"x", "2", "3", "4"};//array of cheackbox
 
 
         return v;
@@ -116,11 +111,13 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         switch (view.getId()) {
             case R.id.from2:
                 Dialog();
-                from.setText(Date);
+                ClickedDate = 0;
+
                 break;
             case R.id.to2:
                 Dialog();
-                to.setText(Date);
+                ClickedDate = 1;
+
                 break;
 
         }
@@ -197,10 +194,25 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
     @Override
     public void onDateSet(int year, int month, int day) {
         NumberFormat nf = NumberFormat.getInstance(new Locale("ar", "EG"));//formate
-        String year1 = nf.format(year);
-        String month1 = nf.format(month + 1);
-        String day1 = nf.format(day);
-        Date = year1 + "/" + month1 + "/" + day1;
+        int month1 = month + 1;
+        int m = 0;
+        int d = 0;
+        if (month1 > 9 && day > 9) {
+            Date = year + "/" + month1 + "/" + day;
+        } else if (month1 < 9 && day > 9) {
+            Date = year + "/" + "0" + month1 + "/" + day;
+        } else if (month1 > 9 && day < 9) {
+            Date = year + "/" + month1 + "/" + "0" + day;
+        } else {
+            Date = year + "/" + "0" + month1 + "/" + "0" + day;
+        }
+
+
+        if (ClickedDate == 0) {
+            from.setText(Date);
+        } else {
+            to.setText(Date);
+        }
     }
 
     public void Dialog() {
@@ -223,22 +235,32 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
 
                 break;
             case R.id.s2:
-                if (parent.getSelectedItem().toString().equals("خاص") && oName != null) {
-                    layout.setVisibility(View.VISIBLE);
-                    CheckBox btn[] = new CheckBox[oName.length];
-                    for (int x = 0; x < oName.length; x++) {
-                        btn[x] = new CheckBox(getContext()); // initialize it
-                        btn[x].setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        btn[x].setText(oName[x]);
-                        btn[x].setTextColor(getContext().getResources().getColor(R.color.text));
-                        btn[x].setId(2000 + x);
-                        btn[x].setOnCheckedChangeListener(this);
-                        layout.addView(btn[x]);
-                    }
-                } else if (!(parent.getSelectedItem().toString().equals("خاص"))) {
+                int place = parent.getSelectedItemPosition();
+                if (layout.getChildCount() != 0) {
                     layout.removeAllViews();
+                }
+                if (place != 0) {
+                    oName = cheackName[place - 1].split(",");
+
+                    if (oName.length > 1) {
+                        layout.setVisibility(View.VISIBLE);
+                        CheckBox btn[] = new CheckBox[oName.length];
+                        for (int x = 0; x < oName.length; x++) {
+                            btn[x] = new CheckBox(getContext()); // initialize it
+                            btn[x].setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                            btn[x].setText(oName[x]);
+                            btn[x].setTextColor(getContext().getResources().getColor(R.color.text));
+                            btn[x].setId(2000 + x);
+                            btn[x].setOnCheckedChangeListener(this);
+                            layout.addView(btn[x]);
+                        }
+                    } else {
+                        layout.setVisibility(View.GONE);
+                    }
+                } else {
                     layout.setVisibility(View.GONE);
                 }
+
         }
 
 
@@ -265,21 +287,37 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-
+                Log.e("onSuccess", response + "");
                 try {
-                    Log.e("onSuccess",response.getInt("message") + "");
-                    if (response.getInt("message") >= 1) {
-                        response.getString("respond");
-                        JSONObject out=response.getJSONObject("respond");
-                        codenumber.setText(out.getString("id") + "");
-                        Log.e("onSuccess",out.getString("id") + "");
-                    } else {
-
-
-
-
+                    a4 = new String[response.length() - 2];
+                    id = new String[response.length() - 2];
+                    cheackName = new String[a4.length];
+                    for (int i = 0; i < response.length() - 2; i++) {
+                        JSONObject json_data = response.getJSONObject(i + "");
+                        a4[i] = json_data.getString("main_dep_name");
+                        id[i] = json_data.getString("id");
                     }
-                    // String[] items = response.getString("message").split(",");
+                    JSONArray subdebartement = response.getJSONArray("subdebartement");
+                    Log.e("onSuccess", subdebartement + "");
+                    for (int i = 0; i < a4.length; i++) {
+                        String box = "";
+                        for (int j = 0; j < subdebartement.length(); j++) {
+                            JSONObject json_data1 = subdebartement.getJSONObject(j);
+
+                            if (id[i].equals(json_data1.getString("main_dep_f_id"))) {
+                                if (box == null) {
+                                    box += json_data1.getString("sub_dep_name");
+                                } else {
+                                    box += json_data1.getString("sub_dep_name") + ",";
+                                }
+                            }
+                        }
+
+                        cheackName[i] = box;
+                    }
+
+                    SpinnerDate(a3, a4, s2);
+                    codenumber.setText(Integer.parseInt(response.getString("maxid")) + 1 + "");
 
                 } catch (Exception ex) {
 
