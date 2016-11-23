@@ -83,7 +83,6 @@
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/s2"
                 style="@style/Widget.AppCompat.Spinner"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end" />
@@ -130,6 +129,7 @@
             >
 
             <EditText
+                android:id="@+id/goalbody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="نص الهدف"
@@ -224,6 +224,7 @@
             >
 
             <EditText
+                android:id="@+id/goallevel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="قياس الهدف"
@@ -243,6 +244,7 @@
             >
 
             <EditText
+                android:id="@+id/goalidea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="نبذة عن الهدف"
@@ -262,6 +264,7 @@
             >
 
             <EditText
+                android:id="@+id/goalideaaround"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="فكرة حول الهدف"

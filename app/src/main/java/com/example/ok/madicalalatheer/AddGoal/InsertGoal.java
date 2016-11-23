@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +49,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
     Spinner s1, s2, s3;
     int ClickedDate;
     TextView codenumber;
-    EditText from, to;
+    EditText from, to, goalbody, goallevel, goalidea, goalideaaround;
     TextView addgoal;
     String[] a1, a2 = null, a3, a4, a5, a6 = null, id, cheackName;
     LinearLayout layout, Mangment;
@@ -57,7 +58,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
     List<String> cheak = new ArrayList<String>();
     String oName[] = null;
     HijriCalendarDialog.Builder text;
-    TextInputLayout input1, input2, input3, input4;
+    TextInputLayout input1, input2, input3, input4, input12, input11;
 
     public InsertGoal() {
         // Required empty public constructor
@@ -85,23 +86,82 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         a1 = new String[]{"*اختيار نوع الهدف", "عام", "خاص"};
         a5 = new String[]{"*اختر اهمية الهدف", "A", "B", "C"};
         a3 = new String[]{"*اختيار الادارة"};
-        // a4 = new String[]{"اختيار نوع الهدف", "عام", "خاص"};
         SpinnerDate(a1, a2, s1);
-        // SpinnerDate(a3, a4, s2);
         SpinnerDate(a5, a6, s3);
-        // oName = new String[]{"x", "2", "3", "4"};//array of cheackbox
-
-
         return v;
     }
 
+    public boolean validate() {
+        boolean out = true;
+        if (s1.getSelectedItemPosition() == 0) {
+            ((TextView) s1.getChildAt(0)).setError(".");
+            out = false;
+        }
+        if (s2.isShown()) {
+            if (s2.getSelectedItemPosition() == 0) {
+                ((TextView) s2.getChildAt(0)).setError(".");
+                out = false;
+            }
+        }
+
+        if (s3.getSelectedItemPosition() == 0) {
+            ((TextView) s3.getChildAt(0)).setError(".");
+            out = false;
+        }
+        if (TextUtils.isEmpty(goalbody.getText().toString())) {
+            input1.setErrorEnabled(true);
+            input1.setError("ادخل نص الهدف");
+            out = false;
+        } else {
+            input1.setErrorEnabled(false);
+        }
+        if (TextUtils.isEmpty(goallevel.getText().toString())) {
+            input2.setErrorEnabled(true);
+            input2.setError("ادخل قياس الهدف");
+            out = false;
+
+        } else {
+            input2.setErrorEnabled(false);
+        }
+        if (TextUtils.isEmpty(goalidea.getText().toString())) {
+            input3.setErrorEnabled(true);
+            input3.setError("ادخل نبذة عن الهدف");
+            out = false;
+        } else {
+            input3.setErrorEnabled(false);
+        }
+        if (TextUtils.isEmpty(goalideaaround.getText().toString())) {
+            input4.setErrorEnabled(true);
+            input4.setError("ادخل فكرة حول الهدف");
+            out = false;
+        } else {
+            input4.setErrorEnabled(false);
+        }
+        if (cheak.isEmpty()&&s2.isShown()) {
+            Toast.makeText(getContext(), "اختر قسم واحد ع الاقل", Toast.LENGTH_LONG).show();
+            out = false;
+        }
+        if (TextUtils.isEmpty(from.getText().toString())) {
+            input12.setErrorEnabled(true);
+            input12.setError("ادخل التاريخ");
+            out = false;
+        }
+        if (TextUtils.isEmpty(to.getText().toString())) {
+            input11.setErrorEnabled(true);
+            input11.setError("ادخل التاريخ");
+            out = false;
+        }
+
+        return out;
+    }
 
     public void click() {
+
+        addgoal.setOnClickListener(this);
         from.setOnClickListener(this);
         to.setOnClickListener(this);
         s1.setOnItemSelectedListener(this);
         s2.setOnItemSelectedListener(this);
-
     }
 
     @Override
@@ -110,14 +170,49 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
 
         switch (view.getId()) {
             case R.id.from2:
+                input12.setErrorEnabled(false);
                 Dialog();
                 ClickedDate = 0;
-
                 break;
             case R.id.to2:
+                input11.setErrorEnabled(false);
                 Dialog();
                 ClickedDate = 1;
+                break;
+            case R.id.addgoal:
+                validate();
+                if (validate()) {
+                    String[] array = cheak.toArray(new String[cheak.size()]);
+                    System.out.println(codenumber.getText()+"\n"+s1.getSelectedItem() + ""+"\n"+s3.getSelectedItem() + ""+"\n"
+                     + s2.getSelectedItem() + ""+goalbody.getText()+"\n"+from.getText()+"\n"+to.getText()+"\n"+goallevel.getText()+"\n"
+                    +goalidea.getText()+"\n"+array+"\n");
+                    try {
+                        RequestParams params = new RequestParams();
+                        params.put("request", "addgoalvalue");
+                        params.put("goal_code", codenumber.getText());
+                        params.put("goal_type", s1.getSelectedItem() + "");
+                        params.put("goal_important", s3.getSelectedItem() + "");
+                        if (s2.getSelectedItemPosition() == 0) {
+                            params.put("departments", "");
+                        } else {
+                            params.put("departments", s2.getSelectedItem() + "");
+                        }
+                        params.put("goal_title", goalbody.getText());
+                        params.put("goal_date_from", from.getText());
+                        params.put("goal_date_to", to.getText());
+                        params.put("goal_apprev", goallevel.getText());
+                        params.put("goal_measurment", goalidea.getText());
+                        params.put("goal_idea", goalideaaround.getText());
 
+                        params.put("cheackbox", array);
+                        System.out.println(params+"testemy");
+                        Load(params);
+                    } catch (Exception ex) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+                    }
+
+
+                }
                 break;
 
         }
@@ -147,15 +242,16 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         s2 = (Spinner) v.findViewById(R.id.s2);
         s3 = (Spinner) v.findViewById(R.id.s3);
         from = (EditText) v.findViewById(R.id.from2);
+        goalbody = (EditText) v.findViewById(R.id.goalbody);
+        goallevel = (EditText) v.findViewById(R.id.goallevel);
+        goalidea = (EditText) v.findViewById(R.id.goalidea);
+        goalideaaround = (EditText) v.findViewById(R.id.goalideaaround);
         to = (EditText) v.findViewById(R.id.to2);
         codenumber=(TextView)v.findViewById(R.id.codenum);
-       /* Drawable drawable1 = MrVector.inflate(getContext().getResources(), R.drawable.calendar);
-        Drawable drawable2 = MrVector.inflate(getContext().getResources(), R.drawable.plus);
-        from.setCompoundDrawablesWithIntrinsicBounds(drawable1, null, null, null);
-        to.setCompoundDrawablesWithIntrinsicBounds(drawable1, null, null, null);*/
         addgoal = (TextView) v.findViewById(R.id.addgoal);
-       // addgoal.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable2, null);
         addgoal.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi.ttf"));
+        input12 = (TextInputLayout) v.findViewById(R.id.input12);
+        input11 = (TextInputLayout) v.findViewById(R.id.input11);
         input1 = (TextInputLayout) v.findViewById(R.id.Textinput1);
         input2 = (TextInputLayout) v.findViewById(R.id.Textinput2);
         input3 = (TextInputLayout) v.findViewById(R.id.Textinput3);
@@ -167,7 +263,6 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         input2.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi-Bold.ttf"));
         input3.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi-Bold.ttf"));
         input4.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi-Bold.ttf"));
-
 
     }
 
@@ -288,7 +383,9 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
                 Log.e("onSuccess", response + "");
+                Log.e("onSuccess", response.length() + "");
                 try {
+                    if (response.length() != 1) {
                     a4 = new String[response.length() - 2];
                     id = new String[response.length() - 2];
                     cheackName = new String[a4.length];
@@ -317,7 +414,10 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                     }
 
                     SpinnerDate(a3, a4, s2);
-                    codenumber.setText(Integer.parseInt(response.getString("maxid")) + 1 + "");
+                        codenumber.setText(Integer.parseInt(response.getString("maxid")) + 1 + "");
+                    } else {
+
+                    }
 
                 } catch (Exception ex) {
 
