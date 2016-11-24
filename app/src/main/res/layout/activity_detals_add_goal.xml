@@ -64,6 +64,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/egoal1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -85,6 +86,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/egoal2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -106,6 +108,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/egoal3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -127,6 +130,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/egoal4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -148,6 +152,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/egoal5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -169,6 +174,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/egoal6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -190,6 +196,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/egoal7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -211,6 +218,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/egoal8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -232,6 +240,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/egoal9"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -253,6 +262,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/egoal10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -274,6 +284,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/egoal11"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -285,7 +296,7 @@
 
         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
+       <android.support.v7.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
             android:id="@+id/ideaapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -335,6 +346,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/eidea1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -356,6 +368,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/eidea2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -377,6 +390,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/eidea3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -398,6 +412,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/eidea4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -419,6 +434,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/eidea5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -440,6 +456,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/eidea6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -461,6 +478,7 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:id="@+id/eidea7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

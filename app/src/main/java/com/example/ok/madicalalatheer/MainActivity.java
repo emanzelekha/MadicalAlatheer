@@ -82,6 +82,7 @@ View goal,idea,process,report,main;
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, AddGoal.class);
+                i.putExtra("InsertGoal","0");
                 startActivity(i);
             }
         });
@@ -136,6 +137,7 @@ View goal,idea,process,report,main;
                 break;
             case R.id.goal:
                 i = new Intent(MainActivity.this, AddGoal.class);
+                i.putExtra("InsertGoal","0");
                 startActivity(i);
                 break;
 

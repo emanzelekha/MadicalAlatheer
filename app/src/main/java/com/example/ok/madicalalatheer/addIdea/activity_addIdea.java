@@ -95,6 +95,7 @@ public class activity_addIdea extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(activity_addIdea.this, AddGoal.class);
+                i.putExtra("InsertGoal","0");
                 startActivity(i);
             }
         });

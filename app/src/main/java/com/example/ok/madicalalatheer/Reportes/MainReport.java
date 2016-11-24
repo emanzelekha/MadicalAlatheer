@@ -82,6 +82,7 @@ Typeface typeface;
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainReport.this, AddGoal.class);
+                i.putExtra("InsertGoal","0");
                 startActivity(i);
             }
         });

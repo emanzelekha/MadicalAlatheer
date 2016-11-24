@@ -67,6 +67,7 @@ public class AddGoal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(AddGoal.this, MainActivity.class);
+                i.putExtra("InsertGoal","0");
                 startActivity(i);
             }
         });
@@ -102,6 +103,7 @@ public class AddGoal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(AddGoal.this, AddGoal.class);
+                i.putExtra("InsertGoal","0");
                 startActivity(i);
             }
         });

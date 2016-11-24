@@ -1,8 +1,6 @@
 package com.example.ok.madicalalatheer.Main;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.example.ok.madicalalatheer.MainActivity;
 import com.example.ok.madicalalatheer.R;
@@ -140,13 +137,15 @@ public class LoginFragment extends Fragment {
 
 
                 try {
+                    Log.e("onSuccess", response + "");
                     Log.e("onSuccess",response.getInt("message") + "");
                     if (response.getInt("message") >= 1) {
                         SharedPreferences sharedPref = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("name", name1);
                         editor.putString("pass", pass1);
-                      //  editor.putString("UserId", response.getString("message"));
+                        JSONObject Id=response.getJSONObject("respond");
+                        editor.putString("UserId", Id.getString("id"));
                         editor.commit();
                         Intent intent = new Intent(getActivity().getApplication(), MainActivity.class);
                        // intent.putExtra("id", response.getString("message"));
