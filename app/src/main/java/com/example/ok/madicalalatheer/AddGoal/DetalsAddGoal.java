@@ -37,13 +37,13 @@ public class DetalsAddGoal extends AppCompatActivity {
         Intent i = getIntent();
         if (i.getStringExtra("Find").equals("goal")) {
             goal.setVisibility(View.VISIBLE);
-            try {
+           /* try {
                 RequestParams params = new RequestParams();
                 params.put("request", "displaygoaldetails");
                 Load(params);
             } catch (Exception ex) {
                 Toast.makeText(getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
-            }
+            }*/
 
 
         } else if (i.getStringExtra("Find").equals("idea")) {

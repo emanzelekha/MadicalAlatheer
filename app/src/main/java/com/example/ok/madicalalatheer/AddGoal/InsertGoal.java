@@ -25,9 +25,7 @@ import android.widget.Toast;
 
 import com.example.ok.madicalalatheer.Fonts.MySpinnerAdapter;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
-import com.example.ok.madicalalatheer.MainActivity;
 import com.example.ok.madicalalatheer.R;
-import com.example.ok.madicalalatheer.Reportes.MainReport;
 import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -39,7 +37,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +53,7 @@ import cz.msebera.android.httpclient.Header;
 public class InsertGoal extends Fragment implements View.OnClickListener, CheckBox.OnCheckedChangeListener, HijriCalendarView.OnDateSetListener, AdapterView.OnItemSelectedListener {
     Spinner s1, s2, s3;
     int ClickedDate;
+    Intent i;
     TextView codenumber;
     EditText from, to, goalbody, goallevel, goalidea, goalideaaround;
     TextView addgoal;
@@ -92,16 +93,30 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         a3 = new String[]{"*اختيار الادارة"};
         SpinnerDate(a1, a2, s1);
         SpinnerDate(a5, a6, s3);
-        Intent i = getActivity().getIntent();
+        i = getActivity().getIntent();
         if (i.getStringExtra("InsertGoal").equals("1")) {
 
+
+            JSONObject out = null;
             try {
-                RequestParams params = new RequestParams();
-                params.put("request", "editgoal");
-                Load(params);
-            } catch (Exception ex) {
-                Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+                out = new JSONObject(i.getStringExtra("goalData"));
+                codenumber.setText(out.getString("goal_code"));
+                s1.setSelection(Integer.parseInt(out.getString("goal_type")));
+                s3.setSelection(Integer.parseInt(out.getString("goal_important")));
+                goalbody.setText(out.getString("goal_title"));
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+                from.setText(out.getString("goal_date_from"));
+
+                to.setText(out.getString("goal_date_to"));
+                goallevel.setText(out.getString("goal_measurment"));
+                goalidea.setText(out.getString("goal_apprev"));
+                goalideaaround.setText(out.getString("goal_idea"));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
 
 
         }
@@ -154,7 +169,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         } else {
             input4.setErrorEnabled(false);
         }
-        if (cheak.isEmpty()&&s2.isShown()) {
+        if (cheak.isEmpty() && s2.isShown() && !(cheackName[s2.getSelectedItemPosition() - 1].equals(""))) {
             Toast.makeText(getContext(), "اختر قسم واحد ع الاقل", Toast.LENGTH_LONG).show();
             out = false;
         }
@@ -209,12 +224,12 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                         params.put("publisher", pref.getString("UserId", ""));
                         params.put("request", "addgoalvalue");
                         params.put("goal_code", codenumber.getText());
-                        params.put("goal_type", s1.getSelectedItemPosition() + "");
-                        params.put("goal_important", s3.getSelectedItem() + "");
+                        params.put("goal_type", s1.getSelectedItemPosition());
+                        params.put("goal_important", s3.getSelectedItemPosition());
                         if (s2.getSelectedItemPosition() == 0) {
                             params.put("departments", "");
                         } else {
-                            params.put("departments", id[s2.getSelectedItemPosition() - 1] + "");
+                            params.put("departments", id[s2.getSelectedItemPosition() - 1]);
                         }
                         params.put("goal_title", goalbody.getText());
                         params.put("goal_date_from", from.getText());
@@ -401,8 +416,8 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-              //  Log.e("onSuccess", response + "");
-              //  Log.e("onSuccess", response.length() + "");
+                Log.e("onSuccess", response + "");
+                Log.e("onSuccess", response.length() + "");
                 try {
                     if (response.length() !=1) {
                     a4 = new String[response.length() - 2];
@@ -439,9 +454,15 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
 
                     SpinnerDate(a3, a4, s2);
                         int code;
-                        code=Integer.parseInt(response.getString("maxid")) + 1;
-                        codenumber.setText(code + "");
-                    } else {
+                        if (response.isNull("maxid")) {
+                            code = 1;
+                        } else {
+                            code = Integer.parseInt(response.getString("maxid")) + 1;
+                        }
+                        if (i.getStringExtra("InsertGoal").equals("0")) {
+                            codenumber.setText(code + "");
+                        }
+                    } else if (response.length() != 0) {
                         Intent i = new Intent(getContext(), AddGoal.class);
                         Toast.makeText(getActivity().getApplicationContext(), "تم الاضافة بنجاح", Toast.LENGTH_LONG).show();
                         startActivity(i);

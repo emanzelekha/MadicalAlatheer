@@ -34,10 +34,11 @@ import cz.msebera.android.httpclient.Header;
  * A simple {@link Fragment} subclass.
  */
 public class DisplayGoal extends Fragment {
-
+    public JSONArray out;
     private List<ControlAddGoal> disList = new ArrayList<>();
     private RecyclerView recyclerView;
     private Adapter mAdapter;
+    JSONObject[] Data;
     Boolean[] buttons, active;
     String[] goals, code, to,goalid;
     public DisplayGoal() {
@@ -57,6 +58,8 @@ public class DisplayGoal extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+
         try {
             RequestParams params = new RequestParams();
             params.put("request","displaygoal");
@@ -84,10 +87,11 @@ public class DisplayGoal extends Fragment {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-
+                out = response;
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
                 try {
+                    Data=new JSONObject[response.length()];
                     goalid = new String[response.length()];
                     buttons = new Boolean[response.length()];
                     active = new Boolean[response.length()];
@@ -96,11 +100,12 @@ public class DisplayGoal extends Fragment {
                     goals = new String[response.length()];
                     for(int i=0;i<response.length();i++){
                        JSONObject data=response.getJSONObject(i);
+                        Data[i]=data;
                         System.out.println(data);
                         goalid[i]=data.getString("id");
-                        goals[i]=data.getString("id");
+                        goals[i] = data.getString("goal_title");
                         code[i]=data.getString("goal_code");
-                        to[i]=data.getString("goal_code");
+                        to[i] = data.getString("goal_to");
                                 if(data.getString("suspend").equals(0)){
                                     active[i]=false;
                                 }else {
@@ -113,11 +118,18 @@ public class DisplayGoal extends Fragment {
                         }
 
                     }
-
+                    //   goalid[1]="9";  goals[1]="hjgjg" ; code[1]="0" ;to[1]="7" ;active[1]=true; buttons[1]=false;
+                 /*goalid=new String[]{"4","5"};
+                    goals=new String[]{"4","9"};
+                    code=new String[]{"4","yg"};
+                    to=new String[]{"4","fgtf"};
+                    active=new Boolean[]{true,false};
+                    buttons=new Boolean[]{true,false};*/
                   for (int i = 0; i < goals.length; i++) {
-                   ControlAddGoal disUserControl = new ControlAddGoal(code[i], goals[i], to[i], active[i], buttons[i]);
-                        disList.add(disUserControl);
-                        mAdapter.notifyDataSetChanged();
+                      System.out.println(goalid[0] + goals[0] + code[0] + to[0] + active[0] + "onSuccess");
+                      ControlAddGoal disUserControl = new ControlAddGoal(Data[i],goalid[i], code[i], goals[i], to[i], active[i], buttons[i]);
+                      disList.add(disUserControl);
+                      mAdapter.notifyDataSetChanged();
                        }
                 } catch (Exception ex) {
 

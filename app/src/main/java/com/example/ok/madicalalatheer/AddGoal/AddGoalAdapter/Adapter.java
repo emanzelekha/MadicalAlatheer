@@ -3,19 +3,16 @@ package com.example.ok.madicalalatheer.AddGoal.AddGoalAdapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ok.madicalalatheer.AddGoal.AddGoal;
 import com.example.ok.madicalalatheer.AddGoal.DetalsAddGoal;
 import com.example.ok.madicalalatheer.AddGoal.control.ControlAddGoal;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
@@ -24,12 +21,9 @@ import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.PublicKey;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -60,16 +54,54 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         NumberFormat nf = NumberFormat.getInstance(new Locale("ar", "EG"));//formate
-        ControlAddGoal disUserControl = displayList.get(position);
+        final ControlAddGoal disUserControl = displayList.get(position);
 
-        holder.Code.setText(nf.format(Integer.parseInt(disUserControl.getSerial1())));
+        holder.Code.setText(disUserControl.getSerial1());
         holder.goal.setText(disUserControl.getGoal());
         holder.to.setText(disUserControl.getTo());
-        holder.serial.setText(nf.format(position + 1));
+        holder.serial.setText(position + 1 + "");
         holder.swt.setChecked(disUserControl.isActive());
-        holder.GoalDetails.setOnClickListener(this);
-        holder.edit.setOnClickListener(this);
-        holder.delet.setOnClickListener(this);
+        holder.GoalDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                i = new Intent(context, DetalsAddGoal.class);
+                i.putExtra("Find","goal");
+                i.putExtra("goalData", disUserControl.getData() + "");
+                context.startActivity(i);
+
+            }
+        });
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Intent i;
+                    i = new Intent(context, AddGoal.class);
+                    i.putExtra("InsertGoal", "1");
+                    i.putExtra("goalData", disUserControl.getData() + "");
+                    context.startActivity(i);
+
+
+                } catch (Exception ex) {
+                    Toast.makeText(context, "Exception" + ex, Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+        holder.delet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    RequestParams params = new RequestParams();
+                    params.put("request", "deletgoal");
+                    params.put("goalid", disUserControl.getGoalid());
+                    Delet(params);
+                } catch (Exception ex) {
+                    Toast.makeText(context, "Exception" + ex, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
     }
 
@@ -82,27 +114,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
     public void onClick(View view) {
         Intent i;
         switch (view.getId()){
-            case R.id.GoalDetails:
-                i=new Intent(context, DetalsAddGoal.class);
-                i.putExtra("Find","goal");
-                context.startActivity(i);
-                break;
-            case R.id.editgoal:
-                i=new Intent(context, DetalsAddGoal.class);
-                i.putExtra("InsertGoal","1");
-                context.startActivity(i);
-                break;
-            case R.id.deletegoal:
-                try {
-                    RequestParams params = new RequestParams();
-                    params.put("request","deletgoal");
-                    params.put("goalid","1");
-                    Delet(params);
-                } catch (Exception ex) {
-                    Toast.makeText(context, "Exception" + ex, Toast.LENGTH_LONG).show();
-                }
 
-                break;
         }
     }
 
@@ -135,7 +147,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
             public void onStart() {
                 progressDialog = new ProgressDialog(context);
                 progressDialog.setCancelable(false);
-                progressDialog.setMessage("جارى البحث...");
+                progressDialog.setMessage("جارى المسح...");
                 progressDialog.show();
             }
 
@@ -145,7 +157,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
                 try {
+                    JSONObject r = response.getJSONObject("respond");
+                    if (r.getInt("message") == 1) {
+                        Toast.makeText(context, "تم مسح الاهدف بنجاح", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(context, AddGoal.class);
+                        i.putExtra("InsertGoal", "0");
+                        context.startActivity(i);
 
+                    } else {
+
+                        Toast.makeText(context, "حاول مرة اخرى", Toast.LENGTH_LONG).show();
+
+                    }
 
                 } catch (Exception ex) {
 

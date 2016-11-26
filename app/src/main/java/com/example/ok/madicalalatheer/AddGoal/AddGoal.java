@@ -132,6 +132,7 @@ public class AddGoal extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabsAddDepartment);
         TypefaceUtil.overrideFonts(getBaseContext(), v);
         tabLayout.setupWithViewPager(viewPager);
+
         setupTabIcons();
 
       /*  for(int i=0;i<2;i++){  ///Font for tab but delet icons
@@ -153,7 +154,14 @@ public class AddGoal extends AppCompatActivity {
 
         adapter.addFrag(new DisplayGoal(), "قائمة البيانات");
         adapter.addFrag(new InsertGoal(), "اضافة جديد");
+        Intent i = getIntent();
+
         viewPager.setAdapter(adapter);
+        if (i.getStringExtra("InsertGoal").equals("1")) {
+            viewPager.setCurrentItem(1);
+        } else {
+            viewPager.setCurrentItem(0);
+        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
