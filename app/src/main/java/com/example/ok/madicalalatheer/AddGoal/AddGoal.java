@@ -132,7 +132,6 @@ public class AddGoal extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabsAddDepartment);
         TypefaceUtil.overrideFonts(getBaseContext(), v);
         tabLayout.setupWithViewPager(viewPager);
-
         setupTabIcons();
 
       /*  for(int i=0;i<2;i++){  ///Font for tab but delet icons
@@ -146,6 +145,7 @@ public class AddGoal extends AppCompatActivity {
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+
 
     }
 

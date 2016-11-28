@@ -39,11 +39,13 @@ import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -53,14 +55,15 @@ import cz.msebera.android.httpclient.Header;
 public class InsertGoal extends Fragment implements View.OnClickListener, CheckBox.OnCheckedChangeListener, HijriCalendarView.OnDateSetListener, AdapterView.OnItemSelectedListener {
     Spinner s1, s2, s3;
     int ClickedDate;
+
     Intent i;
     TextView codenumber;
     EditText from, to, goalbody, goallevel, goalidea, goalideaaround;
     TextView addgoal;
-    String[] a1, a2 = null, a3, a4, a5, a6 = null, id, cheackName,cheackId,oId=null;
+    String[] a1, a2 = null, a3, a4, a5, a6 = null, id, cheackName, cheackId, oId = null, maindep;
     LinearLayout layout, Mangment;
     View v;
-    String Date="";
+    String Date = "";
     List<String> cheak = new ArrayList<String>();
     String oName[] = null;
     HijriCalendarDialog.Builder text;
@@ -71,7 +74,6 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,7 +81,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         v = inflater.inflate(R.layout.fragment_insert_goal, container, false);
         try {
             RequestParams params = new RequestParams();
-            params.put("request","addgoal");
+            params.put("request", "addgoal");
             Load(params);
         } catch (Exception ex) {
             Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
@@ -95,24 +97,50 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         SpinnerDate(a5, a6, s3);
         i = getActivity().getIntent();
         if (i.getStringExtra("InsertGoal").equals("1")) {
-
-
+          /*  try {
+                RequestParams params = new RequestParams();
+                params.put("request", "Editgoal");
+                params.put("goalid", i.getStringExtra("goalIdEdit"));
+                Load(params);
+            } catch (Exception ex) {
+                Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+            }*/
+            addgoal.setText("تعديل الهدف");
             JSONObject out = null;
+
+
             try {
                 out = new JSONObject(i.getStringExtra("goalData"));
-                codenumber.setText(out.getString("goal_code"));
+
+            codenumber.setText(out.getString("goal_code"));
                 s1.setSelection(Integer.parseInt(out.getString("goal_type")));
                 s3.setSelection(Integer.parseInt(out.getString("goal_important")));
                 goalbody.setText(out.getString("goal_title"));
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                // DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                /*Date date = df.parse(str);
+                long epoch = date.getTime();*/
+                try {
+                    df.parse(out.getString("goal_date_from")).getTime();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                // format.format(date);  goal_date_to
+                //  System.out.println(formatted);
 
-                from.setText(out.getString("goal_date_from"));
-
-                to.setText(out.getString("goal_date_to"));
+                try {
+                    from.setText((int) df.parse(out.getString("goal_date_from")).getTime() + "");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    to.setText((int) df.parse(out.getString("goal_date_to")).getTime() + "");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 goallevel.setText(out.getString("goal_measurment"));
                 goalidea.setText(out.getString("goal_apprev"));
                 goalideaaround.setText(out.getString("goal_idea"));
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -214,15 +242,23 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
             case R.id.addgoal:
                 validate();
                 if (validate()) {
-                    String[] array = cheak.toArray(new String[cheak.size()]);
-                    System.out.println(codenumber.getText()+"\n"+s1.getSelectedItem() + ""+"\n"+s3.getSelectedItem() + ""+"\n"
-                     + s2.getSelectedItem() + ""+goalbody.getText()+"\n"+from.getText()+"\n"+to.getText()+"\n"+goallevel.getText()+"\n"
-                    +goalidea.getText()+"\n"+array+"\n");
+                    String[] array = new String[cheak.size()];
+                    for (int i = 0; i < cheak.size(); i++) {
+                        array[i] = cheak.get(i);
+                    }
+                    System.out.println(codenumber.getText() + "\n" + s1.getSelectedItem() + "" + "\n" + s3.getSelectedItem() + "" + "\n"
+                            + s2.getSelectedItem() + "" + goalbody.getText() + "\n" + from.getText() + "\n" + to.getText() + "\n" + goallevel.getText() + "\n"
+                            + goalidea.getText() + "\n" + array + "\n");
                     try {
                         RequestParams params = new RequestParams();
                         SharedPreferences pref = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
                         params.put("publisher", pref.getString("UserId", ""));
-                        params.put("request", "addgoalvalue");
+                        if (i.getStringExtra("InsertGoal").equals("1")) {
+                            params.put("goalid", i.getStringExtra("goalid"));
+                            params.put("request", "editgoalvalue");
+                        } else {
+                            params.put("request", "addgoalvalue");
+                        }
                         params.put("goal_code", codenumber.getText());
                         params.put("goal_type", s1.getSelectedItemPosition());
                         params.put("goal_important", s3.getSelectedItemPosition());
@@ -239,7 +275,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                         params.put("goal_idea", goalideaaround.getText());
 
                         params.put("cheackbox", array);
-                        System.out.println(params+"testemy");
+                        System.out.println(params + "testemy");
                         Load(params);
                     } catch (Exception ex) {
                         Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
@@ -258,8 +294,9 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         for (int i = 0; i < oName.length; i++) {
 
             if ((compoundButton.getId() == 2000 + i) && b == true) {
-                Toast.makeText(getContext(), oName[i], Toast.LENGTH_SHORT).show();
-                cheak.add(oId[i]);
+                Toast.makeText(getContext(), oId[i], Toast.LENGTH_SHORT).show();
+
+                cheak.add(oId[i].trim());
             } else if ((compoundButton.getId() == 2000 + i) && b == false) {
                 cheak.remove(oId[i]);
 
@@ -281,7 +318,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
         goalidea = (EditText) v.findViewById(R.id.goalidea);
         goalideaaround = (EditText) v.findViewById(R.id.goalideaaround);
         to = (EditText) v.findViewById(R.id.to2);
-        codenumber=(TextView)v.findViewById(R.id.codenum);
+        codenumber = (TextView) v.findViewById(R.id.codenum);
         addgoal = (TextView) v.findViewById(R.id.addgoal);
         addgoal.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DroidKufi.ttf"));
         input12 = (TextInputLayout) v.findViewById(R.id.input12);
@@ -370,7 +407,8 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                 }
                 if (place != 0) {
                     oName = cheackName[place - 1].split(",");
-                    oId=cheackId[place - 1].split(",");
+                    oId = cheackId[place - 1].split(",");
+
                     if (oName.length > 1) {
                         layout.setVisibility(View.VISIBLE);
                         CheckBox btn[] = new CheckBox[oName.length];
@@ -381,6 +419,15 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                             btn[x].setTextColor(getContext().getResources().getColor(R.color.text));
                             btn[x].setId(2000 + x);
                             btn[x].setOnCheckedChangeListener(this);
+                            if (i.getStringExtra("InsertGoal").equals("1")) {
+                                String checked[] = i.getStringExtra("outcheck").split(" , ");
+                                for (int d = 0; d < checked.length; d++) {
+                                    if (checked[d].equals(oName[x])) {
+                                        btn[x].setChecked(true);
+                                        //  cheak.add(oId[x].trim());
+                                    }
+                                }
+                            }
                             layout.addView(btn[x]);
                         }
                     } else {
@@ -419,40 +466,69 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
                 try {
-                    if (response.length() !=1) {
-                    a4 = new String[response.length() - 2];
-                    id = new String[response.length() - 2];
-                    cheackName = new String[a4.length];
-                        cheackId = new String[a4.length];
-                    for (int i = 0; i < response.length() - 2; i++) {
-                        JSONObject json_data = response.getJSONObject(i + "");
-                        a4[i] = json_data.getString("main_dep_name");
-                        id[i] = json_data.getString("id");
-                    }
-                    JSONArray subdebartement = response.getJSONArray("subdebartement");
-                 //   Log.e("onSuccess", subdebartement + "");
-                    for (int i = 0; i < a4.length; i++) {
-                        String box = "";
-                        String boxid="";
-                        for (int j = 0; j < subdebartement.length(); j++) {
-                            JSONObject json_data1 = subdebartement.getJSONObject(j);
+                    if (response.length() == 9) {
+                        a4 = new String[response.length() - 2];
+                        id = new String[response.length() - 2];
 
-                            if (id[i].equals(json_data1.getString("main_dep_f_id"))) {
-                                if (box == null) {
-                                    box += json_data1.getString("sub_dep_name");
-                                    boxid += json_data1.getString("id");
-                                } else {
-                                    box += json_data1.getString("sub_dep_name") + ",";
-                                    boxid += json_data1.getString("id")+ ",";
+                        cheackName = new String[a4.length];
+                        String set = "";
+                        String set1 = "";
+                        String set2 = "";
+                        cheackId = new String[a4.length];
+                        for (int i = 0; i < response.length() - 2; i++) {
+                            JSONObject json_data = response.getJSONObject(i + "");
+                            a4[i] = json_data.getString("main_dep_name");
+                            id[i] = json_data.getString("id");
+                        }
+                        JSONArray subdebartement = response.getJSONArray("subdebartement");
+                        //   Log.e("onSuccess", subdebartement + "");
+                        for (int i = 0; i < a4.length; i++) {
+                            String box = "";
+                            String boxid = "";
+                            for (int j = 0; j < subdebartement.length(); j++) {
+                                JSONObject json_data1 = subdebartement.getJSONObject(j);
+
+                                // set2 += json_data1.getString("main_dep_f_id") + " ";
+
+                                if (id[i].equals(json_data1.getString("main_dep_f_id"))) {
+                                    for (int x = 0; x < id.length; x++) {
+                                        if (json_data1.getString("main_dep_f_id").equals(id[x])) {
+                                            set2 += x + " ";
+                                        }
+                                    }
+                                    if (TextUtils.isEmpty(set)) {
+                                        set += json_data1.getString("id");
+                                        set1 += json_data1.getString("sub_dep_name");
+                                    } else {
+                                        set += json_data1.getString("id") + ",";
+                                        set1 += json_data1.getString("sub_dep_name") + ",";
+                                    }
+                                    if (box == null) {
+                                        box += json_data1.getString("sub_dep_name");
+                                        boxid += json_data1.getString("id");
+                                    } else {
+                                        box += json_data1.getString("sub_dep_name") + ",";
+                                        boxid += json_data1.getString("id") + ",";
+                                    }
                                 }
                             }
+
+                            cheackName[i] = box;
+                            cheackId[i] = boxid;
                         }
+                        SpinnerDate(a3, a4, s2);
+                        if (i.getStringExtra("InsertGoal").equals("1")) {
+                            s2.setSelection(Integer.parseInt(i.getStringExtra("Maindep")) + 1);
 
-                        cheackName[i] = box;
-                        cheackId[i] = boxid;
-                    }
 
-                    SpinnerDate(a3, a4, s2);
+                        }
+                        SharedPreferences sharedPref = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("cheackId1", set);
+                        editor.putString("cheackName1", set1);
+                        editor.putString("maindep", set2);
+                        editor.commit();
+
                         int code;
                         if (response.isNull("maxid")) {
                             code = 1;
@@ -462,10 +538,12 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                         if (i.getStringExtra("InsertGoal").equals("0")) {
                             codenumber.setText(code + "");
                         }
-                    } else if (response.length() != 0) {
+                    } else if (response.length() == 1) {
                         Intent i = new Intent(getContext(), AddGoal.class);
                         Toast.makeText(getActivity().getApplicationContext(), "تم الاضافة بنجاح", Toast.LENGTH_LONG).show();
                         startActivity(i);
+
+                    } else {
 
                     }
 
