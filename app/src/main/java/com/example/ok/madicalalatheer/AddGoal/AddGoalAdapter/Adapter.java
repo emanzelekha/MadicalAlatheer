@@ -63,8 +63,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
 
         holder.Code.setText(disUserControl.getSerial1());
         holder.goal.setText(disUserControl.getGoal());
-        MixedArray list = Pherialize.unserialize(disUserControl.getTo()).toArray();
-        System.out.println(list + "Onsycess");
+
+       // System.out.println(list + "Onsycess");
         SharedPreferences pref = context.getSharedPreferences("Data", Context.MODE_PRIVATE);
         String cheackId[] = pref.getString("cheackId1", "").split(",");
         String cheackName[] = pref.getString("cheackName1", "").split(",");
@@ -77,6 +77,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
         System.out.println(pref.getString("cheackName1", "")+"gdyhgtdfyg");
         String out = "";
         String Dep = "";
+        if(!disUserControl.getTo().isEmpty()){
+        MixedArray list = Pherialize.unserialize(disUserControl.getTo()).toArray();
         for (int i = 0; i < list.size(); i++) {
             for (int j=0;j<cheackId.length;j++){
                 if(list.get(i).equals(cheackId[j])){
@@ -90,11 +92,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
           //  Dep = maindepl[(cheackIdl.indexOf(list.get(i))) ]+ "";
             //out+=;
         }}
-        final String outcheck=out;
-        final String Depout = Dep;
+
         System.out.println(pref.getString("maindep", "")+"gdyhgtdfyg");
         System.out.println( Dep+"gdyhgtdfyg");
-        holder.to.setText(out + "");
+        holder.to.setText(out + "");}else{
+            holder.to.setText("عام");
+        }
+        final String outcheck=out;
+        final String Depout = Dep;
         holder.serial.setText(position + 1 + "");
         holder.swt.setChecked(disUserControl.isActive());
         holder.GoalDetails.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +108,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
                 Intent i;
                 i = new Intent(context, DetalsAddGoal.class);
                 i.putExtra("Find","goal");
-                i.putExtra("goalData", disUserControl.getData() + "");
+                i.putExtra("to",outcheck);
+                i.putExtra("goalData", disUserControl.getData()+"");
                 context.startActivity(i);
 
             }

@@ -83,6 +83,7 @@ public class activity_procedure extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(activity_procedure.this, activity_addIdea.class);
+                i.putExtra("InsertIdea", "0");
                 startActivity(i);
             }
         });
@@ -90,7 +91,7 @@ public class activity_procedure extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(activity_procedure.this, activity_procedure.class);
-
+                i.putExtra("Insertprocedure", "0");
                 startActivity(i);
             }
         });

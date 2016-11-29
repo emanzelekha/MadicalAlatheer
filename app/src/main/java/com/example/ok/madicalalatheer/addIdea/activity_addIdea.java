@@ -80,6 +80,7 @@ public class activity_addIdea extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(activity_addIdea.this, activity_addIdea.class);
+                i.putExtra("InsertIdea", "0");
                 startActivity(i);
             }
         });
@@ -87,10 +88,11 @@ public class activity_addIdea extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(activity_addIdea.this, activity_procedure.class);
-
+                i.putExtra("Insertprocedure", "0");
                 startActivity(i);
             }
         });
+
         main2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

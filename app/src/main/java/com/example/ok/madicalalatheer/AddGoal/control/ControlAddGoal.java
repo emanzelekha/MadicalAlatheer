@@ -16,7 +16,7 @@ public class ControlAddGoal {
     private boolean buttons;
 
     public ControlAddGoal(JSONObject Data,String goalid, String serial1, String goal, String to, boolean active, boolean buttons) {
-       this.Data=Data;
+        this.Data = Data;
         this.goalid = goalid;
         this.serial1 = serial1;
         this.goal = goal;

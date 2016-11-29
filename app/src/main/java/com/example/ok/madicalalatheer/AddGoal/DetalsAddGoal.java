@@ -36,6 +36,35 @@ public class DetalsAddGoal extends AppCompatActivity {
         component();
         Intent i = getIntent();
         if (i.getStringExtra("Find").equals("goal")) {
+            try {
+                JSONObject Data = new JSONObject(i.getStringExtra("goalData"));
+                System.out.println(Data.getString("goal_title")+" "+Data + "hbyugft");
+                egoal1.setText(Data.getString("goal_title"));
+                if (Data.getString("goal_type").equals("1")) {
+                    egoal4.setText("عام");
+                } else {
+                    egoal4.setText("خاص");
+                }
+                if(Data.getString("goal_important").equals("1")){
+                    egoal5.setText("A");
+                }else if(Data.getString("goal_important").equals("1")){
+                    egoal5.setText("B");
+                }else{
+                    egoal5.setText("C");
+                }
+                if(i.getStringExtra("to").isEmpty()){
+                    egoal3.setText("عام");
+                }else {
+                egoal3.setText(i.getStringExtra("to"));}
+                egoal6.setText(Data.getString("goal_date_from"));
+                egoal7.setText(Data.getString("goal_date_to"));
+                egoal8.setText(Data.getString("goal_measurment"));
+                egoal9.setText(Data.getString("goal_apprev"));
+                egoal10.setText(Data.getString("goal_idea"));
+                egoal11.setText(Data.getString("publisher"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             goal.setVisibility(View.VISIBLE);
            /* try {
                 RequestParams params = new RequestParams();
@@ -48,13 +77,8 @@ public class DetalsAddGoal extends AppCompatActivity {
 
         } else if (i.getStringExtra("Find").equals("idea")) {
             idea.setVisibility(View.VISIBLE);
-            try {
-                RequestParams params = new RequestParams();
-                params.put("request", "displayideadetails");
-                Load(params);
-            } catch (Exception ex) {
-                Toast.makeText(getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
-            }
+            i.getStringExtra("IdeaData");
+
         }
         close = (TextView) findViewById(R.id.close);
         close.setOnClickListener(new View.OnClickListener() {

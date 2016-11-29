@@ -37,15 +37,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -117,27 +113,20 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                 s3.setSelection(Integer.parseInt(out.getString("goal_important")));
                 goalbody.setText(out.getString("goal_title"));
                 // DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                // SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+
                 /*Date date = df.parse(str);
                 long epoch = date.getTime();*/
-                try {
-                    df.parse(out.getString("goal_date_from")).getTime();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
                 // format.format(date);  goal_date_to
                 //  System.out.println(formatted);
 
-                try {
-                    from.setText((int) df.parse(out.getString("goal_date_from")).getTime() + "");
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    to.setText((int) df.parse(out.getString("goal_date_to")).getTime() + "");
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                // System.out.println(df.format(new Date(new long[] {out.getString("goal_date_from")}))+"jjj");
+                from.setText(out.getString("goal_date_from"));
+
+
+                to.setText(out.getString("goal_date_to"));
+
                 goallevel.setText(out.getString("goal_measurment"));
                 goalidea.setText(out.getString("goal_apprev"));
                 goalideaaround.setText(out.getString("goal_idea"));
@@ -419,7 +408,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                             btn[x].setTextColor(getContext().getResources().getColor(R.color.text));
                             btn[x].setId(2000 + x);
                             btn[x].setOnCheckedChangeListener(this);
-                            if (i.getStringExtra("InsertGoal").equals("1")) {
+                            if (i.getStringExtra("InsertGoal").equals("1") && !(i.getStringExtra("outcheck").isEmpty())) {
                                 String checked[] = i.getStringExtra("outcheck").split(" , ");
                                 for (int d = 0; d < checked.length; d++) {
                                     if (checked[d].equals(oName[x])) {
@@ -517,7 +506,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                             cheackId[i] = boxid;
                         }
                         SpinnerDate(a3, a4, s2);
-                        if (i.getStringExtra("InsertGoal").equals("1")) {
+                        if (i.getStringExtra("InsertGoal").equals("1") && !(i.getStringExtra("Maindep").isEmpty())) {
                             s2.setSelection(Integer.parseInt(i.getStringExtra("Maindep")) + 1);
 
 
@@ -557,8 +546,27 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                Toast.makeText(getActivity().getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
-                Log.e("onFailure", "----------" + responseString);
+                // Toast.makeText(getActivity().getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
+                // Log.e("onFailure", "----------" + responseString);
+                String insert = responseString.replace("<meta charset=\"utf-8\" /><meta charset=\"utf-8\" />", "");
+                try {
+                    JSONObject x = new JSONObject(insert);
+                    JSONObject response = x.getJSONObject("respond");
+                    if (response.getInt("message") == 1) {
+                        Intent i = new Intent(getContext(), AddGoal.class);
+                        i.putExtra("InsertGoal", "0");
+                        if(response.getString("action").equals("update")){
+                            Toast.makeText(getActivity().getApplicationContext(), "تم التعديل بنجاح", Toast.LENGTH_LONG).show();
+                        }else{
+                        Toast.makeText(getActivity().getApplicationContext(), "تم الاضافة بنجاح", Toast.LENGTH_LONG).show();}
+                        startActivity(i);
+                    } else if (response.getInt("message") == 0) {
+                        Toast.makeText(getActivity().getApplicationContext(), "حاول مرة اخرى ", Toast.LENGTH_LONG).show();
+                    }
+                    Log.e("onFailure", "----------" + response.getInt("message"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
 

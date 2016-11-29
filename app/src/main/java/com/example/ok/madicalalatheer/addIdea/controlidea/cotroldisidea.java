@@ -1,10 +1,14 @@
 package com.example.ok.madicalalatheer.addIdea.controlidea;
 
+import org.json.JSONObject;
+
 /**
  * Created by ahmed on 11/7/2016.
  */
 
 public class cotroldisidea  {
+    private JSONObject Data;
+    private String Ideaid;
     private String serial1;
     private String goal;
     private String suggest;
@@ -13,7 +17,9 @@ public class cotroldisidea  {
     private boolean buttons;
 
 
-    public cotroldisidea(String serial1, String goal, String suggest,String job, boolean active, boolean buttons) {
+    public cotroldisidea(JSONObject Data,String Ideaid,String serial1, String goal, String suggest,String job, boolean active, boolean buttons) {
+        this.Data=Data;
+        this.Ideaid = Ideaid;
         this.serial1 = serial1;
         this.goal = goal;
         this.suggest = suggest;
@@ -21,7 +27,17 @@ public class cotroldisidea  {
         this.active = active;
         this.buttons = buttons;
     }
+    public JSONObject getData(){return Data;}
+    public void setData(JSONObject Data){
+        this.Data=Data;
+    }
+    public String getIdeaid() {
+        return Ideaid;
+    }
 
+    public void setIdeaid(String goalid) {
+        this.Ideaid = goalid;
+    }
     public String getSerial1() {
         return serial1;
     }

@@ -67,6 +67,7 @@ View goal,idea,process,report,main;
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, activity_addIdea.class);
+                i.putExtra("InsertIdea", "0");
                 startActivity(i);
             }
         });
@@ -74,7 +75,7 @@ View goal,idea,process,report,main;
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, activity_procedure.class);
-
+                i.putExtra("Insertprocedure", "0");
                 startActivity(i);
             }
         });
@@ -133,6 +134,7 @@ View goal,idea,process,report,main;
 
             case R.id.idea:
                 i = new Intent(MainActivity.this, activity_addIdea.class);
+                i.putExtra("InsertIdea","0");
                 startActivity(i);
                 break;
             case R.id.goal:
@@ -143,6 +145,7 @@ View goal,idea,process,report,main;
 
             case R.id.process:
                 i = new Intent(MainActivity.this, activity_procedure.class);
+                i.putExtra("Insertprocedure", "0");
                 startActivity(i);
                 break;
             case R.id.report:

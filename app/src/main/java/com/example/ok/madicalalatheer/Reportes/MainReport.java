@@ -67,6 +67,7 @@ Typeface typeface;
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainReport.this, activity_addIdea.class);
+                i.putExtra("InsertIdea", "0");
                 startActivity(i);
             }
         });
@@ -74,7 +75,7 @@ Typeface typeface;
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainReport.this, activity_procedure.class);
-
+                i.putExtra("Insertprocedure", "0");
                 startActivity(i);
             }
         });
