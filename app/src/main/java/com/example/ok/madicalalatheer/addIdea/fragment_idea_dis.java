@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.ok.madicalalatheer.AddGoal.AddGoalAdapter.Adapter;
-import com.example.ok.madicalalatheer.AddGoal.control.ControlAddGoal;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
 import com.example.ok.madicalalatheer.addIdea.Adaptercontrolidea.controlideaAdapter;
@@ -62,9 +60,9 @@ String []code,from,content,job,Ideaid;
         recyclerView.setAdapter(mAdapter);
         try {
             RequestParams params = new RequestParams();
-            params.put("request","displayIdea");
+            params.put("request","displayidea");
 
-          //  Load(params);
+            Load(params);
         } catch (Exception ex) {
             Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
         }
@@ -97,14 +95,15 @@ String []code,from,content,job,Ideaid;
                     code = new String[response.length()];
                     from = new String[response.length()];
                     content = new String[response.length()];
+                    job =new String[response.length()];
                     for(int i=0;i<response.length();i++){
                         JSONObject data=response.getJSONObject(i);
                         Data[i]=data;
                         System.out.println(data);
                         Ideaid[i]=data.getString("id");
-                        content[i] = data.getString("goal_title");
-                        code[i]=data.getString("goal_code");
-                        from[i] = data.getString("goal_to");
+                        content[i] = data.getString("idea_content");
+                        code[i]=data.getString("idea_code");
+                        from[i] = data.getString("idea_appre");
                         if(data.getString("suspend").equals(0)){
                             active[i]=false;
                         }else {

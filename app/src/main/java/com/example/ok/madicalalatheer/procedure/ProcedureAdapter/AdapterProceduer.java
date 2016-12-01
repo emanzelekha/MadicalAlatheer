@@ -31,12 +31,15 @@ import java.util.Locale;
  * Created by ok on 06/11/2016.
  */
 
-public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyViewHolder> implements View.OnClickListener, HijriCalendarView.OnDateSetListener {
+public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyViewHolder> implements View.OnClickListener, HijriCalendarView.OnDateSetListener
+{
     HijriCalendarDialog.Builder text;
+    ArrayList<String> DateData=new ArrayList<String>();;
     String[] a1, a2;
-    EditText date;
+    EditText date, doing;
     private List<Controlprocedure> displayList;
     Context context;
+    MyViewHolder context1;
     String Date = "";
     public AdapterProceduer(List<Controlprocedure> displayList) {
         this.displayList = displayList;
@@ -52,7 +55,7 @@ public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyVi
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         //   NumberFormat nf = NumberFormat.getInstance(new Locale("ar", "EG"));//formate
         Controlprocedure disUserControl = displayList.get(position);
         holder.Code.setText(disUserControl.getSerial1());
@@ -61,12 +64,26 @@ public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyVi
         holder.input2.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/DroidKufi-Bold.ttf"));
         date.setOnClickListener(this);
         holder.input1.setOnClickListener(this);
+        if (position + 1 == displayList.size()) {
+            holder.Insert.setVisibility(View.VISIBLE);
+        }
+
+        holder.Insert.setOnClickListener(this);
+
+
+
 
         a1 = new String[]{"*قم باختيار الوظف"};
         a2 = new String[]{"1", "2", "3", "4", "5"};
         SpinnerDate(a1, a2, holder.s1);
     }
 
+    public Boolean validate() {
+        Boolean out = true;
+
+
+        return out;
+    }
     @Override
     public int getItemCount() {
         return displayList.size();
@@ -75,10 +92,40 @@ public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyVi
     @Override
     public void onClick(View view) {
         Intent i;
+        MyViewHolder holder = context1;
         switch (view.getId()) {
 
             case R.id.Date:
                 text = new HijriCalendarDialog.Builder(context).setUILanguage(HijriCalendarDialog.Language.Arabic).setOnDateSetListener(this).show();
+               DateData.add(date.getText() + "");
+                break;
+
+            case R.id.Insert:
+                //  final AdapterProceduer holder1=context1;
+
+
+                    if (DateData.isEmpty()) {
+                        System.out.println("empty");
+
+                  /*  if (TextUtils.isEmpty(doing.getText())) {
+                        holder.input1.setErrorEnabled(true);
+                        holder.input1.setError("ادخل نص الاجراء");
+
+                    } else {
+                        holder.input1.setErrorEnabled(false);
+                    }
+                    if (TextUtils.isEmpty(date.getText())) {
+                        holder.input2.setErrorEnabled(true);
+                        holder.input2.setError("ادخل نص الاجراء");
+
+                    } else {
+                        holder.input2.setErrorEnabled(false);
+                    }*/
+
+
+                }
+
+
                 break;
         }
     }
@@ -86,10 +133,10 @@ public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyVi
     @Override
     public void onDateSet(int year, int month, int day) {
         NumberFormat nf = NumberFormat.getInstance(new Locale("ar", "EG"));//formate
-        String year1 = nf.format(year);
-        String month1 = nf.format(month + 1);
-        String day1 = nf.format(day);
-        Date = year1 + "/" + month1 + "/" + day1;
+        // String year1 = nf.format(year);
+        String month1 = (month + 1) + "";
+        //String day1 = nf.format(day);
+        Date = year + "/" + month1 + "/" + day;
         date.setText(Date);
 
     }
@@ -100,9 +147,11 @@ public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyVi
         public TextView Code, serial;
         public CardView card;
         public Spinner s1;
+        public View Insert;
 
         public MyViewHolder(View view) {
             super(view);
+            doing = (EditText) view.findViewById(R.id.doing);
             serial = (TextView) view.findViewById(R.id.codeProcedureText);
             Code = (TextView) view.findViewById(R.id.codeProcedure);
             card = (CardView) view.findViewById(R.id.cardview);
@@ -110,6 +159,7 @@ public class AdapterProceduer extends RecyclerView.Adapter<AdapterProceduer.MyVi
             input2 = (TextInputLayout) view.findViewById(R.id.input2Date);
             s1 = (Spinner) view.findViewById(R.id.s1row);
             date = (EditText) view.findViewById(R.id.Date);
+            Insert = view.findViewById(R.id.Insert);
         }
     }
 

@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.example.ok.madicalalatheer.Fonts.MySpinnerAdapter;
@@ -32,7 +34,10 @@ import java.util.Locale;
 public class InsertProcedure extends Fragment implements View.OnClickListener, HijriCalendarView.OnDateSetListener, AdapterView.OnItemSelectedListener {
 
     String[] a1, a2, a3, a4, procdure, code;
-    View v;
+    View v,v2,cardviewd,cardviewd2,cardviewd3,cardviewd4,cardviewd5;
+    LinearLayout Scrol;
+    View[]valesview=new View[]{cardviewd,cardviewd2,cardviewd3,cardviewd4,cardviewd5};
+    int vales[]=new int[]{R.id.cardviewd,R.id.cardviewd1,R.id.cardviewd2,R.id.cardviewd3,R.id.cardviewd4};
     Spinner s1, s2;
     private List<Controlprocedure> disList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -48,10 +53,11 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_insert_procedure, container, false);
+        v2=inflater.inflate(R.layout.procedurerow, container, false);
         TypefaceUtil.overrideFonts(getContext(), v);
         commponent();
         Click();
-        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_procedure);
+       // recyclerView = (RecyclerView) v.findViewById(R.id.recycler_procedure);
         a1 = new String[]{"*اختر عدد الاجراءات"};
 
         a2 = new String[]{"1", "2", "3", "4", "5"};
@@ -60,11 +66,7 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
         a4 = new String[]{"1", "2", "3", "4", "5"};
         SpinnerDate(a1, a2, s2);
         SpinnerDate(a3, a4, s1);
-        mAdapter = new AdapterProceduer(disList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
+
 
 
         return v;
@@ -73,6 +75,10 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
     public void commponent() {
         s1 = (Spinner) v.findViewById(R.id.s1P);
         s2 = (Spinner) v.findViewById(R.id.s2P);
+        Scrol=(LinearLayout)v.findViewById(R.id.Scrol);
+        for(int i=0;i<5;i++){
+            valesview[i]=v.findViewById(vales[i]);
+        }
     }
 
     public void Click() {
@@ -99,7 +105,7 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
         s.setAdapter(adapter);
     }
 
-    private void prepareMovieData(String code[], String pro[]) {
+    /*private void prepareMovieData(String code[], String pro[]) {
 
         mAdapter.remove();
         for (int x = 0; x < code.length; x++) {
@@ -110,7 +116,7 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
 
         }
     }
-
+*/
 
     @Override
     public void onClick(View view) {
@@ -130,12 +136,20 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                 procdure = new String[parent.getSelectedItemPosition()];
                 code = new String[parent.getSelectedItemPosition()];
                 NumberFormat nf = NumberFormat.getInstance(new Locale("ar", "EG"));//formate
+             //   LinearLayout l[]=new LinearLayout[parent.getSelectedItemPosition()];
+
                 for (int i = 0; i < parent.getSelectedItemPosition(); i++) {
+                    valesview[i].setVisibility(View.VISIBLE);
+                   /* l[i] = new LinearLayout(getContext()); // initialize it
+                    l[i].setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                   // ViewGroup layout = (ViewGroup) l(i);
+                    l[i].addView(v2);
+*/
                     procdure[i] = "الاجراء " + String.valueOf(nf.format(i + 1));
                     code[i] = String.valueOf(nf.format(i + 1));
                 }
 
-                prepareMovieData(code, procdure);
+//                prepareMovieData(code, procdure);
                 break;
         }
 

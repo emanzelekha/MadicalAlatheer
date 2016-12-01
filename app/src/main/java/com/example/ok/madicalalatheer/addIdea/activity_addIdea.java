@@ -141,6 +141,12 @@ public class activity_addIdea extends AppCompatActivity {
         adapter.addFrag(new insert_idea(), "اضافة");
 
         viewPager.setAdapter(adapter);
+        Intent i = getIntent();
+        if (i.getStringExtra("InsertIdea").equals("1")) {
+            viewPager.setCurrentItem(1);
+        } else {
+            viewPager.setCurrentItem(0);
+        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

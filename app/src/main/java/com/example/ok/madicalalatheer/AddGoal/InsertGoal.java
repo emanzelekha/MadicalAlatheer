@@ -122,10 +122,10 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                 //  System.out.println(formatted);
 
                 // System.out.println(df.format(new Date(new long[] {out.getString("goal_date_from")}))+"jjj");
-                from.setText(out.getString("goal_date_from"));
+               // from.setText(out.getString("goal_date_from"));
 
 
-                to.setText(out.getString("goal_date_to"));
+              //  to.setText(out.getString("goal_date_to"));
 
                 goallevel.setText(out.getString("goal_measurment"));
                 goalidea.setText(out.getString("goal_apprev"));

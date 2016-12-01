@@ -3,6 +3,7 @@ package com.example.ok.madicalalatheer.addIdea;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,6 +31,7 @@ import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,12 +46,12 @@ import cz.msebera.android.httpclient.Header;
  */
 
 public class insert_idea extends Fragment implements AdapterView.OnItemSelectedListener,View.OnClickListener {
-    TextView btn_add;
+    TextView btn_add,Coding;
     EditText t1, t2;
     Spinner spinnermanges, spinner1;
     Spinner spinneremployer;
     Spinner sp_depart;
-    String[] choose, choosetarget, choosemang, manages, chooseemployer, employer, choose_depart, depart;
+    String[] choose, choosetarget,choosetargetid, choosemang, manages, chooseemployer, employer,employerid, choose_depart, depart,departid,managesid;
     LinearLayout layout1, layout2;
     CardView Main;
     TextInputLayout input1, input2;
@@ -68,31 +70,35 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         choose = new String[]{"اختر الهدف"};
-        choosetarget = new String[]{"الهدف 1", "الهدف 2"};
         choosemang = new String[]{"اختر الادارة التابع لها"};
-        manages = new String[]{"الادراة 1", "الادراة 2", "الادراة 3"};
         chooseemployer = new String[]{"اختر الموظف"};
-        employer = new String[]{"الموظف 1", "الموظف 2"};
         choose_depart = new String[]{"اختر القسم"};
-        depart = new String[]{"القسم 2", "القسم 1"};
         v = inflater.inflate(R.layout.insert_idea, container, false);
         TypefaceUtil.overrideFonts(getContext(), v);
         commponent();
+        try {
+            RequestParams params = new RequestParams();
+            params.put("request", "ideaformspinner");
+
+            Load(params);
+        } catch (Exception ex) {
+            Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+        }
         addFont();
         click();
-        SpinnerDate(choose, choosetarget, spinner1);
-        SpinnerDate(choosemang, manages, spinnermanges);
-        SpinnerDate(chooseemployer, employer, spinneremployer);
-        SpinnerDate(choose_depart, depart, sp_depart);
+
+
+
         i = getActivity().getIntent();
         if (i.getStringExtra("InsertIdea").equals("1")) {
-          /*  try {
-                RequestParams params = new RequestParams();
-                params.put("request", "Editgoal");
-                params.put("goalid", i.getStringExtra("goalIdEdit"));
-                Load(params);
-            } catch (Exception ex) {
-                Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+           // try {
+              //  JSONObject Date=new JSONObject(i.getStringExtra("IdeaData"));
+              //  spinner1.setSelection();
+
+
+
+          /*  } catch (JSONException e) {
+                e.printStackTrace();
             }*/
             btn_add.setText("تعديل الفكرة");
             // JSONObject out = null;
@@ -110,6 +116,7 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
     public void click() {
         spinnermanges.setOnItemSelectedListener(this);
         sp_depart.setOnItemSelectedListener(this);
+        btn_add.setOnClickListener(this);
     }
 
     public boolean validate() {
@@ -124,15 +131,16 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                 out = false;
             }
         }
-
+        if (spinneremployer.isShown()) {
         if (spinneremployer.getSelectedItemPosition() == 0) {
             ((TextView) spinneremployer.getChildAt(0)).setError(".");
             out = false;
-        }
+        }}
+        if (sp_depart.isShown()) {
         if (sp_depart.getSelectedItemPosition() == 0) {
             ((TextView) sp_depart.getChildAt(0)).setError(".");
             out = false;
-        }
+        }}
         if (TextUtils.isEmpty(t1.getText().toString())) {
             input1.setErrorEnabled(true);
             input1.setError("ادخل نص الفكرة");
@@ -193,10 +201,12 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                     layout2.setVisibility(View.GONE);
                 }
                 break;
+
         }
     }
 
     public void commponent() {
+        Coding=(TextView) v.findViewById(R.id.Coding);
         t1=(EditText)v.findViewById(R.id.editText);
         t2=(EditText)v.findViewById(R.id.editText2);
         layout1 = (LinearLayout) v.findViewById(R.id.layout1);
@@ -231,6 +241,40 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.add_btn:
+                validate();
+                if(validate()){
+                    try {
+                        RequestParams params = new RequestParams();
+                        if (i.getStringExtra("InsertIdea").equals("1")) {
+                        params.put("request", "update_idea");
+                        params.put("idea",i.getStringExtra("Ideaid"));}else{
+                            params.put("request", "add_idea");
+                        }
+                        params.put("goal_id",choosetargetid[spinner1.getSelectedItemPosition()-1]);
+                        params.put("idea_emp_id",employerid[spinneremployer.getSelectedItemPosition()-1]);
+                        params.put("idea_code",Coding.getText());
+                        params.put("idea_content",t1.getText());
+                        params.put("idea_appre",t2.getText());
+                        SharedPreferences pref = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
+                        String id = pref.getString("name", "");
+                        params.put("admin_name",id);
+                        Load(params);
+                    } catch (Exception ex) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+                    }
+
+
+
+
+
+
+
+
+                }
+                break;
+        }
 
     }
 
@@ -254,6 +298,49 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
                 try {
+                    if (response.length() == 5) {
+                        Coding.setText(Integer.parseInt(response.getJSONObject("0").getString("id"))+1+"");
+                        JSONArray Goal = response.getJSONArray("goalinfo");
+                        JSONArray Dep = response.getJSONArray("departementinfo");
+                        JSONArray Emp = response.getJSONArray("employeeinfo");
+                        JSONArray subDep = response.getJSONArray("supdepartementinfo");
+
+                        depart = new String[subDep.length()];
+                        departid = new String[subDep.length()];
+                        employer = new String[Emp.length()];
+                        employerid = new String[Emp.length()];
+                        manages=new String[Dep.length()];
+                        managesid=new String[Dep.length()];
+                        choosetarget = new String[Goal.length()];
+                        choosetargetid = new String[Goal.length()];
+                        for(int i=0;i<Goal.length();i++){
+                            JSONObject goales=Goal.getJSONObject(i);
+                            choosetarget[i]=goales.getString("goal_title");
+                            choosetargetid[i]=goales.getString("id");
+                        }
+                        for(int i=0;i<Dep.length();i++){
+                            JSONObject Deps=Dep.getJSONObject(i);
+                            manages[i]=Deps.getString("main_dep_name");
+                            managesid[i]=Deps.getString("id");
+                        }
+                        for(int i=0;i<Emp.length();i++){
+                            JSONObject Emps=Emp.getJSONObject(i);
+                            employer[i]=Emps.getString("emp_name");
+                            employerid[i]=Emps.getString("id");
+                        }
+                        for(int i=0;i<subDep.length();i++){
+                            JSONObject subDeps=subDep.getJSONObject(i);
+                            depart[i]=subDeps.getString("sub_dep_name");
+                            departid[i]=subDeps.getString("id");
+                        }
+
+                        SpinnerDate(choose, choosetarget, spinner1);
+                        SpinnerDate(choosemang, manages, spinnermanges);
+                        SpinnerDate(chooseemployer, employer, spinneremployer);
+                        SpinnerDate(choose_depart, depart, sp_depart);
+                    }
+
+
 
 
                 } catch (Exception ex) {

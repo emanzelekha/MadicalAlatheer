@@ -16,6 +16,7 @@ import com.example.ok.madicalalatheer.AddGoal.AddGoal;
 import com.example.ok.madicalalatheer.AddGoal.DetalsAddGoal;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
+import com.example.ok.madicalalatheer.addIdea.activity_addIdea;
 import com.example.ok.madicalalatheer.addIdea.controlidea.cotroldisidea;
 import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -76,7 +77,7 @@ public class controlideaAdapter extends RecyclerView.Adapter<controlideaAdapter.
             public void onClick(View view) {
                 try {
                     Intent i;
-                    i = new Intent(context, AddGoal.class);
+                    i = new Intent(context, activity_addIdea.class);
                     i.putExtra("InsertIdea", "1");
                     i.putExtra("IdeaData", disUserControl.getData() + " ");
                     i.putExtra("Ideaid", disUserControl.getIdeaid());
