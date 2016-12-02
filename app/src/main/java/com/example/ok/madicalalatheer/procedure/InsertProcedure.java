@@ -138,15 +138,18 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                 NumberFormat nf = NumberFormat.getInstance(new Locale("ar", "EG"));//formate
              //   LinearLayout l[]=new LinearLayout[parent.getSelectedItemPosition()];
 
-                for (int i = 0; i < parent.getSelectedItemPosition(); i++) {
-                    valesview[i].setVisibility(View.VISIBLE);
+                for (int i = 0; i < 5; i++) {
+                    if(i<parent.getSelectedItemPosition()){
+                    valesview[i].setVisibility(View.VISIBLE);}else{
+                        valesview[i].setVisibility(View.GONE);
+                    }
                    /* l[i] = new LinearLayout(getContext()); // initialize it
                     l[i].setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                    // ViewGroup layout = (ViewGroup) l(i);
                     l[i].addView(v2);
 */
-                    procdure[i] = "الاجراء " + String.valueOf(nf.format(i + 1));
-                    code[i] = String.valueOf(nf.format(i + 1));
+                  //  procdure[i] = "الاجراء " + String.valueOf(nf.format(i + 1));
+                  //y  code[i] = String.valueOf(nf.format(i + 1));
                 }
 
 //                prepareMovieData(code, procdure);

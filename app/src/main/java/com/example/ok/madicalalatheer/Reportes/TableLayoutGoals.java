@@ -1,9 +1,11 @@
 package com.example.ok.madicalalatheer.Reportes;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +18,23 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ok.madicalalatheer.Fonts.MySpinnerAdapter;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
+import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 import static android.support.v7.appcompat.R.attr.height;
 import static android.support.v7.appcompat.R.id.top;
@@ -55,6 +66,14 @@ Spinner s1,s2;
         a4 = new String[]{"اختيار نوع الهدف", "عام", "خاص"};
         SpinnerDate(a1, a2, s1);
         SpinnerDate(a3, a4, s2);
+        try {
+            RequestParams params = new RequestParams();
+            params.put("request", "goalsreport");
+
+            Load(params);
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+        }
 
     }
     public void click(){
@@ -170,4 +189,55 @@ Spinner s1,s2;
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+//web swrver function
+
+    public void Load(RequestParams params) throws JSONException {
+
+        AsyncHttpClient.post("", params, new JsonHttpResponseHandler() {
+            ProgressDialog progressDialog;
+
+            @Override
+            public void onStart() {
+                progressDialog = new ProgressDialog(TableLayoutGoals.this);
+                progressDialog.setCancelable(false);
+                progressDialog.setMessage("ÌÇÑì ÇáÈÍË...");
+                progressDialog.show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                Log.e("onSuccess", response + "");
+                Log.e("onSuccess", response.length() + "");
+                try {
+
+
+
+                } catch (Exception ex) {
+
+                    Toast.makeText(getApplicationContext(), "ÇÔÇÑå ÇáäÊ ÖÛíÝå", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                // Toast.makeText(getActivity().getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
+                // Log.e("onFailure", "----------" + responseString);
+
+                Log.e("onFailure", "----------" + responseString);
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                progressDialog.dismiss();
+            }
+        });
+
+
+    }
+
 }

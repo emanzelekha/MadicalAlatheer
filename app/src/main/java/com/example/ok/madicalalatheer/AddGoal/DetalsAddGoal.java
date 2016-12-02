@@ -77,7 +77,18 @@ public class DetalsAddGoal extends AppCompatActivity {
 
         } else if (i.getStringExtra("Find").equals("idea")) {
             idea.setVisibility(View.VISIBLE);
-            i.getStringExtra("IdeaData");
+            try {
+                JSONObject Data = new JSONObject(i.getStringExtra("IdeaData"));
+                eidea2.setText(Data.getString("goal_id"));
+                eidea1.setText(Data.getString("idea_content"));
+                eidea3.setText(Data.getString("admin"));
+                eidea4.setText(Data.getString("idea_emp_id"));
+                eidea5.setText(Data.getString("idea_appre"));
+                eidea6.setText(Data.getString("date"));
+                eidea7.setText(Data.getString("admin"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }
         close = (TextView) findViewById(R.id.close);

@@ -1,8 +1,10 @@
 package com.example.ok.madicalalatheer.Reportes;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -10,10 +12,19 @@ import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
+import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
 import com.example.ok.madicalalatheer.zoom.ZoomableRelativeLayout;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 
 public class TableLayoutPerformance extends AppCompatActivity {
 View v;
@@ -42,7 +53,14 @@ View v;
                 finish();
             }
         });
+        try {
+            RequestParams params = new RequestParams();
+            params.put("request", "proceduresreport");//åÊÛíÑ ÇáÇÓã ÍÓÈ ãÇ íÞæáß æåÊÈÚÊáÉ Çá id ãä Çáshared refrance
 
+            Load(params);
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -130,32 +148,55 @@ View v;
 
     }
 
+    public void Load(RequestParams params) throws JSONException {
+
+        AsyncHttpClient.post("", params, new JsonHttpResponseHandler() {
+            ProgressDialog progressDialog;
+
+            @Override
+            public void onStart() {
+                progressDialog = new ProgressDialog(TableLayoutPerformance.this);
+                progressDialog.setCancelable(false);
+                progressDialog.setMessage("ÌÇÑì ÇáÈÍË...");
+                progressDialog.show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                Log.e("onSuccess", response + "");
+                Log.e("onSuccess", response.length() + "");
+                try {
 
 
-    private class OnPinchListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 
-        float startingSpan;
-        float endSpan;
-        float startFocusX;
-        float startFocusY;
-      ZoomableRelativeLayout mZoomableRelativeLayout=new ZoomableRelativeLayout(getBaseContext());
+                } catch (Exception ex) {
 
-        public boolean onScaleBegin(ScaleGestureDetector detector) {
-            startingSpan = detector.getCurrentSpan();
-            startFocusX = detector.getFocusX();
-            startFocusY = detector.getFocusY();
-            return true;
-        }
+                    Toast.makeText(getApplicationContext(), "ÇÔÇÑå ÇáäÊ ÖÛíÝå", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                // Toast.makeText(getActivity().getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
+                // Log.e("onFailure", "----------" + responseString);
+
+                Log.e("onFailure", "----------" +responseString);
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                progressDialog.dismiss();
+            }
+        });
 
 
-        public boolean onScale(ScaleGestureDetector detector) {
-
-            mZoomableRelativeLayout.scale(detector.getCurrentSpan()/startingSpan, startFocusX, startFocusY);
-            return true;
-        }
-
-        public void onScaleEnd(ScaleGestureDetector detector) {
-            mZoomableRelativeLayout.restore();
-        }
     }
+
+
+
+
 }

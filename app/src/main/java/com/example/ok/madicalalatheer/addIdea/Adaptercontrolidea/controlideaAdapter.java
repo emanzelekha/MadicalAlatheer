@@ -98,8 +98,8 @@ public class controlideaAdapter extends RecyclerView.Adapter<controlideaAdapter.
                 try {
                     RequestParams params = new RequestParams();
                     params.put("request", "deletIdea");
-                    params.put("Ideaid", disUserControl.getIdeaid());
-                 //   Delet(params);
+                    params.put("ideaid", disUserControl.getIdeaid());
+                   Delet(params);
                 } catch (Exception ex) {
                     Toast.makeText(context, "Exception" + ex, Toast.LENGTH_LONG).show();
                 }
