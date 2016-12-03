@@ -2,18 +2,12 @@ package com.example.ok.madicalalatheer.Reportes;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -27,6 +21,7 @@ import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,14 +31,12 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-import static android.support.v7.appcompat.R.attr.height;
-import static android.support.v7.appcompat.R.id.top;
-
 public class TableLayoutGoals extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 Spinner s1,s2;
     TextView close;
     View Mangment;
-    String[] a1, a2 = null, a3, a4, a5, a6 = null;
+    String[] a1, a2 = null, a3, a4, a5, a6 = null,id,id2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,12 +53,12 @@ Spinner s1,s2;
         click();
 
         init();
-        a1 = new String[]{"*اختيار الادارة", "عام", "خاص"};
+        a1 = new String[]{"*اختيار الادارة"};
 
         a3 = new String[]{"*اختيار القسم"};
-        a4 = new String[]{"اختيار نوع الهدف", "عام", "خاص"};
+
         SpinnerDate(a1, a2, s1);
-        SpinnerDate(a3, a4, s2);
+
         try {
             RequestParams params = new RequestParams();
             params.put("request", "goalsreport");
@@ -177,7 +170,15 @@ Spinner s1,s2;
             case R.id.s1:
                 break;
             case R.id.s2:
-                if (adapterView.getSelectedItem().toString().equals("خاص")) {
+               try{
+                   RequestParams params = new RequestParams();
+                   params.put("request","goalreportoutput"
+                            );
+params.put("main",id[s1.getSelectedItemPosition() - 1]);
+                   params.put("sup",id2[s2.getSelectedItemPosition() - 1]);
+                   Load(params);
+               }catch (Exception ex){
+
                }
                 break;
 
@@ -211,12 +212,28 @@ Spinner s1,s2;
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
                 try {
+                    a2 = new String[response.length()-1];
+                    id = new String[response.length()-1];
+                    for (int i = 0; i < response.length()-1; i++) {
+                        JSONObject out = response.getJSONObject(i+"");
+                        a2[i] = out.getString("main_dep_name");
+                        id[i] = out.getString("id");
+                    }
+                    JSONArray out2=response.getJSONArray("supdepartement");
+                    a4=new String[out2.length()];
+                    id2=new String[out2.length()];
+                    for(int i=0;i<out2.length();i++){
 
-
+                        JSONObject json_data1 = out2.getJSONObject(i);
+                      a4[i]=json_data1.getString("sub_dep_name");
+                        id2[i]=json_data1.getString("id");
+                    }
+                    SpinnerDate(a1, a2, s1);
+                    SpinnerDate(a3, a4, s2);
 
                 } catch (Exception ex) {
 
-                    Toast.makeText(getApplicationContext(), "ÇÔÇÑå ÇáäÊ ÖÛíÝå", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
 
                 }
             }

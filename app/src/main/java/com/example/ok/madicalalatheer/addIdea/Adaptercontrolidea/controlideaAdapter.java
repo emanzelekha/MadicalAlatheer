@@ -163,7 +163,7 @@ public class controlideaAdapter extends RecyclerView.Adapter<controlideaAdapter.
                     JSONObject r = response.getJSONObject("respond");
                     if (r.getInt("message") == 1) {
                         Toast.makeText(context, "تم مسح الاهدف بنجاح", Toast.LENGTH_LONG).show();
-                        Intent i = new Intent(context, AddGoal.class);
+                        Intent i = new Intent(context, activity_addIdea.class);
                         i.putExtra("InsertIdea", "0");
                         context.startActivity(i);
 

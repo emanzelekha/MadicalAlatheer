@@ -21,6 +21,7 @@ import com.example.ok.madicalalatheer.zoom.ZoomableRelativeLayout;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -162,7 +163,7 @@ View v;
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");

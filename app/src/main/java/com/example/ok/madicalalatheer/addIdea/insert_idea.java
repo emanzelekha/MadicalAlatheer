@@ -299,7 +299,7 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                 Log.e("onSuccess", response.length() + "");
                 try {
                     if (response.length() == 5) {
-                        Coding.setText(Integer.parseInt(response.getJSONObject("0").getString("id"))+1+"");
+                        Coding.setText(Integer.parseInt(response.getString("id"))+1+"");
                         JSONArray Goal = response.getJSONArray("goalinfo");
                         JSONArray Dep = response.getJSONArray("departementinfo");
                         JSONArray Emp = response.getJSONArray("employeeinfo");
