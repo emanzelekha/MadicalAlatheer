@@ -1,20 +1,21 @@
 package com.example.ok.madicalalatheer;
 
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ok.madicalalatheer.AddGoal.AddGoal;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
@@ -22,10 +23,21 @@ import com.example.ok.madicalalatheer.Main.Login;
 import com.example.ok.madicalalatheer.Reportes.MainReport;
 import com.example.ok.madicalalatheer.addIdea.activity_addIdea;
 import com.example.ok.madicalalatheer.procedure.activity_procedure;
+import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 View goal,idea,process,report,main;
     Typeface typeface;
+    String[] MainDep, MainDepId, SubDep, SubDepId;
+    String MainDep1 = "", MainDepId1 = "", SubDep1 = "", SubDepId1 = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +122,16 @@ View goal,idea,process,report,main;
         component();
         Click();
         TypefaceUtil.overrideFonts(getBaseContext(), main);
+
+        try {
+            RequestParams params = new RequestParams();
+            params.put("request", "goalsreport");
+
+            Load(params);
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+        }
+
     }
 
     public void component(){
@@ -153,4 +175,88 @@ View goal,idea,process,report,main;
                 startActivity(i);
                 break;}
     }
+
+
+    public void Load(RequestParams params) throws JSONException {
+
+        AsyncHttpClient.post("", params, new JsonHttpResponseHandler() {
+            ProgressDialog progressDialog;
+
+            @Override
+            public void onStart() {
+                progressDialog = new ProgressDialog(MainActivity.this);
+                progressDialog.setCancelable(false);
+                progressDialog.setMessage("ÌÇÑì ÇáÈÍË...");
+                progressDialog.show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                Log.e("onSuccess", response + "");
+                Log.e("onSuccess", response.length() + "");
+                try {
+                    MainDep = new String[response.length() - 1];
+                    MainDepId = new String[response.length() - 1];
+                    SubDep = new String[response.length() - 1];
+                    SubDepId = new String[response.length() - 1];
+                    for (int i = 0; i < response.length() - 1; i++) {
+                        JSONObject json_data = response.getJSONObject(i + "");
+                        MainDep[i] = json_data.getString("main_dep_name");
+                        MainDepId[i] = json_data.getString("id");
+                        MainDepId1 += json_data.getString("id") + ",";
+                        MainDep1 += json_data.getString("main_dep_name") + ",";
+
+                    }
+                    JSONArray subdebartement = response.getJSONArray("supdepartement");
+                    for (int i = 0; i < response.length() - 1; i++) {
+                        String set = "";
+                        String set1 = "";
+                        for (int j = 0; j < subdebartement.length(); j++) {
+                            JSONObject json_data1 = subdebartement.getJSONObject(j);
+                            if (MainDepId[i].equals(json_data1.getString("main_dep_f_id"))) {
+                                set += json_data1.getString("id") + ",";
+                                set1 += json_data1.getString("sub_dep_name") + ",";
+                            }
+                        }
+                        SubDepId1 += set + "oo";
+                        SubDep1 += set1 + "oo";
+                    }
+                //  System.out.println(SubDep1 + "                               " + SubDepId1);
+                    SharedPreferences sharedPref = getBaseContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("MainDep", MainDep1);
+                    editor.putString("MainDepId", MainDepId1);
+                    editor.putString("SubDep", SubDep1);
+                    editor.putString("SubDepId", SubDepId1);
+                    editor.commit();
+
+                } catch (Exception ex) {
+
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Log.e("onFailure", "----------" + responseString);
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                progressDialog.dismiss();
+            }
+        });
+
+
+    }
+
 }
+
+
+
+

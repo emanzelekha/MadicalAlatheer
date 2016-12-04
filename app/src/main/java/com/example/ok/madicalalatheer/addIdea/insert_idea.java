@@ -51,7 +51,7 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
     Spinner spinnermanges, spinner1;
     Spinner spinneremployer;
     Spinner sp_depart;
-    String[] choose, choosetarget,choosetargetid, choosemang, manages, chooseemployer, employer,employerid, choose_depart, depart,departid,managesid;
+    String[] idsupall,a5,choose, choosetarget,choosetargetid, choosemang, manages, chooseemployer, employer,employerid, choose_depart, depart,departid,managesid;
     LinearLayout layout1, layout2;
     CardView Main;
     TextInputLayout input1, input2;
@@ -76,6 +76,11 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
         v = inflater.inflate(R.layout.insert_idea, container, false);
         TypefaceUtil.overrideFonts(getContext(), v);
         commponent();
+        SharedPreferences pref = getContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
+
+        a5 = pref.getString("SubDep", "").split("oo");
+
+        idsupall = pref.getString("SubDepId", "").split("oo");
         try {
             RequestParams params = new RequestParams();
             params.put("request", "ideaformspinner");
@@ -187,10 +192,14 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                 int item = (int) adapterView.getItemIdAtPosition(i);
                 if (item != 0) {
                     layout1.setVisibility(View.VISIBLE);
+                    depart = a5[spinnermanges.getSelectedItemPosition() - 1].split(",");
+                    departid=idsupall[spinnermanges.getSelectedItemPosition() - 1].split(",");
+                    SpinnerDate(choose_depart, depart, sp_depart);
                 } else {
                     layout1.setVisibility(View.GONE);
                     layout2.setVisibility(View.GONE);
                 }
+
                 break;
 
             case R.id.sp_depart:
@@ -200,7 +209,11 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                 } else {
                     layout2.setVisibility(View.GONE);
                 }
+
+
+
                 break;
+
 
         }
     }
@@ -299,7 +312,8 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                 Log.e("onSuccess", response.length() + "");
                 try {
                     if (response.length() == 5) {
-                        Coding.setText(Integer.parseInt(response.getString("id"))+1+"");
+
+                        Coding.setText(Integer.parseInt(response.getJSONObject("id").getString("id"))+1+"");
                         JSONArray Goal = response.getJSONArray("goalinfo");
                         JSONArray Dep = response.getJSONArray("departementinfo");
                         JSONArray Emp = response.getJSONArray("employeeinfo");
@@ -328,16 +342,16 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                             employer[i]=Emps.getString("emp_name");
                             employerid[i]=Emps.getString("id");
                         }
-                        for(int i=0;i<subDep.length();i++){
+                       /* for(int i=0;i<subDep.length();i++){
                             JSONObject subDeps=subDep.getJSONObject(i);
                             depart[i]=subDeps.getString("sub_dep_name");
                             departid[i]=subDeps.getString("id");
-                        }
+                        }*/
 
                         SpinnerDate(choose, choosetarget, spinner1);
                         SpinnerDate(choosemang, manages, spinnermanges);
                         SpinnerDate(chooseemployer, employer, spinneremployer);
-                        SpinnerDate(choose_depart, depart, sp_depart);
+
                     }
 
 

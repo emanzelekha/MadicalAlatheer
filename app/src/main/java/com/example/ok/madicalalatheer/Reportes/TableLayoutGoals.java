@@ -1,6 +1,8 @@
 package com.example.ok.madicalalatheer.Reportes;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,10 +34,10 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 public class TableLayoutGoals extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-Spinner s1,s2;
+    Spinner s1, s2;
     TextView close;
-    View Mangment;
-    String[] a1, a2 = null, a3, a4, a5, a6 = null,id,id2;
+    View Mangment, baclspinner;
+    String[] a1, a2 = null, a3, a4, a5, a6 = null, id, id2, iddep, idsupall, idsup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,31 +56,34 @@ Spinner s1,s2;
 
         init();
         a1 = new String[]{"*اختيار الادارة"};
-
         a3 = new String[]{"*اختيار القسم"};
+        SharedPreferences pref = getBaseContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
+        a2 = pref.getString("MainDep", "").split(",");
+        a5 = pref.getString("SubDep", "").split("oo");
+
+
+        iddep = pref.getString("MainDepId", "").split(",");
+        idsupall = pref.getString("SubDepId", "").split("oo");
+
+        //  String maindep = pref.getString("maindep", "");
 
         SpinnerDate(a1, a2, s1);
 
-        try {
-            RequestParams params = new RequestParams();
-            params.put("request", "goalsreport");
-
-            Load(params);
-        } catch (Exception ex) {
-            Toast.makeText(getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
-        }
-
     }
-    public void click(){
+
+    public void click() {
         s1.setOnItemSelectedListener(this);
         s2.setOnItemSelectedListener(this);
     }
+
     public void component() {
 
-        Mangment =  findViewById(R.id.activity_table_layout);
+        Mangment = findViewById(R.id.activity_table_layout);
         s1 = (Spinner) findViewById(R.id.s1);
         s2 = (Spinner) findViewById(R.id.s2);
-        }
+        baclspinner = findViewById(R.id.baclspinner);
+    }
+
     public void SpinnerDate(String[] array1, String[] array2, Spinner s) {
         String[] arraySpinner = null;
         if (array2 != null) {
@@ -97,6 +102,7 @@ Spinner s1,s2;
         adapter.setDropDownViewResource(R.layout.downspinner);
         s.setAdapter(adapter);
     }
+
     public void init() {
         TableLayout stk = (TableLayout) findViewById(R.id.table_main);
         TableRow tbrow0 = new TableRow(this);
@@ -105,7 +111,7 @@ Spinner s1,s2;
         tv0.setText(" المسلسل ");
         tv0.setTextColor(Color.BLACK);
         tv0.setGravity(Gravity.CENTER);
-        tv0.setPadding(10,10,10,10);
+        tv0.setPadding(10, 10, 10, 10);
 
         tbrow0.addView(tv0);
         TextView tv1 = new TextView(this);
@@ -113,13 +119,13 @@ Spinner s1,s2;
 
         tv1.setTextColor(Color.BLACK);
         tv1.setGravity(Gravity.CENTER);
-        tv1.setPadding(10,10,10,10);
+        tv1.setPadding(10, 10, 10, 10);
         tbrow0.addView(tv1);
         TextView tv2 = new TextView(this);
         tv2.setText(" عدد الاقسام ");
         tv2.setTextColor(Color.BLACK);
         tv2.setGravity(Gravity.CENTER);
-        tv2.setPadding(10,10,10,10);
+        tv2.setPadding(10, 10, 10, 10);
         tbrow0.addView(tv2);
        /* TextView tv3 = new TextView(this);
         tv3.setText(" Stock Remaining ");
@@ -130,25 +136,25 @@ Spinner s1,s2;
         stk.addView(tbrow0);
         for (int i = 0; i < 25; i++) {
             TableRow tbrow = new TableRow(this);
-            tbrow.setBackground(i % 2 == 0 ?getResources().getDrawable( R.drawable.withee) :getResources().getDrawable( R.drawable.withet));
+            tbrow.setBackground(i % 2 == 0 ? getResources().getDrawable(R.drawable.withee) : getResources().getDrawable(R.drawable.withet));
             TextView t1v = new TextView(this);
             t1v.setText("" + i);
             t1v.setBackground(getResources().getDrawable(R.drawable.table));
-            t1v.setPadding(10,10,10,10);
+            t1v.setPadding(10, 10, 10, 10);
             t1v.setTextColor(Color.BLACK);
             t1v.setGravity(Gravity.CENTER);
             tbrow.addView(t1v);
             TextView t2v = new TextView(this);
             t2v.setText("Product " + i);
             t2v.setBackground(getResources().getDrawable(R.drawable.table));
-            t2v.setPadding(10,10,10,10);
+            t2v.setPadding(10, 10, 10, 10);
             t2v.setTextColor(Color.BLACK);
             t2v.setGravity(Gravity.CENTER);
             tbrow.addView(t2v);
             TextView t3v = new TextView(this);
             t3v.setText("Rs." + i);
             t3v.setBackground(getResources().getDrawable(R.drawable.table));
-            t3v.setPadding(10,10,10,10);
+            t3v.setPadding(10, 10, 10, 10);
             t3v.setTextColor(Color.BLACK);
             t3v.setGravity(Gravity.CENTER);
             tbrow.addView(t3v);
@@ -168,18 +174,26 @@ Spinner s1,s2;
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()) {
             case R.id.s1:
+
+                if (s1.getSelectedItemPosition() != 0) {
+                    baclspinner.setVisibility(View.VISIBLE);
+                    a4 = a5[s1.getSelectedItemPosition() - 1].split(",");
+                } else {
+                    baclspinner.setVisibility(View.GONE);
+                }
+                SpinnerDate(a3, a4, s2);
                 break;
             case R.id.s2:
-               try{
-                   RequestParams params = new RequestParams();
-                   params.put("request","goalreportoutput"
-                            );
-params.put("main",id[s1.getSelectedItemPosition() - 1]);
-                   params.put("sup",id2[s2.getSelectedItemPosition() - 1]);
-                   Load(params);
-               }catch (Exception ex){
+                try {
+                  /*  RequestParams params = new RequestParams();
+                    params.put("request", "goalreportoutput"
+                    );
+                    params.put("main", id[s1.getSelectedItemPosition() - 1]);
+                    params.put("sub", id2[s2.getSelectedItemPosition() - 1]);
+                    Load(params);*/
+                } catch (Exception ex) {
 
-               }
+                }
                 break;
 
         }
@@ -212,24 +226,23 @@ params.put("main",id[s1.getSelectedItemPosition() - 1]);
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
                 try {
-                    a2 = new String[response.length()-1];
-                    id = new String[response.length()-1];
-                    for (int i = 0; i < response.length()-1; i++) {
-                        JSONObject out = response.getJSONObject(i+"");
+                    a2 = new String[response.length() - 1];
+                    id = new String[response.length() - 1];
+                    for (int i = 0; i < response.length() - 1; i++) {
+                        JSONObject out = response.getJSONObject(i + "");
                         a2[i] = out.getString("main_dep_name");
                         id[i] = out.getString("id");
                     }
-                    JSONArray out2=response.getJSONArray("supdepartement");
-                    a4=new String[out2.length()];
-                    id2=new String[out2.length()];
-                    for(int i=0;i<out2.length();i++){
+                    JSONArray out2 = response.getJSONArray("supdepartement");
+                    a4 = new String[out2.length()];
+                    id2 = new String[out2.length()];
+                    for (int i = 0; i < out2.length(); i++) {
 
                         JSONObject json_data1 = out2.getJSONObject(i);
-                      a4[i]=json_data1.getString("sub_dep_name");
-                        id2[i]=json_data1.getString("id");
+                        a4[i] = json_data1.getString("sub_dep_name");
+                        id2[i] = json_data1.getString("id");
                     }
-                    SpinnerDate(a1, a2, s1);
-                    SpinnerDate(a3, a4, s2);
+
 
                 } catch (Exception ex) {
 
