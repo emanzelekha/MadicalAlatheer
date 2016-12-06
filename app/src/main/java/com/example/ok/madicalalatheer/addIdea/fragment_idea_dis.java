@@ -116,7 +116,7 @@ String []code,from,content,job,Ideaid;
                         }
 
                     }
-                    //   goalid[1]="9";  goals[1]="hjgjg" ; code[1]="0" ;to[1]="7" ;active[1]=true; buttons[1]=false;
+                  //   goalid[1]="9";  goals[1]="hjgjg" ; code[1]="0" ;to[1]="7" ;active[1]=true; buttons[1]=false;
                  /*goalid=new String[]{"4","5"};
                     goals=new String[]{"4","9"};
                     code=new String[]{"4","yg"};

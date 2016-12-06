@@ -24,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ok.madicalalatheer.AddGoal.AddGoal;
 import com.example.ok.madicalalatheer.Fonts.MySpinnerAdapter;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
@@ -47,6 +48,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class insert_idea extends Fragment implements AdapterView.OnItemSelectedListener,View.OnClickListener {
     TextView btn_add,Coding;
+    JSONObject Date;
     EditText t1, t2;
     Spinner spinnermanges, spinner1;
     Spinner spinneremployer;
@@ -96,15 +98,16 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
 
         i = getActivity().getIntent();
         if (i.getStringExtra("InsertIdea").equals("1")) {
-           // try {
-              //  JSONObject Date=new JSONObject(i.getStringExtra("IdeaData"));
+            try {
+                Date = new JSONObject(i.getStringExtra("IdeaData"));
               //  spinner1.setSelection();
+                System.out.println(i.getStringExtra("IdeaData") + "Ooooout");
+                t1.setText(Date.getString("idea_appre"));
+                t2.setText(Date.getString("idea_content"));
 
-
-
-          /*  } catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
-            }*/
+            }
             btn_add.setText("تعديل الفكرة");
             // JSONObject out = null;
 
@@ -262,7 +265,9 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                         RequestParams params = new RequestParams();
                         if (i.getStringExtra("InsertIdea").equals("1")) {
                         params.put("request", "update_idea");
-                        params.put("idea",i.getStringExtra("Ideaid"));}else{
+                        params.put("ideaid",i.getStringExtra("Ideaid"));
+                        }
+                        else{
                             params.put("request", "add_idea");
                         }
                         params.put("goal_id",choosetargetid[spinner1.getSelectedItemPosition()-1]);
@@ -274,6 +279,7 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                         String id = pref.getString("name", "");
                         params.put("admin_name",id);
                         Load(params);
+                        System.out.println(params+"fghfrjgf");
                     } catch (Exception ex) {
                         Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
                     }
@@ -313,7 +319,6 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                 try {
                     if (response.length() == 5) {
 
-                        Coding.setText(Integer.parseInt(response.getJSONObject("id").getString("id"))+1+"");
                         JSONArray Goal = response.getJSONArray("goalinfo");
                         JSONArray Dep = response.getJSONArray("departementinfo");
                         JSONArray Emp = response.getJSONArray("employeeinfo");
@@ -351,7 +356,37 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                         SpinnerDate(choose, choosetarget, spinner1);
                         SpinnerDate(choosemang, manages, spinnermanges);
                         SpinnerDate(chooseemployer, employer, spinneremployer);
+                        if (i.getStringExtra("InsertIdea").equals("1")) {
+                            Coding.setText(Date.getString("id"));
+                            for (int i = 0; i < choosetargetid.length; i++) {
+                                if (Date.getString("goal_id").equals(choosetargetid[i])) {
+                                    spinner1.setSelection(i + 1);
+                                    break;
+                                }
+                            }
+                        } else {
+                            Coding.setText(Integer.parseInt(response.getJSONObject("id").getString("id")) + 1 + "");
+                        }
 
+                    }else {
+                        JSONObject response1=response.getJSONObject("respond");
+                        if(response1.getString("action").equals("insert success")&&response1.getString("message").equals("1")){
+                            Intent i = new Intent(getContext(), activity_addIdea.class);
+                            i.putExtra("InsertIdea", "0");
+                            Toast.makeText(getActivity().getApplicationContext(), "تم تسجيل الفكرة بنجاح", Toast.LENGTH_LONG).show();
+                            startActivity(i);
+                        }
+
+                       else if(response1.getString("action").equals("update success")&&response1.getString("message").equals("1")){
+                            Intent i = new Intent(getContext(), activity_addIdea.class);
+                            i.putExtra("InsertIdea", "0");
+                            Toast.makeText(getActivity().getApplicationContext(), "تم تعديل الفكرة بنجاح", Toast.LENGTH_LONG).show();
+                            startActivity(i);
+                        }
+
+                        else{
+                            Toast.makeText(getActivity().getApplicationContext(), "حاول مرة اخرى ", Toast.LENGTH_LONG).show();
+                        }
                     }
 
 
@@ -369,13 +404,8 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                 super.onFailure(statusCode, headers, responseString, throwable);
                 // Toast.makeText(getActivity().getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
                 // Log.e("onFailure", "----------" + responseString);
-                String insert = responseString.replace("<meta charset=\"utf-8\" /><meta charset=\"utf-8\" />", "");
-                try {
-                    JSONObject x = new JSONObject(insert);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Log.e("onFailure", "----------" + insert);
+
+                Log.e("onFailure", "----------" + responseString);
             }
 
             @Override
