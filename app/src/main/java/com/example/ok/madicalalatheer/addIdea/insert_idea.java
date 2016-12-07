@@ -377,7 +377,7 @@ public class insert_idea extends Fragment implements AdapterView.OnItemSelectedL
                             startActivity(i);
                         }
 
-                       else if(response1.getString("action").equals("update success")&&response1.getString("message").equals("1")){
+                       else if(response1.getString("action").equals("updated success")&&response1.getString("message").equals("1")){
                             Intent i = new Intent(getContext(), activity_addIdea.class);
                             i.putExtra("InsertIdea", "0");
                             Toast.makeText(getActivity().getApplicationContext(), "تم تعديل الفكرة بنجاح", Toast.LENGTH_LONG).show();

@@ -174,26 +174,27 @@ public class TableLayoutGoals extends AppCompatActivity implements AdapterView.O
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()) {
             case R.id.s1:
-
                 if (s1.getSelectedItemPosition() != 0) {
                     baclspinner.setVisibility(View.VISIBLE);
                     a4 = a5[s1.getSelectedItemPosition() - 1].split(",");
+                    a6=idsupall[s1.getSelectedItemPosition() - 1].split(",");
                 } else {
                     baclspinner.setVisibility(View.GONE);
                 }
                 SpinnerDate(a3, a4, s2);
                 break;
             case R.id.s2:
+                if(adapterView.getSelectedItemPosition()!=0){
                 try {
-                  /*  RequestParams params = new RequestParams();
-                    params.put("request", "goalreportoutput"
-                    );
-                    params.put("main", id[s1.getSelectedItemPosition() - 1]);
-                    params.put("sub", id2[s2.getSelectedItemPosition() - 1]);
-                    Load(params);*/
-                } catch (Exception ex) {
+                    RequestParams params = new RequestParams();
+                    params.put("request", "goalreportoutput");
+                    params.put("main", iddep[s1.getSelectedItemPosition() - 1]);
+                    params.put("sub", a6[s2.getSelectedItemPosition() - 1]);
+                    Load(params);
 
-                }
+                } catch (Exception ex) {
+                    System.out.println(ex+"لطخة"+"khngjdfghju");
+                }}
                 break;
 
         }
@@ -226,7 +227,7 @@ public class TableLayoutGoals extends AppCompatActivity implements AdapterView.O
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
                 try {
-                    a2 = new String[response.length() - 1];
+                  /*  a2 = new String[response.length() - 1];
                     id = new String[response.length() - 1];
                     for (int i = 0; i < response.length() - 1; i++) {
                         JSONObject out = response.getJSONObject(i + "");
@@ -242,7 +243,7 @@ public class TableLayoutGoals extends AppCompatActivity implements AdapterView.O
                         a4[i] = json_data1.getString("sub_dep_name");
                         id2[i] = json_data1.getString("id");
                     }
-
+*/
 
                 } catch (Exception ex) {
 
