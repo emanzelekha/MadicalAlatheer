@@ -151,6 +151,7 @@ public class LoginFragment extends Fragment {
                        // intent.putExtra("id", response.getString("message"));
 
                         startActivity(intent);
+                        getActivity().finish();
 
                     } else {
 

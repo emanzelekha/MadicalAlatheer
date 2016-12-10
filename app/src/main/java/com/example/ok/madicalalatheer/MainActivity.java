@@ -186,7 +186,7 @@ View goal,idea,process,report,main;
             public void onStart() {
                 progressDialog = new ProgressDialog(MainActivity.this);
                 progressDialog.setCancelable(false);
-                progressDialog.setMessage("ÌÇÑì ÇáÈÍË...");
+                progressDialog.setMessage("جارى التحميل...");
                 progressDialog.show();
             }
 
@@ -218,9 +218,14 @@ View goal,idea,process,report,main;
                                 set += json_data1.getString("id") + ",";
                                 set1 += json_data1.getString("sub_dep_name") + ",";
                             }
+
                         }
+                        if(set.equals("")&&set1.equals("")){
+                            SubDepId1 += "0"+ "oo";
+                            SubDep1 += "لا يوجد اقسام" + "oo";
+                        }else {
                         SubDepId1 += set + "oo";
-                        SubDep1 += set1 + "oo";
+                        SubDep1 += set1 + "oo";}
                     }
                 //  System.out.println(SubDep1 + "                               " + SubDepId1);
                     SharedPreferences sharedPref = getBaseContext().getSharedPreferences("Data", Context.MODE_PRIVATE);

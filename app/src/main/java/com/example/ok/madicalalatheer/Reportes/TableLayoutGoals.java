@@ -3,16 +3,12 @@ package com.example.ok.madicalalatheer.Reportes;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +19,6 @@ import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,33 +30,33 @@ import cz.msebera.android.httpclient.Header;
 
 public class TableLayoutGoals extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Spinner s1, s2;
-    TextView close;
-    View Mangment, baclspinner;
+    TextView close, subname, goals;
+    Context c;
+    View Mangment, baclspinner, font;
     String[] a1, a2 = null, a3, a4, a5, a6 = null, id, id2, iddep, idsupall, idsup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_layout);
-        TypefaceUtil.overrideFonts(getBaseContext(), Mangment);
-        close = (TextView) findViewById(R.id.close);
+        component();
+        TypefaceUtil.overrideFonts(this, Mangment);
+
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        component();
+
         click();
 
-        init();
+        //  init();
         a1 = new String[]{"*اختيار الادارة"};
         a3 = new String[]{"*اختيار القسم"};
         SharedPreferences pref = getBaseContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
         a2 = pref.getString("MainDep", "").split(",");
         a5 = pref.getString("SubDep", "").split("oo");
-
-
         iddep = pref.getString("MainDepId", "").split(",");
         idsupall = pref.getString("SubDepId", "").split("oo");
 
@@ -77,8 +72,11 @@ public class TableLayoutGoals extends AppCompatActivity implements AdapterView.O
     }
 
     public void component() {
-
+        close = (TextView) findViewById(R.id.close);
+        goals = (TextView) findViewById(R.id.goals);
+        subname = (TextView) findViewById(R.id.supname);
         Mangment = findViewById(R.id.activity_table_layout);
+        font = findViewById(R.id.font);
         s1 = (Spinner) findViewById(R.id.s1);
         s2 = (Spinner) findViewById(R.id.s2);
         baclspinner = findViewById(R.id.baclspinner);
@@ -103,78 +101,13 @@ public class TableLayoutGoals extends AppCompatActivity implements AdapterView.O
         s.setAdapter(adapter);
     }
 
-    public void init() {
-        TableLayout stk = (TableLayout) findViewById(R.id.table_main);
-        TableRow tbrow0 = new TableRow(this);
-
-        TextView tv0 = new TextView(this);
-        tv0.setText(" المسلسل ");
-        tv0.setTextColor(Color.BLACK);
-        tv0.setGravity(Gravity.CENTER);
-        tv0.setPadding(10, 10, 10, 10);
-
-        tbrow0.addView(tv0);
-        TextView tv1 = new TextView(this);
-        tv1.setText(" الهدف ");
-
-        tv1.setTextColor(Color.BLACK);
-        tv1.setGravity(Gravity.CENTER);
-        tv1.setPadding(10, 10, 10, 10);
-        tbrow0.addView(tv1);
-        TextView tv2 = new TextView(this);
-        tv2.setText(" عدد الاقسام ");
-        tv2.setTextColor(Color.BLACK);
-        tv2.setGravity(Gravity.CENTER);
-        tv2.setPadding(10, 10, 10, 10);
-        tbrow0.addView(tv2);
-       /* TextView tv3 = new TextView(this);
-        tv3.setText(" Stock Remaining ");
-        tv3.setTextColor(Color.BLACK);
-        tv3.setGravity(Gravity.CENTER);
-        tv3.setPadding(5,5,5,5);
-        tbrow0.addView(tv3);*/
-        stk.addView(tbrow0);
-        for (int i = 0; i < 25; i++) {
-            TableRow tbrow = new TableRow(this);
-            tbrow.setBackground(i % 2 == 0 ? getResources().getDrawable(R.drawable.withee) : getResources().getDrawable(R.drawable.withet));
-            TextView t1v = new TextView(this);
-            t1v.setText("" + i);
-            t1v.setBackground(getResources().getDrawable(R.drawable.table));
-            t1v.setPadding(10, 10, 10, 10);
-            t1v.setTextColor(Color.BLACK);
-            t1v.setGravity(Gravity.CENTER);
-            tbrow.addView(t1v);
-            TextView t2v = new TextView(this);
-            t2v.setText("Product " + i);
-            t2v.setBackground(getResources().getDrawable(R.drawable.table));
-            t2v.setPadding(10, 10, 10, 10);
-            t2v.setTextColor(Color.BLACK);
-            t2v.setGravity(Gravity.CENTER);
-            tbrow.addView(t2v);
-            TextView t3v = new TextView(this);
-            t3v.setText("Rs." + i);
-            t3v.setBackground(getResources().getDrawable(R.drawable.table));
-            t3v.setPadding(10, 10, 10, 10);
-            t3v.setTextColor(Color.BLACK);
-            t3v.setGravity(Gravity.CENTER);
-            tbrow.addView(t3v);
-          /*  TextView t4v = new TextView(this);
-            t4v.setText("" + i * 15 / 32 * 10);
-            t4v.setBackground(getResources().getDrawable(R.drawable.table));
-            t4v.setPadding(3,3,3,3);
-            t4v.setTextColor(Color.BLACK);
-            t4v.setGravity(Gravity.CENTER);
-            tbrow.addView(t4v);*/
-            stk.addView(tbrow);
-        }
-
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()) {
             case R.id.s1:
                 if (s1.getSelectedItemPosition() != 0) {
+                    font.setVisibility(View.GONE);
                     baclspinner.setVisibility(View.VISIBLE);
                     a4 = a5[s1.getSelectedItemPosition() - 1].split(",");
                     a6=idsupall[s1.getSelectedItemPosition() - 1].split(",");
@@ -185,6 +118,7 @@ public class TableLayoutGoals extends AppCompatActivity implements AdapterView.O
                 break;
             case R.id.s2:
                 if(adapterView.getSelectedItemPosition()!=0){
+                 //   font.setVisibility(View.GONE);
                 try {
                     RequestParams params = new RequestParams();
                     params.put("request", "goalreportoutput");
@@ -194,7 +128,9 @@ public class TableLayoutGoals extends AppCompatActivity implements AdapterView.O
 
                 } catch (Exception ex) {
                     System.out.println(ex+"لطخة"+"khngjdfghju");
-                }}
+                }}else {
+                  //  font.setVisibility(View.GONE);
+                }
                 break;
 
         }
@@ -217,7 +153,7 @@ public class TableLayoutGoals extends AppCompatActivity implements AdapterView.O
             public void onStart() {
                 progressDialog = new ProgressDialog(TableLayoutGoals.this);
                 progressDialog.setCancelable(false);
-                progressDialog.setMessage("ÌÇÑì ÇáÈÍË...");
+                progressDialog.setMessage("جارى التحميل...");
                 progressDialog.show();
             }
 
@@ -226,24 +162,21 @@ public class TableLayoutGoals extends AppCompatActivity implements AdapterView.O
 
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
+                font.setVisibility(View.VISIBLE);
                 try {
-                  /*  a2 = new String[response.length() - 1];
-                    id = new String[response.length() - 1];
-                    for (int i = 0; i < response.length() - 1; i++) {
-                        JSONObject out = response.getJSONObject(i + "");
-                        a2[i] = out.getString("main_dep_name");
-                        id[i] = out.getString("id");
+                    String p, g;
+                    if (response.isNull("privite")) {
+                        p = "0";
+                    } else {
+                        p = response.getString("privite");
                     }
-                    JSONArray out2 = response.getJSONArray("supdepartement");
-                    a4 = new String[out2.length()];
-                    id2 = new String[out2.length()];
-                    for (int i = 0; i < out2.length(); i++) {
-
-                        JSONObject json_data1 = out2.getJSONObject(i);
-                        a4[i] = json_data1.getString("sub_dep_name");
-                        id2[i] = json_data1.getString("id");
+                    if (response.isNull("global")) {
+                        g = "0";
+                    } else {
+                        g = response.getString("global");
                     }
-*/
+                    goals.setText("عام: "+g+" | "+"خاص: "+p);
+                    subname.setText(a4[s2.getSelectedItemPosition() - 1]);
 
                 } catch (Exception ex) {
 

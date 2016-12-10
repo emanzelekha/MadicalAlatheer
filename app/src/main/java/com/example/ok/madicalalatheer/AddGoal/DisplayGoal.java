@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ok.madicalalatheer.AddGoal.AddGoalAdapter.Adapter;
@@ -98,6 +99,11 @@ public class DisplayGoal extends Fragment {
                     code = new String[response.length()];
                     to = new String[response.length()];
                     goals = new String[response.length()];
+                    if(response.length()==0){
+                        TextView found=(TextView)v.findViewById(R.id.found);
+                        found.setVisibility(View.VISIBLE);
+                        found.setText("لا يوجد افكار");
+                    }
                     for(int i=0;i<response.length();i++){
                        JSONObject data=response.getJSONObject(i);
                         Data[i]=data;

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
@@ -37,6 +38,7 @@ public class fragment_idea_dis extends Fragment {
 String []code,from,content,job,Ideaid;
     Boolean []active,buttons;
     JSONObject Data[];
+    TextView found;
     View v;
     private List<cotroldisidea> disList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -96,6 +98,11 @@ String []code,from,content,job,Ideaid;
                     from = new String[response.length()];
                     content = new String[response.length()];
                     job =new String[response.length()];
+                    if(response.length()==0){
+                        found=(TextView)v.findViewById(R.id.found);
+                        found.setVisibility(View.VISIBLE);
+                        found.setText("لا يوجد افكار");
+                    }
                     for(int i=0;i<response.length();i++){
                         JSONObject data=response.getJSONObject(i);
                         Data[i]=data;

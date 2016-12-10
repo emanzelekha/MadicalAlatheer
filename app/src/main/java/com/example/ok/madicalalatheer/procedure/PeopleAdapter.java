@@ -27,7 +27,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
     public PeopleAdapter(Context context) {
         super(context);
 
-        setItems(getSampleItems());
+
     }
 
     public static class PeopleListItem extends ExpandableRecyclerAdapter.ListItem {
@@ -64,8 +64,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
             super.bind(position);
             txt_target.setText(visibleItems.get(position).Text);
             sort.setText((String.valueOf(visibleItems.get(position).sort)));
-          /*  txt_target.setTypeface(Typeface.createFromAsset(.getAssets(), "fonts/DroidKufi-Bold.ttf"));
-            sort.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/DroidKufi-Bold.ttf"));*/
+
         }
     }
 
@@ -114,10 +113,10 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
         }
     }
 
-    private List<PeopleListItem> getSampleItems() {
+   public List<PeopleListItem> getSampleItems(ArrayList al) {
 
-        List<PeopleListItem> items = new ArrayList<>();
-        items.add(new PeopleListItem(1,"الهدف الاول"));
+        List<PeopleListItem> items = al;
+       /* items.add(new PeopleListItem(1,"الهدف الاول"));
         items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
         items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
         items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
@@ -132,7 +131,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
         items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
         items.add(new PeopleListItem(3,"الهدف الاول"));
         items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
+        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));*/
 
         return items;
     }

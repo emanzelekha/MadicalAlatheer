@@ -54,7 +54,7 @@ public class AddGoal extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         TextView t = (TextView) toolbar.findViewById(R.id.toolbar_title);
         // t.setTypeface(button);
-        t.setText(Html.fromHtml("<strong>المركز الطبى </strong>"));
+        t.setText(Html.fromHtml("<strong>الاهداف </strong>"));
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

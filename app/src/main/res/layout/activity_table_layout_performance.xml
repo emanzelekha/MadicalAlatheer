@@ -37,7 +37,6 @@ android:orientation="vertical"
 
                 android:id="@+id/RelativeLayout1"
                 android:layout_width="fill_parent"
-
                 android:layout_height="fill_parent"
                 android:orientation="vertical" >
 
@@ -48,6 +47,7 @@ android:orientation="vertical"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true" >
                 </TableLayout>
+
             </RelativeLayout>
         </HorizontalScrollView>
     </ScrollView>
