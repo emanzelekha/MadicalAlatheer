@@ -4,14 +4,10 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -100,12 +96,19 @@ public class fragement_procedure extends Fragment {
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
                 try {
+                    String t="";
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject out=response.getJSONObject(i);
+                        if(t.equals("")){
+                        t=out.getString("goal_title");}
 
+
+                    }
 
 
                 } catch (Exception ex) {

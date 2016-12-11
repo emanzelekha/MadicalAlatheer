@@ -1,11 +1,13 @@
 package com.example.ok.madicalalatheer.procedure;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +15,29 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.ok.madicalalatheer.Fonts.MySpinnerAdapter;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
 import com.example.ok.madicalalatheer.procedure.Modle.Controlprocedure;
 import com.example.ok.madicalalatheer.procedure.ProcedureAdapter.AdapterProceduer;
+import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import net.alhazmy13.hijridatepicker.HijriCalendarView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,6 +68,14 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
         TypefaceUtil.overrideFonts(getContext(), v);
         commponent();
         Click();
+        try {
+            RequestParams params = new RequestParams();
+            params.put("request", "getproceduresparam");//هتغير الاسم حسب ما يقولك وهتبعتلة ال id من الshared refrance
+
+            Load(params);
+        } catch (Exception ex) {
+            Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+        }
        // recyclerView = (RecyclerView) v.findViewById(R.id.recycler_procedure);
         a1 = new String[]{"*اختر عدد الاجراءات"};
 
@@ -162,4 +181,54 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+
+    public void Load(RequestParams params) throws JSONException {
+
+        AsyncHttpClient.post("", params, new JsonHttpResponseHandler() {
+            ProgressDialog progressDialog;
+
+            @Override
+            public void onStart() {
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setCancelable(false);
+                progressDialog.setMessage("جارى البحث...");
+                progressDialog.show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                Log.e("onSuccess", response + "");
+                Log.e("onSuccess", response.length() + "");
+                try {
+
+
+
+                } catch (Exception ex) {
+
+                    Toast.makeText(getActivity().getApplicationContext(), "اشاره النت ضغيفه", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                // Toast.makeText(getActivity().getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
+                // Log.e("onFailure", "----------" + responseString);
+
+                Log.e("onFailure", "----------" + responseString);
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                progressDialog.dismiss();
+            }
+        });
+
+
+    }
+
 }

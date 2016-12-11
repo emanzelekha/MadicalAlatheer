@@ -705,9 +705,31 @@
 
             </LinearLayout>
         </LinearLayout>
+
     </ScrollView>
 
+    <LinearLayout
 
+        android:id="@+id/Insert"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/addgoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/plus"
+            android:padding="8dp"
+            android:text="اضافة الاجراءات"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </LinearLayout>
 
 

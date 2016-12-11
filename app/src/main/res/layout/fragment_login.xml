@@ -84,7 +84,7 @@
                     android:background="@drawable/texted"
 
                     android:text="تسجيل دخول"
-                   />
+                    />
 
 
             </RelativeLayout>
