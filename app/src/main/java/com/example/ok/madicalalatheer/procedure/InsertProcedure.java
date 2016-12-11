@@ -2,17 +2,16 @@ package com.example.ok.madicalalatheer.procedure;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -31,11 +30,9 @@ import net.alhazmy13.hijridatepicker.HijriCalendarView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -44,11 +41,17 @@ import cz.msebera.android.httpclient.Header;
  */
 public class InsertProcedure extends Fragment implements View.OnClickListener, HijriCalendarView.OnDateSetListener, AdapterView.OnItemSelectedListener {
 
-    String[] a1, a2, a3, a4, procdure, code;
-    View v,v2,cardviewd,cardviewd2,cardviewd3,cardviewd4,cardviewd5;
+    String[] a1, a2, a3, a4, procdure, code, goalid,a6,a7;
+    View v, v2, cardviewd, cardviewd2, cardviewd3, cardviewd4, cardviewd5;
     LinearLayout Scrol;
-    View[]valesview=new View[]{cardviewd,cardviewd2,cardviewd3,cardviewd4,cardviewd5};
-    int vales[]=new int[]{R.id.cardviewd,R.id.cardviewd1,R.id.cardviewd2,R.id.cardviewd3,R.id.cardviewd4};
+    View[] valesview = new View[]{cardviewd, cardviewd2, cardviewd3, cardviewd4, cardviewd5};
+    int vales[] = new int[]{R.id.cardviewd, R.id.cardviewd1, R.id.cardviewd2, R.id.cardviewd3, R.id.cardviewd4};
+    Spinner s1row, s2row, s3row, s4row, s5row;
+    Spinner s[]=new Spinner[]{s1row, s2row, s3row, s4row, s5row};
+    int[] Spinner = new int[]{R.id.s1row, R.id.s1row2, R.id.s1row3, R.id.s1row4, R.id.s1row5};
+    /*Spinner s1row, s2row, s3row, s4row, s5row;
+    Spinner s[]=new Spinner[]{s1row, s2row, s3row, s4row, s5row};*/
+    int[] codeProcedureText = new int[]{R.id.codeProcedureText, R.id.codeProcedureText2, R.id.codeProcedureText3, R.id.codeProcedureText4, R.id.codeProcedureText5};
     Spinner s1, s2;
     private List<Controlprocedure> disList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -64,10 +67,15 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_insert_procedure, container, false);
-        v2=inflater.inflate(R.layout.procedurerow, container, false);
+        v2 = inflater.inflate(R.layout.procedurerow, container, false);
         TypefaceUtil.overrideFonts(getContext(), v);
         commponent();
         Click();
+        SharedPreferences pref = getContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
+
+        a6= pref.getString("employee", "").split("oo");
+        a7= pref.getString("employeeId", "").split("oo");
+
         try {
             RequestParams params = new RequestParams();
             params.put("request", "getproceduresparam");//هتغير الاسم حسب ما يقولك وهتبعتلة ال id من الshared refrance
@@ -76,16 +84,14 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
         } catch (Exception ex) {
             Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
         }
-       // recyclerView = (RecyclerView) v.findViewById(R.id.recycler_procedure);
+        // recyclerView = (RecyclerView) v.findViewById(R.id.recycler_procedure);
         a1 = new String[]{"*اختر عدد الاجراءات"};
 
         a2 = new String[]{"1", "2", "3", "4", "5"};
         a3 = new String[]{"*قم باختيار الهدف"};
 
-        a4 = new String[]{"1", "2", "3", "4", "5"};
-        SpinnerDate(a1, a2, s2);
-        SpinnerDate(a3, a4, s1);
 
+        SpinnerDate(a1, a2, s2);
 
 
         return v;
@@ -94,9 +100,9 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
     public void commponent() {
         s1 = (Spinner) v.findViewById(R.id.s1P);
         s2 = (Spinner) v.findViewById(R.id.s2P);
-        Scrol=(LinearLayout)v.findViewById(R.id.Scrol);
-        for(int i=0;i<5;i++){
-            valesview[i]=v.findViewById(vales[i]);
+        Scrol = (LinearLayout) v.findViewById(R.id.Scrol);
+        for (int i = 0; i < 5; i++) {
+            valesview[i] = v.findViewById(vales[i]);
         }
     }
 
@@ -154,24 +160,15 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                 System.out.println(parent.getSelectedItem().toString() + "lll");
                 procdure = new String[parent.getSelectedItemPosition()];
                 code = new String[parent.getSelectedItemPosition()];
-                NumberFormat nf = NumberFormat.getInstance(new Locale("ar", "EG"));//formate
-             //   LinearLayout l[]=new LinearLayout[parent.getSelectedItemPosition()];
-
                 for (int i = 0; i < 5; i++) {
-                    if(i<parent.getSelectedItemPosition()){
-                    valesview[i].setVisibility(View.VISIBLE);}else{
+                    if (i < parent.getSelectedItemPosition()) {
+                        valesview[i].setVisibility(View.VISIBLE);
+                    } else {
                         valesview[i].setVisibility(View.GONE);
                     }
-                   /* l[i] = new LinearLayout(getContext()); // initialize it
-                    l[i].setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                   // ViewGroup layout = (ViewGroup) l(i);
-                    l[i].addView(v2);
-*/
-                  //  procdure[i] = "الاجراء " + String.valueOf(nf.format(i + 1));
-                  //y  code[i] = String.valueOf(nf.format(i + 1));
+
                 }
 
-//                prepareMovieData(code, procdure);
                 break;
         }
 
@@ -202,9 +199,15 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
                 try {
+                    a4 = new String[response.length()];
+                    goalid = new String[response.length()];
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject out = response.getJSONObject(i + "");
+                        a4[i] = out.getString("goal_title");
+                        goalid[i] = out.getString("id");
 
-
-
+                    }
+                    SpinnerDate(a3, a4, s1);
                 } catch (Exception ex) {
 
                     Toast.makeText(getActivity().getApplicationContext(), "اشاره النت ضغيفه", Toast.LENGTH_LONG).show();
@@ -215,8 +218,6 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                // Toast.makeText(getActivity().getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
-                // Log.e("onFailure", "----------" + responseString);
 
                 Log.e("onFailure", "----------" + responseString);
             }

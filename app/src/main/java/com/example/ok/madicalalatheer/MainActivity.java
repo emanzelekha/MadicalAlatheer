@@ -36,8 +36,7 @@ import cz.msebera.android.httpclient.Header;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 View goal,idea,process,report,main;
     Typeface typeface;
-    String[] MainDep, MainDepId, SubDep, SubDepId;
-    String MainDep1 = "", MainDepId1 = "", SubDep1 = "", SubDepId1 = "",SubDep1e = "", SubDepId1e = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,14 +122,6 @@ View goal,idea,process,report,main;
         Click();
         TypefaceUtil.overrideFonts(getBaseContext(), main);
 
-        try {
-            RequestParams params = new RequestParams();
-            params.put("request", "goalsreport");
-
-            Load(params);
-        } catch (Exception ex) {
-            Toast.makeText(getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
-        }
 
     }
 
@@ -177,109 +168,7 @@ View goal,idea,process,report,main;
     }
 
 
-    public void Load(RequestParams params) throws JSONException {
 
-        AsyncHttpClient.post("", params, new JsonHttpResponseHandler() {
-            ProgressDialog progressDialog;
-
-            @Override
-            public void onStart() {
-                progressDialog = new ProgressDialog(MainActivity.this);
-                progressDialog.setCancelable(false);
-                progressDialog.setMessage("جارى التحميل...");
-                progressDialog.show();
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
-                Log.e("onSuccess", response + "");
-                Log.e("onSuccess", response.length() + "");
-                try {
-                    MainDep = new String[response.length()-2 ];
-                    MainDepId = new String[response.length()-2];
-                    SubDep = new String[response.getJSONArray("supdepartement").length()];
-                    SubDepId = new String[response.getJSONArray("supdepartement").length()];
-                    for (int i = 0; i < response.length()-2; i++) {
-                        JSONObject json_data = response.getJSONObject(i + "");
-                        MainDep[i] = json_data.getString("main_dep_name");
-                        MainDepId[i] = json_data.getString("id");
-                        MainDepId1 += json_data.getString("id") + ",";
-                        MainDep1 += json_data.getString("main_dep_name") + ",";
-
-                    }
-                    JSONArray subdebartement = response.getJSONArray("supdepartement");
-                    for (int i = 0; i < response.length() - 2; i++) {
-                        String set = "";
-                        String set1 = "";
-                        for (int j = 0; j < subdebartement.length(); j++) {
-                            JSONObject json_data1 = subdebartement.getJSONObject(j);
-                            if (MainDepId[i].equals(json_data1.getString("main_dep_f_id"))) {
-                                set += json_data1.getString("id") + ",";
-                                set1 += json_data1.getString("sub_dep_name") + ",";
-                            }
-
-                        }
-                        if(set.equals("")&&set1.equals("")){
-                            SubDepId1 += "0"+ "oo";
-                            SubDep1 += "لا يوجد اقسام" + "oo";
-                        }else {
-                        SubDepId1 += set + "oo";
-                        SubDep1 += set1 + "oo";}
-                    }
-                    JSONArray employee = response.getJSONArray("employee");
-                    for (int i = 0; i < response.length() - 2; i++) {
-                        String sete = "";
-                        String set1e = "";
-                        for (int j = 0; j < subdebartement.length(); j++) {
-                            JSONObject json_data1 = employee.getJSONObject(j);
-                            if (MainDepId[i].equals(json_data1.getString("main_dep_f_id"))) {
-                                sete += json_data1.getString("id") + ",";
-                                set1e += json_data1.getString("emp_name") + ",";
-                            }
-
-                        }
-                        if(sete.equals("")&&set1e.equals("")){
-                            SubDepId1e += "0"+ "oo";
-                            SubDep1e += "لا يوجد اقسام" + "oo";
-                        }else {
-                            SubDepId1e += sete + "oo";
-                            SubDep1e += set1e + "oo";}
-                    }
-                //  System.out.println(SubDep1 + "                               " + SubDepId1);
-                    SharedPreferences sharedPref = getBaseContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("MainDep", MainDep1);
-                    editor.putString("MainDepId", MainDepId1);
-                    editor.putString("SubDep", SubDep1);
-                    editor.putString("SubDepId", SubDepId1);
-                    editor.putString("employee", SubDep1e);
-                    editor.putString("employeeId", SubDepId1e);
-                    editor.commit();
-
-                } catch (Exception ex) {
-
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
-
-                }
-            }
-
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-                Log.e("onFailure", "----------" + responseString);
-            }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                progressDialog.dismiss();
-            }
-        });
-
-
-    }
 
 }
 

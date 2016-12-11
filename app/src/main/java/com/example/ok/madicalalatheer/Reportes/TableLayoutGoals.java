@@ -11,17 +11,14 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.ok.madicalalatheer.Fonts.MySpinnerAdapter;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
 import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -118,18 +115,18 @@ public class TableLayoutGoals extends AppCompatActivity implements AdapterView.O
                 break;
             case R.id.s2:
                 if(adapterView.getSelectedItemPosition()!=0){
-                 //   font.setVisibility(View.GONE);
-                try {
-                    RequestParams params = new RequestParams();
-                    params.put("request", "goalreportoutput");
-                    params.put("main", iddep[s1.getSelectedItemPosition() - 1]);
-                    params.put("sub", a6[s2.getSelectedItemPosition() - 1]);
-                    Load(params);
+                    //   font.setVisibility(View.GONE);
+                    try {
+                        RequestParams params = new RequestParams();
+                        params.put("request", "goalreportoutput");
+                        params.put("main", iddep[s1.getSelectedItemPosition() - 1]);
+                        params.put("sub", a6[s2.getSelectedItemPosition() - 1]);
+                        Load(params);
 
-                } catch (Exception ex) {
-                    System.out.println(ex+"لطخة"+"khngjdfghju");
-                }}else {
-                  //  font.setVisibility(View.GONE);
+                    } catch (Exception ex) {
+                        System.out.println(ex+"لطخة"+"khngjdfghju");
+                    }}else {
+                    //  font.setVisibility(View.GONE);
                 }
                 break;
 

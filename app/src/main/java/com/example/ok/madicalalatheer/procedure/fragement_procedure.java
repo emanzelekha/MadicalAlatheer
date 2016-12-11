@@ -36,7 +36,7 @@ public class fragement_procedure extends Fragment {
     RecyclerView recycler;
     PeopleAdapter adapter;
     View v;
-
+    List<PeopleAdapter.PeopleListItem> items = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,15 +44,6 @@ public class fragement_procedure extends Fragment {
 
         TypefaceUtil.overrideFonts(getContext(), v);
         recycler = (RecyclerView) v.findViewById(R.id.main_recycler);
-        adapter = new PeopleAdapter(getContext());
-        adapter.setItems(getSampleItems());
-        adapter.setMode(ExpandableRecyclerAdapter.MODE_ACCORDION);
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycler.setAdapter(adapter);
-
-        return v;
-    }
-    private List<PeopleAdapter.PeopleListItem> getSampleItems() {
         try {
             RequestParams params = new RequestParams();
             params.put("request", "displayprocedure");//هتغير الاسم حسب ما يقولك وهتبعتلة ال id من الshared refrance
@@ -61,27 +52,20 @@ public class fragement_procedure extends Fragment {
         } catch (Exception ex) {
             Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
         }
+        adapter = new PeopleAdapter(getContext());
 
-        List<PeopleAdapter.PeopleListItem> items = new ArrayList<>();
-        items.add(new PeopleAdapter.PeopleListItem(1,"الهدف الاول"));
-        items.add(new PeopleAdapter.PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleAdapter.PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleAdapter.PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleAdapter.PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleAdapter.PeopleListItem(2,"الهدف الاول"));
-        items.add(new PeopleAdapter.PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleAdapter.PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleAdapter.PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleAdapter.PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleAdapter.PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleAdapter.PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleAdapter.PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleAdapter.PeopleListItem(3,"الهدف الاول"));
-        items.add(new PeopleAdapter.PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleAdapter.PeopleListItem("الأجراء الجديد","9/2/1438"));
+        adapter.setMode(ExpandableRecyclerAdapter.MODE_ACCORDION);
+        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        recycler.setAdapter(adapter);
+
+        return v;
+    }
+
+   /* private List<PeopleAdapter.PeopleListItem> getSampleItems() {
 
         return items;
-    }
+    }*/
+
     public void Load(RequestParams params) throws JSONException {
 
         AsyncHttpClient.post("", params, new JsonHttpResponseHandler() {
@@ -101,16 +85,25 @@ public class fragement_procedure extends Fragment {
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
                 try {
-                    String t="";
+                    String t = "";
+                    int m=0;
                     for (int i = 0; i < response.length(); i++) {
-                        JSONObject out=response.getJSONObject(i);
-                        if(t.equals("")){
-                        t=out.getString("goal_title");}
-
+                        JSONObject out = response.getJSONObject(i);
+                        if (t.equals("")) {
+                            m++;
+                            t = out.getString("goal_title");
+                            items.add(new PeopleAdapter.PeopleListItem(m,t));
+                        }else if(!out.getString("goal_title").equals(t)){
+                            m++;
+                            t = out.getString("goal_title");
+                            items.add(new PeopleAdapter.PeopleListItem(m,t));
+                        } else if (out.getString("goal_title").equals(t)) {
+                            items.add(new PeopleAdapter.PeopleListItem(out.getString("pro_title"), out.getString("pro_end_date")));
+                        }
 
                     }
 
-
+                    adapter.setItems(items);
                 } catch (Exception ex) {
 
                     Toast.makeText(getActivity().getApplicationContext(), "اشاره النت ضغيفه", Toast.LENGTH_LONG).show();
@@ -121,7 +114,7 @@ public class fragement_procedure extends Fragment {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                Log.e("onFailure", "----------" +responseString);
+                Log.e("onFailure", "----------" + responseString);
             }
 
             @Override
@@ -136,4 +129,3 @@ public class fragement_procedure extends Fragment {
 
 
 }
-
