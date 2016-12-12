@@ -69,7 +69,7 @@
 
 </LinearLayout>
         <LinearLayout
-            android:id="@+id/ideadetails"
+            android:id="@+id/Deletproc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -90,6 +90,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/Editproc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
