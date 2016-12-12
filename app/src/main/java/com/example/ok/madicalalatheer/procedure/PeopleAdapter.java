@@ -113,26 +113,5 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
         }
     }
 
-   public List<PeopleListItem> getSampleItems(ArrayList al) {
 
-        List<PeopleListItem> items = al;
-       /* items.add(new PeopleListItem(1,"الهدف الاول"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleListItem(2,"الهدف الاول"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleListItem(3,"الهدف الاول"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));
-        items.add(new PeopleListItem("الأجراء الجديد","9/2/1438"));*/
-
-        return items;
-    }
 }

@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff">
 
     <!-- TODO: Update blank fragment layout -->
@@ -40,7 +39,7 @@
             android:textColorHint="#fff"
             android:drawablePadding="15dp"
             android:textColor="#fff"
-
+            android:drawableRight="@drawable/user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -54,11 +53,11 @@
             android:hint="كلمة المرور"
             android:textColorHint="#fff"
             android:textColor="#fff"
+            android:drawableRight="@drawable/lock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:gravity="center|right" />
-
 
         <LinearLayout
             android:layout_marginTop="2dp"

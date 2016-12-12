@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
 
             LoginFragment f1 = new LoginFragment();
             fragmentTransaction.replace(android.R.id.content, f1);
-        fragmentTransaction.commit();
+            fragmentTransaction.commit();
         try {
             RequestParams params = new RequestParams();
             params.put("request", "goalsreport");
@@ -64,14 +64,14 @@ public class Login extends AppCompatActivity {
 
         AsyncHttpClient.post("", params, new JsonHttpResponseHandler() {
             ProgressDialog progressDialog;
-/*
+
             @Override
             public void onStart() {
-                progressDialog = new ProgressDialog(MainActivity.this);
+                progressDialog = new ProgressDialog(Login.this);
                 progressDialog.setCancelable(false);
                 progressDialog.setMessage("جارى التحميل...");
                 progressDialog.show();
-            }*/
+            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -114,7 +114,7 @@ public class Login extends AppCompatActivity {
                     for (int i = 0; i < response.length() - 2; i++) {
                         String sete = "";
                         String set1e = "";
-                        for (int j = 0; j < subdebartement.length(); j++) {
+                        for (int j = 0; j < employee.length(); j++) {
                             JSONObject json_data1 = employee.getJSONObject(j);
                             if (MainDepId[i].equals(json_data1.getString("main_dep_f_id"))) {
                                 sete += json_data1.getString("id") + ",";
@@ -122,14 +122,11 @@ public class Login extends AppCompatActivity {
                             }
 
                         }
-                        if(sete.equals("")&&set1e.equals("")){
-                            SubDepId1e += "0"+ "oo";
-                            SubDep1e += "لا يوجد اقسام" + "oo";
-                        }else {
+
                             SubDepId1e += sete + "oo";
-                            SubDep1e += set1e + "oo";}
+                            SubDep1e += set1e + "oo";
                     }
-                    //  System.out.println(SubDep1 + "                               " + SubDepId1);
+                    System.out.println(SubDep1e + " bbbbbbb               " + SubDepId1e);
                     SharedPreferences sharedPref = getBaseContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("MainDep", MainDep1);
@@ -154,11 +151,11 @@ public class Login extends AppCompatActivity {
                 Log.e("onFailure", "----------" + responseString);
             }
 
-           /* @Override
+            @Override
             public void onFinish() {
                 super.onFinish();
                 progressDialog.dismiss();
-            }*/
+            }
         });
 
 

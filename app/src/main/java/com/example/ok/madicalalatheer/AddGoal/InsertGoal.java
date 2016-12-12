@@ -557,6 +557,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                         i.putExtra("InsertGoal", "0");
                         if(response.getString("action").equals("update")){
                             Toast.makeText(getActivity().getApplicationContext(), "تم التعديل بنجاح", Toast.LENGTH_LONG).show();
+                            startActivity(i);
                         }else{
                         Toast.makeText(getActivity().getApplicationContext(), "تم الاضافة بنجاح", Toast.LENGTH_LONG).show();}
                         startActivity(i);

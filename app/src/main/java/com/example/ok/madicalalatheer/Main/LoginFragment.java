@@ -80,6 +80,7 @@ public class LoginFragment extends Fragment {
         String tests = pref.getString("pass", "");
         name.setText(id);
         pass.setText(tests);
+
         //  Toast.makeText(getActivity().getApplicationContext(), tests + id, Toast.LENGTH_LONG).show();
 
 
