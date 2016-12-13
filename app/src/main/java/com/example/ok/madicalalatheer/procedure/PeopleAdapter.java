@@ -5,17 +5,28 @@ package com.example.ok.madicalalatheer.procedure;
  */
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.ok.madicalalatheer.AddGoal.AddGoal;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
+import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
 import com.innodroid.expandablerecycler.ExpandableRecyclerAdapter;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 
 public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.PeopleListItem> {
     public static final int TYPE_PERSON = 1001;
@@ -60,6 +71,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
         public String txt_last;
         public int sort;
         public String date;
+        public JSONObject detals;
 
         public PeopleListItem(int sort, String group) {
             super(TYPE_HEADER);
@@ -68,12 +80,12 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
             this.sort = sort;
         }
 
-        public PeopleListItem(String first, String date,JSONObject detals) {
+        public PeopleListItem(String first, String date, JSONObject detals) {
             super(TYPE_PERSON);
-
+            this.detals = detals;
             Text = first + "";
             this.date = date + "";
-        }
+    }
     }
 
     public class HeaderViewHolder extends ExpandableRecyclerAdapter.HeaderViewHolder {
@@ -90,7 +102,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
             txt_target.setText(visibleItems.get(position).Text);
             sort.setText((String.valueOf(visibleItems.get(position).sort)));
 
-        }
+    }
     }
 
     public class PersonViewHolder extends ExpandableRecyclerAdapter.ViewHolder {
@@ -105,19 +117,86 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
             Editproc = view.findViewById(R.id.Editproc);
         }
 
-        public void bind(int position) {
-
+        public void bind(final int position) {
             procedure.setText(visibleItems.get(position).Text);
             date.setText(visibleItems.get(position).date);
+
             Deletproc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
+                    try {
+                        RequestParams params = new RequestParams();
+                        params.put("request", "delete_procedure");//هتغير الاسم حسب ما يقولك وهتبعتلة ال id من الshared refrance
+                        params.put("proid", visibleItems.get(position).detals.getString("goal_id"));
+                        Load(params);
+                    } catch (Exception ex) {
+                        Toast.makeText(context.getContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+                }
+
+                    System.out.println(visibleItems.get(position).detals + "jhjgyugy");
                 }
             });
 
-        }
+    }
     }
 
+    public void Load(RequestParams params) throws JSONException {
+
+        AsyncHttpClient.post("", params, new JsonHttpResponseHandler() {
+            ProgressDialog progressDialog;
+
+            @Override
+            public void onStart() {
+                progressDialog = new ProgressDialog(context.getContext());
+                progressDialog.setCancelable(false);
+                progressDialog.setMessage("جارى البحث...");
+                progressDialog.show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                Log.e("onSuccess", response + "");
+                Log.e("onSuccess", response.length() + "");
+                try {
+                    JSONObject r = response.getJSONObject("respond");
+                    if (r.getInt("message") == 1) {
+                        Toast.makeText(context.getContext(), "تم مسح الاجراء بنجاح", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(context.getContext(), activity_procedure.class);
+                        i.putExtra("Insertprocedure", "0");
+                        context.getContext().startActivity(i);
+
+                    } else {
+
+                        Toast.makeText(context.getContext(), "حاول مرة اخرى", Toast.LENGTH_LONG).show();
+
+                    }
+
+                } catch (Exception ex) {
+
+                    Toast.makeText(context.getContext(), "اشاره النت ضغيفه", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                // Toast.makeText(getActivity().getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
+                // Log.e("onFailure", "----------" + responseString);
+
+                Log.e("onFailure", "----------" + responseString);
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                progressDialog.dismiss();
+            }
+        });
+
+
+    }
 
 }
