@@ -120,7 +120,15 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
         public void bind(final int position) {
             procedure.setText(visibleItems.get(position).Text);
             date.setText(visibleItems.get(position).date);
-
+            Editproc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i=new Intent(context.getContext(),activity_procedure.class);
+                    i.putExtra("Insertprocedure", "1");
+                    i.putExtra("Data",visibleItems.get(position).detals+"");
+                    context.getContext().startActivity(i);
+                }
+            });
             Deletproc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -128,7 +136,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
                     try {
                         RequestParams params = new RequestParams();
                         params.put("request", "delete_procedure");//هتغير الاسم حسب ما يقولك وهتبعتلة ال id من الshared refrance
-                        params.put("proid", visibleItems.get(position).detals.getString("goal_id"));
+                        params.put("id", visibleItems.get(position).detals.getString("pro_code"));
                         Load(params);
                     } catch (Exception ex) {
                         Toast.makeText(context.getContext(), "Exception" + ex, Toast.LENGTH_LONG).show();

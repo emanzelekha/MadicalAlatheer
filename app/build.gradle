@@ -35,4 +35,5 @@ dependencies {
     compile 'com.github.grennis:ExpandableRecyclerView:0.9.3'
     compile 'com.loopj.android:android-async-http:1.4.9'
     testCompile 'junit:junit:4.12'
+    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
 }

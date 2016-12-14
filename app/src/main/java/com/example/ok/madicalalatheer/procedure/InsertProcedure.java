@@ -21,7 +21,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ok.madicalalatheer.AddGoal.AddGoal;
 import com.example.ok.madicalalatheer.Fonts.MySpinnerAdapter;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
@@ -46,11 +45,13 @@ import cz.msebera.android.httpclient.Header;
  */
 public class InsertProcedure extends Fragment implements View.OnClickListener, HijriCalendarView.OnDateSetListener, AdapterView.OnItemSelectedListener {
     String maxid = "", Date = "";
+    Intent i;
+    int e = 0;
     HijriCalendarDialog.Builder text;
     TextInputLayout input2Date, input2Date2, input2Date3, input2Date4, input2Date5;
     TextInputLayout Textinput1p, Textinput1p2, Textinput1p3, Textinput1p4, Textinput1p5;
     String[] a1, a2, a3, a4, procdure, code, goalid, a6, a7, employee, employeeId, emp;
-    View v, v2, cardviewd, cardviewd2, cardviewd3, cardviewd4, cardviewd5, Insert;
+    View v, v2, cardviewd, cardviewd2, cardviewd3, cardviewd4, cardviewd5, Insert, Spinner1;
     LinearLayout Scrol;
     TextInputLayout[] Input2 = new TextInputLayout[]{input2Date, input2Date2, input2Date3, input2Date4, input2Date5};
     int inputvales2[] = new int[]{R.id.input2Date, R.id.input2Date2, R.id.input2Date3, R.id.input2Date4, R.id.input2Date5};
@@ -60,7 +61,7 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
     //View
     View[] valesview = new View[]{cardviewd, cardviewd2, cardviewd3, cardviewd4, cardviewd5};
     int vales[] = new int[]{R.id.cardviewd, R.id.cardviewd1, R.id.cardviewd2, R.id.cardviewd3, R.id.cardviewd4};
-
+    JSONObject out = null;
     //All Spiner
     Spinner s1row, s2row, s3row, s4row, s5row;
     Spinner s[]=new Spinner[]{s1row, s2row, s3row, s4row, s5row};
@@ -74,6 +75,7 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
     EditText Editproc[] = new EditText[]{doing, doing2, doing3, doing4, doing5};
     int[] codeProcedureTextall = new int[]{R.id.doing, R.id.doing2, R.id.doing3, R.id.doing4, R.id.doing5};
     //Coding
+    TextView addgoal;
     TextView codeProcedure, codeProcedure2, codeProcedure3, codeProcedure4, codeProcedure5;
     TextView codeing[] = new TextView[]{codeProcedure, codeProcedure2, codeProcedure3, codeProcedure4, codeProcedure5};
     int[] codeall = new int[]{R.id.codeProcedure, R.id.codeProcedure2, R.id.codeProcedure3, R.id.codeProcedure4, R.id.codeProcedure5};
@@ -131,10 +133,81 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
         a2 = new String[]{"1", "2", "3", "4", "5"};
         a3 = new String[]{"*قم باختيار الهدف"};
         SpinnerDate(a1, a2, s2);
+
+
+        i = getActivity().getIntent();
+
+        if (i.getStringExtra("Insertprocedure").equals("1")) {
+          /*  try {
+                RequestParams params = new RequestParams();
+                params.put("request", "Editgoal");
+                params.put("goalid", i.getStringExtra("goalIdEdit"));
+                Load(params);
+            } catch (Exception ex) {
+                Toast.makeText(getActivity().getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+            }*/
+            addgoal.setText("تعديل الاجراء");
+            SpinnerDate(emp, employee, s[0]);
+
+            valesview[0].setVisibility(View.VISIBLE);
+            Spinner1.setVisibility(View.GONE);
+            try {
+                out = new JSONObject(i.getStringExtra("Data"));
+
+                codeing[0].setText(out.getString("pro_code"));
+                //s1.setSelection(Integer.parseInt(out.getString("goal_type")));
+                int print = 0;
+                for (int j = 0; j < employeeId.length; j++) {
+                    if (employeeId[j].equals(out.getString("employee_id"))) {
+                        print = j;
+                        break;
+                    }
+                }
+
+                s[0].setSelection(print + 1);
+                Editproc[0].setText(out.getString("pro_title"));
+                // DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                // SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+
+                /*Date date = df.parse(str);
+                long epoch = date.getTime();*/
+                // format.format(date);  goal_date_to
+                //  System.out.println(formatted);
+
+                // System.out.println(df.format(new Date(new long[] {out.getString("goal_date_from")}))+"jjj");
+                // from.setText(out.getString("goal_date_from"));
+
+
+                //  to.setText(out.getString("goal_date_to"));
+
+                Text[0].setText(out.getString("pro_end_date"));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
         return v;
     }
 
     public void commponent() {
+        Spinner1 = v.findViewById(R.id.s22);
+        addgoal = (TextView) v.findViewById(R.id.addgoal);
         s1 = (Spinner) v.findViewById(R.id.s1P);
         s2 = (Spinner) v.findViewById(R.id.s2P);
         Scrol = (LinearLayout) v.findViewById(R.id.Scrol);
@@ -157,11 +230,18 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
             ((TextView) s1.getChildAt(0)).setError(".");
             out = false;
         }
+        if (i.getStringExtra("Insertprocedure").equals("0")) {
         if (s2.getSelectedItemPosition() == 0) {
             ((TextView) s2.getChildAt(0)).setError(".");
             out = false;
         }
-        for (int i = 0; i < s2.getSelectedItemPosition(); i++) {
+        }
+        if (i.getStringExtra("Insertprocedure").equals("1")) {
+            e = 1;
+        } else {
+            e = s2.getSelectedItemPosition();
+        }
+        for (int i = 0; i < e; i++) {
 
             if (s[i].getSelectedItemPosition() == 0) {
                 ((TextView) s[i].getChildAt(0)).setError(".");
@@ -241,23 +321,34 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                 if (Validate()) {
                     try {
                         RequestParams params = new RequestParams();
-                        params.put("request", "insertprocedure");//هتغير الاسم حسب ما يقولك وهتبعتلة ال id من الshared refrance
-                        params.put("pro_num", s2.getSelectedItemPosition() );
+                        if (i.getStringExtra("Insertprocedure").equals("1")) {
+                            params.put("request", "update_procedure");
+                            params.put("pro_num", 1 );
+                            params.put("employee_id", employeeId[s[0].getSelectedItemPosition() - 1]);
+                            params.put("pro_title",  Editproc[0].getText().toString());
+                            params.put("pro_end_date", Text[0].getText().toString());
+                            params.put("pro_code",codeing[0].getText().toString());
+                        } else {
+                            params.put("request", "insertprocedure");
+                            params.put("pro_num", s2.getSelectedItemPosition() );
+                            String arr1[] = new String[e ];
+                            String arr2[] = new String[e ];
+                            String arr3[] = new String[e ];
+                            String arr4[] = new String[e ];
+                            for (int i = 0; i < e; i++) {
+                                arr1[i] = employeeId[s[i].getSelectedItemPosition() - 1];
+                                arr2[i] = Text[i].getText().toString();
+                                arr3[i] = Editproc[i].getText().toString();
+                                arr4[i]=((Integer.parseInt(maxid))+i)+"";
+                            }
+                            params.put("employee_id", arr1);
+                            params.put("pro_title", arr3);
+                            params.put("pro_end_date", arr2);
+                            params.put("pro_code",arr4);
+                        }//هتغير الاسم حسب ما يقولك وهتبعتلة ال id من الshared refrance}
+
                         params.put("goal_id", goalid[s1.getSelectedItemPosition() - 1]);
-                        String arr1[] = new String[s2.getSelectedItemPosition() ];
-                        String arr2[] = new String[s2.getSelectedItemPosition() ];
-                        String arr3[] = new String[s2.getSelectedItemPosition() ];
-                        String arr4[] = new String[s2.getSelectedItemPosition() ];
-                        for (int i = 0; i < s2.getSelectedItemPosition(); i++) {
-                            arr1[i] = employeeId[s[i].getSelectedItemPosition() - 1];
-                            arr2[i] = Text[i].getText().toString();
-                            arr3[i] = Editproc[i].getText().toString();
-                            arr4[i]=((Integer.parseInt(maxid))+i)+"";
-                        }
-                        params.put("employee_id", arr1);
-                        params.put("pro_title", arr3);
-                        params.put("pro_end_date", arr2);
-                        params.put("pro_code",arr4);
+
                         Load(params);
                         System.out.println(params+"dnsgvjfgh");
                     } catch (Exception ex) {
@@ -348,6 +439,14 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                     }
                     maxid = response.getString("maxid");
                     SpinnerDate(a3, a4, s1);
+                    if (i.getStringExtra("Insertprocedure").equals("1")) {
+                        for (int x = 0; x < goalid.length; x++) {
+                            if (goalid[x].equals(out.getString("goal_id"))) {
+                                s1.setSelection(x + 1);
+                                break;
+                            }
+                        }
+                    }
                 } catch (Exception ex) {
 
                     Toast.makeText(getActivity().getApplicationContext(), "اشاره النت ضغيفه", Toast.LENGTH_LONG).show();

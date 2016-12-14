@@ -144,6 +144,12 @@ public class activity_procedure extends AppCompatActivity {
         adapter.addFrag(new fragement_procedure(), "قائمة البيانات");
         adapter.addFrag(new InsertProcedure(), "اضافة جديد");
         viewPager.setAdapter(adapter);
+        Intent i = getIntent();
+        if (i.getStringExtra("Insertprocedure").equals("1")) {
+            viewPager.setCurrentItem(1);
+        } else {
+            viewPager.setCurrentItem(0);
+        }
     }
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

@@ -19,11 +19,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dd.CircularProgressButton;
 import com.example.ok.madicalalatheer.MainActivity;
 import com.example.ok.madicalalatheer.R;
 import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
@@ -42,7 +44,7 @@ import cz.msebera.android.httpclient.Header;
  */
 public class LoginFragment extends Fragment {
     View view = null;
-    Button go, log;
+    CircularProgressButton go, log;
     EditText name, pass;
     Typeface button;
     TextView t1, or;
@@ -63,7 +65,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_login, container, false);
-        log = (Button) view.findViewById(R.id.reg1);
+        log = (CircularProgressButton) view.findViewById(R.id.reg1);
         name = (EditText) view.findViewById(R.id.name);
         pass = (EditText) view.findViewById(R.id.pass);
         t1 = (TextView) view.findViewById(R.id.t1);
@@ -83,10 +85,13 @@ public class LoginFragment extends Fragment {
 
         //  Toast.makeText(getActivity().getApplicationContext(), tests + id, Toast.LENGTH_LONG).show();
 
-
+        log.setIndeterminateProgressMode(true);
         log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 name1 = name.getText().toString();
                 pass1 = pass.getText().toString();
                 if (cheak() != false) {
@@ -130,14 +135,15 @@ public class LoginFragment extends Fragment {
     public void AskLogin(RequestParams params) throws JSONException {
 
         AsyncHttpClient.post("", params, new JsonHttpResponseHandler() {
-            ProgressDialog progressDialog;
+         ProgressDialog progressDialog;
 
             @Override
             public void onStart() {
-                progressDialog = new ProgressDialog(getActivity());
+                log.setProgress(50);
+              /*  progressDialog = new ProgressDialog(getActivity());
                 progressDialog.setCancelable(false);
                 progressDialog.setMessage("جارى البحث...");
-                progressDialog.show();
+                progressDialog.show();*/
             }
 
             @Override
@@ -187,7 +193,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onFinish() {
                 super.onFinish();
-                progressDialog.dismiss();
+              //  progressDialog.dismiss();
+              //  log.getCompleteText();
             }
         });
 
