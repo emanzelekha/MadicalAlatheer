@@ -73,15 +73,15 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.dd.CircularProgressButton
+                <Button
                     android:textColor="#fff"
-                    app:cpb_textComplete="تم التسجيل بنجاح"
+                   android:background="@drawable/texted"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/reg1"
-                    app:cpb_textIdle="تسجيل دخول"
+                    android:text="تسجيل دخول"
 
                     />
 

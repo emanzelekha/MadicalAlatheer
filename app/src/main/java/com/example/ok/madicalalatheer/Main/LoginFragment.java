@@ -44,7 +44,7 @@ import cz.msebera.android.httpclient.Header;
  */
 public class LoginFragment extends Fragment {
     View view = null;
-    CircularProgressButton go, log;
+    Button go, log;
     EditText name, pass;
     Typeface button;
     TextView t1, or;
@@ -65,7 +65,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_login, container, false);
-        log = (CircularProgressButton) view.findViewById(R.id.reg1);
+        log = (Button) view.findViewById(R.id.reg1);
         name = (EditText) view.findViewById(R.id.name);
         pass = (EditText) view.findViewById(R.id.pass);
         t1 = (TextView) view.findViewById(R.id.t1);
@@ -85,7 +85,7 @@ public class LoginFragment extends Fragment {
 
         //  Toast.makeText(getActivity().getApplicationContext(), tests + id, Toast.LENGTH_LONG).show();
 
-        log.setIndeterminateProgressMode(true);
+
         log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,11 +139,11 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onStart() {
-                log.setProgress(50);
-              /*  progressDialog = new ProgressDialog(getActivity());
+
+                progressDialog = new ProgressDialog(getActivity());
                 progressDialog.setCancelable(false);
-                progressDialog.setMessage("جارى البحث...");
-                progressDialog.show();*/
+                progressDialog.setMessage("جارى التحميل...");
+                progressDialog.show();
             }
 
             @Override
@@ -193,8 +193,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onFinish() {
                 super.onFinish();
-              //  progressDialog.dismiss();
-              //  log.getCompleteText();
+               progressDialog.dismiss();
+
             }
         });
 

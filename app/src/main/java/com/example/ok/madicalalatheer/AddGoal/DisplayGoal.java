@@ -41,7 +41,8 @@ public class DisplayGoal extends Fragment {
     private Adapter mAdapter;
     JSONObject[] Data;
     Boolean[] buttons, active;
-    String[] goals, code, to,goalid;
+    String[] goals, code, to, goalid;
+
     public DisplayGoal() {
         // Required empty public constructor
     }

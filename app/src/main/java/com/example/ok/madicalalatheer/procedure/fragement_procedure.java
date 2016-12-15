@@ -93,6 +93,7 @@ public class fragement_procedure extends Fragment {
                             m++;
                             t = out.getString("goal_title");
                             items.add(new PeopleAdapter.PeopleListItem(m,t));
+                            items.add(new PeopleAdapter.PeopleListItem(out.getString("pro_title"), out.getString("pro_end_date"),out));
                         }else if(!out.getString("goal_title").equals(t)){
                             m++;
                             t = out.getString("goal_title");
@@ -101,11 +102,7 @@ public class fragement_procedure extends Fragment {
                         else if (out.getString("goal_title").equals(t)) {
                             items.add(new PeopleAdapter.PeopleListItem(out.getString("pro_title"), out.getString("pro_end_date"),out));
                         }
-                        else if(out.getString("goal_title").equals(t)){
-                            t = out.getString("goal_title");
-                        }else{
-                            t="";
-                        }
+
 
                     }
 

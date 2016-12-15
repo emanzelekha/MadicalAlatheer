@@ -16,13 +16,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Main.Login">
+        <activity android:name=".animation.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Main.Login"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".addIdea.activity_addIdea" />
         <activity android:name=".AddGoal.AddGoal" />
