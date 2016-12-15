@@ -11,7 +11,7 @@ import com.loopj.android.http.SyncHttpClient;
  *     10.0.3.2  http://aqar.esy.es/  http://android.alatheertech.com/
  */
 public class AsyncHttpClient {
-    private static final String BASE_URL = "http://gulfmedical-sa.com/demo/admin/webservice.php";
+    private static final String BASE_URL = "http://khaleejhail-sa.com/admin/api.php";
 
     public static com.loopj.android.http.AsyncHttpClient syncHttpClient  = new SyncHttpClient();
     public static com.loopj.android.http.AsyncHttpClient asyncHttpClient = new com.loopj.android.http.AsyncHttpClient();

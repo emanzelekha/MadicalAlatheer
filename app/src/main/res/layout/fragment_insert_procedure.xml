@@ -23,23 +23,20 @@
             android:layout_marginRight="5dp"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/baclspinner"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
 
-                <android.support.v7.widget.AppCompatSpinner
+
+                <AutoCompleteTextView
+                    android:padding="5dp"
                     android:id="@+id/s1P"
-                    style="@style/Widget.AppCompat.Spinner"
-
+                    android:background="@drawable/baclspinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end" />
-            </LinearLayout>
+                    android:layout_gravity="end"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/text"
+                    android:hint="*قم باختيار الهدف"/>
+
 
             <LinearLayout
                android:id="@+id/s22"

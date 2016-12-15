@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -45,6 +47,7 @@ import cz.msebera.android.httpclient.Header;
  */
 public class InsertProcedure extends Fragment implements View.OnClickListener, HijriCalendarView.OnDateSetListener, AdapterView.OnItemSelectedListener {
     String maxid = "", Date = "";
+    int posation=10009000;
     Intent i;
     int e = 0;
     HijriCalendarDialog.Builder text;
@@ -79,8 +82,10 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
     TextView codeProcedure, codeProcedure2, codeProcedure3, codeProcedure4, codeProcedure5;
     TextView codeing[] = new TextView[]{codeProcedure, codeProcedure2, codeProcedure3, codeProcedure4, codeProcedure5};
     int[] codeall = new int[]{R.id.codeProcedure, R.id.codeProcedure2, R.id.codeProcedure3, R.id.codeProcedure4, R.id.codeProcedure5};
-    Spinner s1, s2;
+    Spinner  s2;
 
+    AutoCompleteTextView s1;
+    ArrayAdapter<String> adapter;
 
     public InsertProcedure() {
         // Required empty public constructor
@@ -182,6 +187,14 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                 //  to.setText(out.getString("goal_date_to"));
 
                 Text[0].setText(out.getString("pro_end_date"));
+               s1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        posation=position;
+                       // Toast toast= Toast.makeText(getApplicationContext(), s + " is clicked", Toast.LENGTH_SHORT);
+                       // toast.setGravity(Gravity.CENTER,0,0); toast.show();
+                    }
+                });
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -208,7 +221,7 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
     public void commponent() {
         Spinner1 = v.findViewById(R.id.s22);
         addgoal = (TextView) v.findViewById(R.id.addgoal);
-        s1 = (Spinner) v.findViewById(R.id.s1P);
+        s1 = (AutoCompleteTextView) v.findViewById(R.id.s1P);
         s2 = (Spinner) v.findViewById(R.id.s2P);
         Scrol = (LinearLayout) v.findViewById(R.id.Scrol);
         for (int i = 0; i < 5; i++) {
@@ -226,8 +239,8 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
 
     public Boolean Validate() {
         Boolean out = true;
-        if (s1.getSelectedItemPosition() == 0) {
-            ((TextView) s1.getChildAt(0)).setError(".");
+        if (TextUtils.isEmpty(s1.getText())) {
+            s1.setError("ادخل الهدف...");
             out = false;
         }
         if (i.getStringExtra("Insertprocedure").equals("0")) {
@@ -267,7 +280,7 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
         return out;
     }
     public void Click() {
-        s1.setOnItemSelectedListener(this);
+        s1.setOnClickListener(this);
         s2.setOnItemSelectedListener(this);
         Insert.setOnClickListener(this);
         for (int i = 0; i < 5; i++) {
@@ -347,7 +360,7 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                             params.put("pro_code",arr4);
                         }//هتغير الاسم حسب ما يقولك وهتبعتلة ال id من الshared refrance}
 
-                        params.put("goal_id", goalid[s1.getSelectedItemPosition() - 1]);
+                        params.put("goal_id", goalid[posation]);
 
                         Load(params);
                         System.out.println(params+"dnsgvjfgh");
@@ -438,7 +451,9 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                         goalid[i] = out.getString("id");
                     }
                     maxid = response.getString("maxid");
-                    SpinnerDate(a3, a4, s1);
+                    adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, a4);
+                    s1.setAdapter(adapter);
+
                     if (i.getStringExtra("Insertprocedure").equals("1")) {
                         for (int x = 0; x < goalid.length; x++) {
                             if (goalid[x].equals(out.getString("goal_id"))) {

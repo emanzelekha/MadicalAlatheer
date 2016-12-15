@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -23,6 +24,7 @@ import com.example.ok.madicalalatheer.R;
 import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
