@@ -89,9 +89,6 @@ public class LoginFragment extends Fragment {
         log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 name1 = name.getText().toString();
                 pass1 = pass.getText().toString();
                 if (cheak() != false) {

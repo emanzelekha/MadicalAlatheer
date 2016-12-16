@@ -457,7 +457,8 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                     if (i.getStringExtra("Insertprocedure").equals("1")) {
                         for (int x = 0; x < goalid.length; x++) {
                             if (goalid[x].equals(out.getString("goal_id"))) {
-                                s1.setSelection(x + 1);
+                             //   s1.setSelection(x);
+                                s1.setText(a4[x]);
                                 break;
                             }
                         }

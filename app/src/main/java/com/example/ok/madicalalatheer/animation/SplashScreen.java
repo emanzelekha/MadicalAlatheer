@@ -34,7 +34,7 @@ import cz.msebera.android.httpclient.Header;
 
 
 public class SplashScreen extends Activity {
-
+int finish=0;
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         Window window = getWindow();
@@ -65,7 +65,6 @@ public class SplashScreen extends Activity {
        try {
             RequestParams params = new RequestParams();
             params.put("request", "goalsreport");
-
             Load(params);
         } catch (Exception ex) {
             Toast.makeText(getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
@@ -81,14 +80,20 @@ public class SplashScreen extends Activity {
                     int waited = 0;
                     // Splash screen pause time
                     while (waited < 3500) {
+                        while (finish==0){
+                        sleep(100);}
                         sleep(100);
                         waited += 100;
                     }
                     Intent intent = new Intent(SplashScreen.this,
                             Login.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(intent);
-                    SplashScreen.this.finish();
+
+                        startActivity(intent);
+                        SplashScreen.this.finish();
+
+
+
                 } catch (InterruptedException e) {
                     // do nothing
                 } finally {
@@ -194,6 +199,8 @@ public class SplashScreen extends Activity {
             @Override
             public void onFinish() {
                 super.onFinish();
+                finish=1;
+
              //   progressDialog.dismiss();
             }
         });
