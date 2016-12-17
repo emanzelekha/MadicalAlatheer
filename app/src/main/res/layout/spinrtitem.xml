@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
     android:layoutDirection="rtl"
+    android:gravity="right"
+    android:textAlignment="gravity"
     android:singleLine="true"
-    android:textAlignment="inherit"
     android:textColor="@color/text" />

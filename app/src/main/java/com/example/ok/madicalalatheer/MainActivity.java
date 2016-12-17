@@ -1,6 +1,6 @@
 package com.example.ok.madicalalatheer;
 
-import android.app.ProgressDialog;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,11 +11,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.text.Html;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ok.madicalalatheer.AddGoal.AddGoal;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
@@ -23,24 +23,27 @@ import com.example.ok.madicalalatheer.Main.Login;
 import com.example.ok.madicalalatheer.Reportes.MainReport;
 import com.example.ok.madicalalatheer.addIdea.activity_addIdea;
 import com.example.ok.madicalalatheer.procedure.activity_procedure;
-import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-View goal,idea,process,report,main;
+    View goal, idea, process, report, padding, activity_main;
     Typeface typeface;
-
+    float width = 0, height = 0;
+    double diagonalInches = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        component();
+        Click();
+        TypefaceUtil.overrideFonts(this, activity_main);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        width = metrics.heightPixels / metrics.ydpi;
+        height = metrics.widthPixels / metrics.xdpi;
+        diagonalInches = Math.sqrt(height * height + width * width);
+        if (diagonalInches>=6.5) {
+        padding.setPadding(70, 120, 70, 120);}
+
         typeface = Typeface.createFromAsset(getAssets(), "fonts/DroidKufi-Bold.ttf");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -118,19 +121,18 @@ View goal,idea,process,report,main;
                 startActivity(i);
             }
         });
-        component();
-        Click();
-        TypefaceUtil.overrideFonts(getBaseContext(), main);
+
 
 
     }
 
     public void component(){
-        main=findViewById(R.id.activity_main);
+        padding = findViewById(R.id.padding);
         idea=findViewById(R.id.idea);
         goal=findViewById(R.id.goal);
         process=findViewById(R.id.process);
         report=findViewById(R.id.report);
+        activity_main = findViewById(R.id.activity_main);
     }
     public void Click(){
         idea.setOnClickListener(this);

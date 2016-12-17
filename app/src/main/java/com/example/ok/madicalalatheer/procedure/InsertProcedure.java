@@ -12,8 +12,10 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -102,7 +104,7 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
         commponent();
         Click();
         SharedPreferences pref = getContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
-
+        getActivity(). getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         a6= pref.getString("employee", "").split("oo");
         a7= pref.getString("employeeId", "").split("oo");
         int f = 0;
@@ -141,6 +143,34 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
 
 
         i = getActivity().getIntent();
+       /* s1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    s1.showDropDown();
+
+            }
+        });*/
+
+        s1.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                s1.showDropDown();
+                return false;
+            }
+        });
+        s1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                posation=position;
+                // Toast toast= Toast.makeText(getApplicationContext(), s + " is clicked", Toast.LENGTH_SHORT);
+                // toast.setGravity(Gravity.CENTER,0,0); toast.show();
+            }
+        });
+
 
         if (i.getStringExtra("Insertprocedure").equals("1")) {
           /*  try {
@@ -187,14 +217,6 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                 //  to.setText(out.getString("goal_date_to"));
 
                 Text[0].setText(out.getString("pro_end_date"));
-               s1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        posation=position;
-                       // Toast toast= Toast.makeText(getApplicationContext(), s + " is clicked", Toast.LENGTH_SHORT);
-                       // toast.setGravity(Gravity.CENTER,0,0); toast.show();
-                    }
-                });
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -310,6 +332,9 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.s1:
+                s1.showDropDown();
+                break;
             case R.id.Date:
                 Dialog();
                 Datet = 0;
@@ -451,7 +476,13 @@ public class InsertProcedure extends Fragment implements View.OnClickListener, H
                         goalid[i] = out.getString("id");
                     }
                     maxid = response.getString("maxid");
-                    adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, a4);
+                    MySpinnerAdapter adapter = new MySpinnerAdapter(
+                            getContext(),
+                            R.layout.spinrtitem,
+                            Arrays.asList(a4)
+                    );
+                    adapter.setDropDownViewResource(R.layout.downspinner);
+                   // adapter = new ArrayAdapter<String>(getContext(), R.layout.downspinner, a4);
                     s1.setAdapter(adapter);
 
                     if (i.getStringExtra("Insertprocedure").equals("1")) {

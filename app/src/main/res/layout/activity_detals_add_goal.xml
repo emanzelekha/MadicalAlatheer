@@ -39,6 +39,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:text="تفاصيل الهدف"
+                    android:gravity="right"
+                    android:textAlignment="gravity"
                     android:textColor="@color/colorPrimary"
                     android:textSize="18dp" />
 
@@ -60,6 +62,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:text="نص الهدف:"
                         android:textColor="@color/text" />
 
@@ -68,6 +72,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:textColor="@color/black" />
 
                 </LinearLayout>
@@ -79,6 +85,8 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -86,6 +94,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/egoal2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -101,6 +111,8 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -108,6 +120,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/egoal3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -130,6 +144,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/egoal4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -152,6 +168,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/egoal5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -174,6 +192,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/egoal6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -196,6 +216,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/egoal7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -218,6 +240,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/egoal8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -240,6 +264,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/egoal9"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -255,6 +281,8 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -262,6 +290,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/egoal10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -284,6 +314,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/egoal11"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -346,6 +378,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/eidea1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -368,6 +402,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/eidea2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -383,6 +419,8 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -390,6 +428,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/eidea3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -405,6 +445,8 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -412,6 +454,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/eidea4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -434,6 +478,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/eidea5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -456,6 +502,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/eidea6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -478,6 +526,8 @@
                         android:textColor="@color/text" />
 
                     <TextView
+                        android:gravity="right"
+                        android:textAlignment="gravity"
                         android:id="@+id/eidea7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

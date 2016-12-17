@@ -1,7 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_login"
     android:background="#fff">
 
     <!-- TODO: Update blank fragment layout -->
@@ -24,41 +26,63 @@
 
             android:text="تسجيل دخول"
             android:gravity="center" />
-        <ImageView
+        <ImageButton
+            android:clickable="false"
             android:layout_marginTop="5dp"
-
+            android:background="@drawable/logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_gravity="center"
             />
-        <EditText
-            android:layout_marginTop="10dp"
-            android:id="@+id/name"
-            android:background="@drawable/texte"
-            android:hint="اسم المستخدم"
-            android:textColorHint="#fff"
-            android:drawablePadding="15dp"
-            android:textColor="#fff"
-            android:drawableRight="@drawable/user"
+        <LinearLayout
+            android:layoutDirection="rtl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:gravity="center|right" />
+            android:layout_marginTop="10dp"
+            android:background="@drawable/texte"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/user"
+                android:layout_margin="5dp"/>
         <EditText
+            android:background="@android:color/transparent"
+            android:id="@+id/name"
+            android:hint="اسم المستخدم"
+            android:textColorHint="#fff"
+            android:textColor="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|right" /></LinearLayout>
+    <LinearLayout
+        android:layoutDirection="rtl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/text"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:srcCompat="@drawable/lock"
+            android:layout_margin="5dp"/>
+        <EditText
+            android:background="@android:color/transparent"
             android:inputType="textPassword"
-            android:drawablePadding="15dp"
-            android:layout_marginTop="1dp"
             android:id="@+id/pass"
-            android:background="@drawable/text"
             android:hint="كلمة المرور"
             android:textColorHint="#fff"
             android:textColor="#fff"
-            android:drawableRight="@drawable/lock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:gravity="center|right" />
+            android:gravity="center|right" /></LinearLayout>
 
         <LinearLayout
             android:layout_marginTop="2dp"

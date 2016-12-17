@@ -455,7 +455,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
                 try {
-                    if (response.length() == 9) {
+
                         a4 = new String[response.length() - 2];
                         id = new String[response.length() - 2];
 
@@ -527,14 +527,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                         if (i.getStringExtra("InsertGoal").equals("0")) {
                             codenumber.setText(code + "");
                         }
-                    } else if (response.length() == 1) {
-                        Intent i = new Intent(getContext(), AddGoal.class);
-                        Toast.makeText(getActivity().getApplicationContext(), "تم الاضافة بنجاح", Toast.LENGTH_LONG).show();
-                        startActivity(i);
 
-                    } else {
-
-                    }
 
                 } catch (Exception ex) {
 

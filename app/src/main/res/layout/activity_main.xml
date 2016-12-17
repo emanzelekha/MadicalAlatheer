@@ -62,12 +62,13 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backmain"
+    android:background="#fff"
     android:gravity="center"
     android:layoutDirection="rtl"
     tools:context="com.example.ok.madicalalatheer.MainActivity">
 
     <LinearLayout
+        android:id="@+id/padding"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
@@ -95,14 +96,17 @@
                 android:background="@drawable/buttonlefttop"
                 android:clickable="true"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/plus" />
                 <TextView
                     android:id="@+id/button1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="2dp"
-                    android:drawableTop="@drawable/plus"
                     android:padding="8dp"
                     android:text="اضافة هدف"
                     android:textColor="@color/white"
@@ -120,14 +124,15 @@
                 android:background="@drawable/buttonrighttop"
                 android:clickable="true"
                 android:gravity="center"
-                android:orientation="horizontal">
-
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/plus" />
                 <TextView
                     android:id="@+id/button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="2dp"
-                    android:drawableTop="@drawable/plus"
                     android:padding="8dp"
                     android:text="اضافة فكرة"
                     android:textColor="@color/white"
@@ -155,14 +160,15 @@
                 android:background="@drawable/buttonleftbottom"
                 android:clickable="true"
                 android:gravity="center"
-                android:orientation="horizontal">
-
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/plus" />
                 <TextView
                     android:id="@+id/button3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="2dp"
-                    android:drawableTop="@drawable/plus"
                     android:padding="8dp"
                     android:text="اضافة اجراء"
                     android:textColor="@color/white"
@@ -180,14 +186,15 @@
                 android:background="@drawable/buttonrightbottom"
                 android:clickable="true"
                 android:gravity="center"
-                android:orientation="horizontal">
-
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/plus" />
                 <TextView
                     android:id="@+id/button4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="2dp"
-                    android:drawableTop="@drawable/plus"
                     android:padding="8dp"
                     android:text="تقارير"
                     android:textColor="@color/white"

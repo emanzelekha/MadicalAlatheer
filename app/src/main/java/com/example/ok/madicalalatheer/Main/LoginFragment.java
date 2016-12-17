@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
+import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.MainActivity;
 import com.example.ok.madicalalatheer.R;
 import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
@@ -43,7 +44,7 @@ import cz.msebera.android.httpclient.Header;
  * A simple {@link Fragment} subclass.
  */
 public class LoginFragment extends Fragment {
-    View view = null;
+    View view = null,v;
     Button go, log;
     EditText name, pass;
     Typeface button;
@@ -65,17 +66,21 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_login, container, false);
+      //  view =v.findViewById(R.id.fragment_login) ;
+       //
+      TypefaceUtil.overrideFonts(getActivity(), view);
+
         log = (Button) view.findViewById(R.id.reg1);
         name = (EditText) view.findViewById(R.id.name);
         pass = (EditText) view.findViewById(R.id.pass);
         t1 = (TextView) view.findViewById(R.id.t1);
 
-        button = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DroidKufi-Bold.ttf");
+      //  button = Typeface.createFromAsset(getActivity().getAssets(), "fonts/DroidKufi-Bold.ttf");
 
-        log.setTypeface(button);
+       /* log.setTypeface(button);
         name.setTypeface(button);
         pass.setTypeface(button);
-        t1.setTypeface(button);
+        t1.setTypeface(button);*/
 
         SharedPreferences pref = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
         String id = pref.getString("name", "");
