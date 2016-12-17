@@ -144,6 +144,7 @@
                         android:text="تفاصيل"
                         android:textColor="@color/white" />
                     <ImageView
+
                       android:layout_marginLeft="4dp"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
