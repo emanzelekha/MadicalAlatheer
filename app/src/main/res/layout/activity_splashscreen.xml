@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="المركز الطبى "
+        android:text="مجمع الخليج "
         android:id="@+id/splash_text2"
         android:textColor="#FFF"
         android:textSize="28dp"

@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -51,7 +52,7 @@ import cz.msebera.android.httpclient.Header;
 public class InsertGoal extends Fragment implements View.OnClickListener, CheckBox.OnCheckedChangeListener, HijriCalendarView.OnDateSetListener, AdapterView.OnItemSelectedListener {
     Spinner s1, s2, s3;
     int ClickedDate;
-
+    ImageView fromImg, toImg;
     Intent i;
     TextView codenumber;
     EditText from, to, goalbody, goallevel, goalidea, goalideaaround;
@@ -108,7 +109,7 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
             try {
                 out = new JSONObject(i.getStringExtra("goalData"));
 
-            codenumber.setText(out.getString("goal_code"));
+                codenumber.setText(out.getString("goal_code"));
                 s1.setSelection(Integer.parseInt(out.getString("goal_type")));
                 s3.setSelection(Integer.parseInt(out.getString("goal_important")));
                 goalbody.setText(out.getString("goal_title"));
@@ -122,10 +123,10 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                 //  System.out.println(formatted);
 
                 // System.out.println(df.format(new Date(new long[] {out.getString("goal_date_from")}))+"jjj");
-               // from.setText(out.getString("goal_date_from"));
+                // from.setText(out.getString("goal_date_from"));
 
 
-              //  to.setText(out.getString("goal_date_to"));
+                //  to.setText(out.getString("goal_date_to"));
 
                 goallevel.setText(out.getString("goal_measurment"));
                 goalidea.setText(out.getString("goal_apprev"));
@@ -133,7 +134,6 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
 
 
         }
@@ -205,7 +205,8 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
     }
 
     public void click() {
-
+        fromImg.setOnClickListener(this);
+        toImg.setOnClickListener(this);
         addgoal.setOnClickListener(this);
         from.setOnClickListener(this);
         to.setOnClickListener(this);
@@ -223,7 +224,17 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                 Dialog();
                 ClickedDate = 0;
                 break;
+            case R.id.fromImg:
+                input12.setErrorEnabled(false);
+                Dialog();
+                ClickedDate = 0;
+                break;
             case R.id.to2:
+                input11.setErrorEnabled(false);
+                Dialog();
+                ClickedDate = 1;
+                break;
+            case R.id.toImg:
                 input11.setErrorEnabled(false);
                 Dialog();
                 ClickedDate = 1;
@@ -296,6 +307,8 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
     }
 
     public void component() {
+        fromImg = (ImageView) v.findViewById(R.id.fromImg);
+        toImg = (ImageView) v.findViewById(R.id.toImg);
         layout = (LinearLayout) v.findViewById(R.id.cheackbox);
         Mangment = (LinearLayout) v.findViewById(R.id.Mangment);
         s1 = (Spinner) v.findViewById(R.id.s1);
@@ -456,77 +469,77 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                 Log.e("onSuccess", response.length() + "");
                 try {
 
-                        a4 = new String[response.length() - 2];
-                        id = new String[response.length() - 2];
+                    a4 = new String[response.length() - 2];
+                    id = new String[response.length() - 2];
 
-                        cheackName = new String[a4.length];
-                        String set = "";
-                        String set1 = "";
-                        String set2 = "";
-                        cheackId = new String[a4.length];
-                        for (int i = 0; i < response.length() - 2; i++) {
-                            JSONObject json_data = response.getJSONObject(i + "");
-                            a4[i] = json_data.getString("main_dep_name");
-                            id[i] = json_data.getString("id");
-                        }
-                        JSONArray subdebartement = response.getJSONArray("subdebartement");
-                        //   Log.e("onSuccess", subdebartement + "");
-                        for (int i = 0; i < a4.length; i++) {
-                            String box = "";
-                            String boxid = "";
-                            for (int j = 0; j < subdebartement.length(); j++) {
-                                JSONObject json_data1 = subdebartement.getJSONObject(j);
+                    cheackName = new String[a4.length];
+                    String set = "";
+                    String set1 = "";
+                    String set2 = "";
+                    cheackId = new String[a4.length];
+                    for (int i = 0; i < response.length() - 2; i++) {
+                        JSONObject json_data = response.getJSONObject(i + "");
+                        a4[i] = json_data.getString("main_dep_name");
+                        id[i] = json_data.getString("id");
+                    }
+                    JSONArray subdebartement = response.getJSONArray("subdebartement");
+                    //   Log.e("onSuccess", subdebartement + "");
+                    for (int i = 0; i < a4.length; i++) {
+                        String box = "";
+                        String boxid = "";
+                        for (int j = 0; j < subdebartement.length(); j++) {
+                            JSONObject json_data1 = subdebartement.getJSONObject(j);
 
-                                // set2 += json_data1.getString("main_dep_f_id") + " ";
+                            // set2 += json_data1.getString("main_dep_f_id") + " ";
 
-                                if (id[i].equals(json_data1.getString("main_dep_f_id"))) {
-                                    for (int x = 0; x < id.length; x++) {
-                                        if (json_data1.getString("main_dep_f_id").equals(id[x])) {
-                                            set2 += x + " ";
-                                        }
-                                    }
-                                    if (TextUtils.isEmpty(set)) {
-                                        set += json_data1.getString("id");
-                                        set1 += json_data1.getString("sub_dep_name");
-                                    } else {
-                                        set += json_data1.getString("id") + ",";
-                                        set1 += json_data1.getString("sub_dep_name") + ",";
-                                    }
-                                    if (box == null) {
-                                        box += json_data1.getString("sub_dep_name");
-                                        boxid += json_data1.getString("id");
-                                    } else {
-                                        box += json_data1.getString("sub_dep_name") + ",";
-                                        boxid += json_data1.getString("id") + ",";
+                            if (id[i].equals(json_data1.getString("main_dep_f_id"))) {
+                                for (int x = 0; x < id.length; x++) {
+                                    if (json_data1.getString("main_dep_f_id").equals(id[x])) {
+                                        set2 += x + " ";
                                     }
                                 }
+                                if (TextUtils.isEmpty(set)) {
+                                    set += json_data1.getString("id");
+                                    set1 += json_data1.getString("sub_dep_name");
+                                } else {
+                                    set += json_data1.getString("id") + ",";
+                                    set1 += json_data1.getString("sub_dep_name") + ",";
+                                }
+                                if (box == null) {
+                                    box += json_data1.getString("sub_dep_name");
+                                    boxid += json_data1.getString("id");
+                                } else {
+                                    box += json_data1.getString("sub_dep_name") + ",";
+                                    boxid += json_data1.getString("id") + ",";
+                                }
                             }
-
-                            cheackName[i] = box;
-                            cheackId[i] = boxid;
                         }
-                        SpinnerDate(a3, a4, s2);
-                        if (i.getStringExtra("InsertGoal").equals("1") && !(i.getStringExtra("Maindep").isEmpty())) {
-                            s2.setSelection(Integer.parseInt(i.getStringExtra("Maindep")) + 1);
+
+                        cheackName[i] = box;
+                        cheackId[i] = boxid;
+                    }
+                    SpinnerDate(a3, a4, s2);
+                    if (i.getStringExtra("InsertGoal").equals("1") && !(i.getStringExtra("Maindep").isEmpty())) {
+                        s2.setSelection(Integer.parseInt(i.getStringExtra("Maindep")) + 1);
 
 
-                        }
-                        SharedPreferences sharedPref = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString("cheackId1", set);
-                        editor.putString("cheackName1", set1);
-                        editor.putString("maindep", set2);
-                        editor.commit();
+                    }
+                    SharedPreferences sharedPref = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("cheackId1", set);
+                    editor.putString("cheackName1", set1);
+                    editor.putString("maindep", set2);
+                    editor.commit();
 
-                        int code;
-                        if (response.isNull("maxid")) {
-                            code = 1;
-                        } else {
-                            code = Integer.parseInt(response.getString("maxid")) + 1;
-                        }
-                        if (i.getStringExtra("InsertGoal").equals("0")) {
-                            codenumber.setText(code + "");
-                        }
+                    int code;
+                    if (response.isNull("maxid")) {
+                        code = 1;
+                    } else {
+                        code = Integer.parseInt(response.getString("maxid")) + 1;
+                    }
+                    if (i.getStringExtra("InsertGoal").equals("0")) {
+                        codenumber.setText(code + "");
+                    }
 
 
                 } catch (Exception ex) {
@@ -548,11 +561,12 @@ public class InsertGoal extends Fragment implements View.OnClickListener, CheckB
                     if (response.getInt("message") == 1) {
                         Intent i = new Intent(getContext(), AddGoal.class);
                         i.putExtra("InsertGoal", "0");
-                        if(response.getString("action").equals("update")){
+                        if (response.getString("action").equals("update")) {
                             Toast.makeText(getActivity().getApplicationContext(), "تم التعديل بنجاح", Toast.LENGTH_LONG).show();
                             startActivity(i);
-                        }else{
-                        Toast.makeText(getActivity().getApplicationContext(), "تم الاضافة بنجاح", Toast.LENGTH_LONG).show();}
+                        } else {
+                            Toast.makeText(getActivity().getApplicationContext(), "تم الاضافة بنجاح", Toast.LENGTH_LONG).show();
+                        }
                         startActivity(i);
                     } else if (response.getInt("message") == 0) {
                         Toast.makeText(getActivity().getApplicationContext(), "حاول مرة اخرى ", Toast.LENGTH_LONG).show();

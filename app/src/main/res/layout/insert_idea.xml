@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layoutDirection="ltr"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView
+        xmlns:cardview="http://schemas.android.com/apk/res-auto"
         android:id="@+id/InsertIdea"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -185,18 +186,19 @@
                 android:background="@drawable/button"
                 android:clickable="true"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
-
                     android:id="@+id/add_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="10dp"
-                    android:drawableRight="@drawable/plus"
                     android:padding="8dp"
                     android:text="اضافة فكرة"
                     android:textColor="@color/white" />
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/plus"/>
             </LinearLayout>
 
         </LinearLayout>

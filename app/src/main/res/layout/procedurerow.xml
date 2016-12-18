@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,7 +11,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/cardview"
-    xmlns:app="http://schemas.android.com/tools"
     android:layout_marginBottom="1dp"
     android:layoutDirection="ltr"
     cardview:cardCornerRadius="2dp"
@@ -84,18 +84,26 @@
         app:hintTextAppearance="@style/TextLabel"
 
         >
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="center"
+    android:gravity="center">
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:srcCompat="@drawable/calendar"/>
         <EditText
             android:id="@+id/Date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/calendar"
-            android:drawablePadding="4dp"
             android:focusable="false"
             android:gravity="right"
             android:hint="تاريخ انهاء الاجراء"
             android:inputType="datetime" />
+        </LinearLayout>
 
     </android.support.design.widget.TextInputLayout>
 
