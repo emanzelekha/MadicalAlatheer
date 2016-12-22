@@ -173,7 +173,7 @@ public class TableLayoutPerformance extends AppCompatActivity {
             public void onStart() {
                 progressDialog = new ProgressDialog(TableLayoutPerformance.this);
                 progressDialog.setCancelable(false);
-                progressDialog.setMessage("ÌÇÑì ÇáÈÍË...");
+                progressDialog.setMessage("جارى التحميل...");
                 progressDialog.show();
             }
 

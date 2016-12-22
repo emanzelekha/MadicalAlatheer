@@ -90,7 +90,7 @@ public class TableLayoutGoals extends AppCompatActivity implements AdapterView.O
             arraySpinner = Arrays.copyOf(array1, array1.length);
         }
         MySpinnerAdapter adapter = new MySpinnerAdapter(
-                getBaseContext(),
+                TableLayoutGoals.this,
                 R.layout.spinrtitem,
                 Arrays.asList(arraySpinner)
         );
