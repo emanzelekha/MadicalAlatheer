@@ -16,8 +16,10 @@ import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ok.madicalalatheer.AddGoal.AddGoal;
+
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.Main.Login;
 import com.example.ok.madicalalatheer.Reportes.MainReport;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Typeface typeface;
     float width = 0, height = 0;
     double diagonalInches = 0;
+    String id="",empId="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,7 +124,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
             }
         });
-
+        SharedPreferences pref = getBaseContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
+         id = pref.getString("member_type", "");
+        empId = pref.getString("emp_id", "");
+       if(!id.equals("1")){
+         goal.setEnabled(false);
+       }
 
 
     }
@@ -153,12 +161,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
                 break;
             case R.id.goal:
+                if(id.equals("1")){
                 i = new Intent(MainActivity.this, AddGoal.class);
                 i.putExtra("InsertGoal","0");
-                startActivity(i);
+                startActivity(i);}else{
+                    Toast.makeText(MainActivity.this,"لا يوجد لديك صلاحية",Toast.LENGTH_LONG).show();
+                }
                 break;
 
             case R.id.process:
+
                 i = new Intent(MainActivity.this, activity_procedure.class);
                 i.putExtra("Insertprocedure", "0");
                 startActivity(i);

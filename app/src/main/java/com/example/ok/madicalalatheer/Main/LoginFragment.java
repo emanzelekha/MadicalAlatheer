@@ -15,7 +15,9 @@ import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -156,12 +158,16 @@ public class LoginFragment extends Fragment {
                     Log.e("onSuccess", response + "");
                     Log.e("onSuccess",response.getInt("message") + "");
                     if (response.getInt("message") >= 1) {
+                        JSONObject out=response.getJSONObject("respond");
                         SharedPreferences sharedPref = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("name", name1);
                         editor.putString("pass", pass1);
                         JSONObject Id=response.getJSONObject("respond");
                         editor.putString("UserId", Id.getString("id"));
+                        editor.putString("emp_id",out.getString("emp_id"));
+                        editor.putString("member_type",out.getString("member_type"));
+
                         editor.commit();
                         Intent intent = new Intent(getActivity().getApplication(), MainActivity.class);
                        // intent.putExtra("id", response.getString("message"));
@@ -203,6 +209,7 @@ public class LoginFragment extends Fragment {
 
     }
 
+
     private static Bitmap getBitmap(VectorDrawable vectorDrawable) {
         Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(),
                 vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
@@ -211,6 +218,10 @@ public class LoginFragment extends Fragment {
         vectorDrawable.draw(canvas);
         return bitmap;
     }
+
+
+
+
 
 }
 

@@ -28,6 +28,7 @@ import cz.msebera.android.httpclient.Header;
 public class TableLayoutPerformance extends AppCompatActivity {
     View v;
     String[] text1, text2, text3, text4;
+    int []outd;
     TextView close;
 
     @Override
@@ -187,14 +188,16 @@ public class TableLayoutPerformance extends AppCompatActivity {
                     text2 = new String[response.length()];
                     text3 = new String[response.length()];
                     text4 = new String[response.length()];
+                    outd = new int[response.length()];
 
                   for (int i = 0; i < response.length(); i++) {
                         JSONObject out = response.getJSONObject(i);
                         text1[i] = out.getString("goal_title");
                         text2[i] = out.getString("pro");
                         text3[i] = out.getString("date");
-                        text4[i] = out.getString("approvedBy");
 
+                        text4[i] = out.getString("approvedBy");
+                      System.out.println();
 
                     }
 

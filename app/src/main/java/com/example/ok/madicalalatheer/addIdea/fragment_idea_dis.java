@@ -90,38 +90,49 @@ String []code,from,content,job,Ideaid;
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
                 try {
-                    Data=new JSONObject[response.length()];
-                    Ideaid = new String[response.length()];
-                    buttons = new Boolean[response.length()];
-                    active = new Boolean[response.length()];
-                    code = new String[response.length()];
-                    from = new String[response.length()];
-                    content = new String[response.length()];
-                    job =new String[response.length()];
+
                     if(response.length()==0){
                         found=(TextView)v.findViewById(R.id.found);
                         found.setVisibility(View.VISIBLE);
                         found.setText("لا يوجد افكار");
                     }
+                    int m = 0;
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject data = response.getJSONObject(i);
+                        if (data.getString("deleted").equals("1")) {
+                            m++;
+                        }
+                    }
+                    Data = new JSONObject[m];
+                    Ideaid = new String[m];
+                    buttons = new Boolean[m];
+                    active = new Boolean[m];
+                    code = new String[m];
+                    from = new String[m];
+                    content = new String[m];
+                    job = new String[response.length()];
+                    int n = 0;
                     for(int i=0;i<response.length();i++){
                         JSONObject data=response.getJSONObject(i);
-                        Data[i]=data;
+                        if (data.getString("deleted").equals("1")) {
+                            Data[n] = data;
                         System.out.println(data);
-                        Ideaid[i]=data.getString("id");
-                        content[i] = data.getString("idea_content");
-                        code[i]=data.getString("idea_code");
-                        from[i] = data.getString("idea_appre");
-                        if(data.getString("suspend").equals(0)){
-                            active[i]=false;
+                            Ideaid[n] = data.getString("id");
+                            content[n] = data.getString("idea_content");
+                            code[n] = data.getString("idea_code");
+                            from[n] = data.getString("idea_appre");
+                            if (data.getString("suspend").equals("0")) {
+                                active[n] = false;
                         }else {
-                            active[i]=true;
+                                active[n] = true;
                         }
-                        if(data.getString("suspend").equals(0)){
-                            buttons[i]=false;
+                            if (data.getString("suspend").equals("0")) {
+                                buttons[n] = false;
                         }else {
-                            buttons[i]=true;
+                                buttons[n] = true;
                         }
-
+                            n++;
+                        }
                     }
                   //   goalid[1]="9";  goals[1]="hjgjg" ; code[1]="0" ;to[1]="7" ;active[1]=true; buttons[1]=false;
                  /*goalid=new String[]{"4","5"};
@@ -131,6 +142,7 @@ String []code,from,content,job,Ideaid;
                     active=new Boolean[]{true,false};
                     buttons=new Boolean[]{true,false};*/
                     for (int x = 0; x < content.length; x++) {
+
                         cotroldisidea disUserControl = new cotroldisidea(Data[x],Ideaid[x],code[x], content[x], from[x], job[x], active[x], buttons[x]);
                         disList.add(disUserControl);
                         mAdapter.notifyDataSetChanged();}
@@ -159,22 +171,5 @@ String []code,from,content,job,Ideaid;
 
     }
 
-    private void prepareMovieData() {
-        buttons = new Boolean[]{true, true, false, false, true};
-       active = new Boolean[]{true, true, false, false, true};
-       code = new String[]{"1", "2", "3", "4", "5"};
-        from = new String[]{"عن", "عن", "عن", "عن", "عن"};
 
-         content =new String[] {"احمد عبدالحميد شعبان السلامونى", "احمد عبدالحميد شعبان السلامونى", "احمد عبدالحميد شعبان السلامونى"
-                , "احمد عبدالحميد شعبان السلامونى", "احمد عبدالحميد شعبان السلامونى"};
-         job =new String[] {"job1", "job1",
-                "job1", "job1", "job1"};
-        for (int x = 0; x < content.length; x++) {
-            cotroldisidea disUserControl = new cotroldisidea(Data[x],Ideaid[x],code[x], content[x], from[x], job[x], active[x], buttons[x]);
-            disList.add(disUserControl);
-            mAdapter.notifyDataSetChanged();
-
-
-        }
-    }
 }

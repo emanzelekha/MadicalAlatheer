@@ -102,7 +102,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
         final String Depout = Dep;
         holder.serial.setText(position + 1 + "");
         holder.swt.setChecked(disUserControl.isActive());
-        holder.GoalDetails.setOnClickListener(new View.OnClickListener() {
+        holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i;
@@ -114,7 +114,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
 
             }
         });
-        holder.edit.setOnClickListener(new View.OnClickListener() {
+        System.out.println(disUserControl.getButtons()+"fbhndgrfjrgfjhrgfhrgf");
+        if(disUserControl.getButtons().equals("0")){
+            holder.delet.setVisibility(View.VISIBLE);
+            holder.edit.setVisibility(View.VISIBLE);
+            holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
@@ -146,7 +150,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
                     Toast.makeText(context, "Exception" + ex, Toast.LENGTH_LONG).show();
                 }
             }
-        });
+        });}else{
+            holder.delet.setVisibility(View.GONE);
+          holder.edit.setVisibility(View.GONE);}
 
     }
 
@@ -164,22 +170,22 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> implemen
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView Code, goal, to, serial,details,delet,edit;
-        public View GoalDetails;
+        public TextView Code, goal, to, serial;
+        public View GoalDetails,details,delet,edit;
         public SwitchCompat swt;
 
 
         public MyViewHolder(View view) {
             super(view);
-            details = (TextView) view.findViewById(R.id.detailsgoal);
-            delet = (TextView) view.findViewById(R.id.deletegoal);
-            edit = (TextView) view.findViewById(R.id.editgoal);
+            details = view.findViewById(R.id.detailsgoal);
+            delet =  view.findViewById(R.id.deletegoal);
+            edit =  view.findViewById(R.id.editgoal);
             serial = (TextView) view.findViewById(R.id.serial);
             Code = (TextView) view.findViewById(R.id.Code);
             goal = (TextView) view.findViewById(R.id.goal);
             to = (TextView) view.findViewById(R.id.to);
             swt = (SwitchCompat) view.findViewById(R.id.Active);
-            GoalDetails = view.findViewById(R.id.GoalDetails);
+
         }
     }
 

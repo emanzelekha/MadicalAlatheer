@@ -72,7 +72,11 @@ public class controlideaAdapter extends RecyclerView.Adapter<controlideaAdapter.
 
             }
         });
-        holder.edit.setOnClickListener(new View.OnClickListener() {
+
+
+            holder.edit.setVisibility(View.VISIBLE);
+            holder.delet.setVisibility(View.VISIBLE);
+         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
@@ -105,6 +109,8 @@ public class controlideaAdapter extends RecyclerView.Adapter<controlideaAdapter.
                 }
             }
         });
+
+
 
 
     }

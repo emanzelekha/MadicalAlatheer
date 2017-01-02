@@ -16,7 +16,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.ok.madicalalatheer.AddGoal.AddGoal;
@@ -33,6 +36,7 @@ import java.util.List;
 public class activity_procedure extends AppCompatActivity {
     Typeface typeface;
     View v;
+    public int x;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     public int[] tabIcons = {
@@ -179,5 +183,7 @@ public class activity_procedure extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
-    }
 
+
+
+}

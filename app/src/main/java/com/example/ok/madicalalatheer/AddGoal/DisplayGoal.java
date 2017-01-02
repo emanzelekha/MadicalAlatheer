@@ -40,8 +40,8 @@ public class DisplayGoal extends Fragment {
     private RecyclerView recyclerView;
     private Adapter mAdapter;
     JSONObject[] Data;
-    Boolean[] buttons, active;
-    String[] goals, code, to, goalid;
+    Boolean[] active;
+    String[] goals, code, to, goalid, buttons;
 
     public DisplayGoal() {
         // Required empty public constructor
@@ -93,46 +93,56 @@ public class DisplayGoal extends Fragment {
                 Log.e("onSuccess", response + "");
                 Log.e("onSuccess", response.length() + "");
                 try {
-                    Data=new JSONObject[response.length()];
-                    goalid = new String[response.length()];
-                    buttons = new Boolean[response.length()];
-                    active = new Boolean[response.length()];
-                    code = new String[response.length()];
-                    to = new String[response.length()];
-                    goals = new String[response.length()];
+
                     if(response.length()==0){
                         TextView found=(TextView)v.findViewById(R.id.found);
                         found.setVisibility(View.VISIBLE);
                         found.setText("لا يوجد افكار");
                     }
+                    int m = 0;
                     for(int i=0;i<response.length();i++){
-                       JSONObject data=response.getJSONObject(i);
-                        Data[i]=data;
-                        System.out.println(data);
-                        goalid[i]=data.getString("id");
-                        goals[i] = data.getString("goal_title");
-                        code[i]=data.getString("goal_code");
-                        to[i] = data.getString("goal_to");
-                                if(data.getString("suspend").equals(0)){
-                                    active[i]=false;
-                                }else {
-                                    active[i]=true;
-                                }
-                        if(data.getString("suspend").equals(0)){
-                            buttons[i]=false;
-                        }else {
-                            buttons[i]=true;
+                        JSONObject data = response.getJSONObject(i);
+                        if (data.getString("deleted").equals("1")) {
+                            m++;
                         }
+                    }
+                    Data = new JSONObject[m];
+                    goalid = new String[m];
+                    buttons = new String[m];
+                    active = new Boolean[m];
+                    code = new String[m];
+                    to = new String[m];
+                    goals = new String[m];
+                    int n = 0;
+                    System.out.println(m + "bghghfgd");
+                    for (int i = 0; i < response.length(); i++) {
+                       JSONObject data=response.getJSONObject(i);
+                        System.out.println(data.getString("deleted") + "gfhgfghdf");
+                        if (data.getString("deleted").equals("1")) {
 
+                            Data[n] = data;
+                            System.out.println(data);
+                            goalid[n] = data.getString("id");
+                            goals[n] = data.getString("goal_title");
+                            code[n] = data.getString("goal_code");
+                            to[n] = data.getString("goal_to");
+                            if (data.getString("suspend").equals("0")) {
+                                active[n] = false;
+                            } else {
+                                active[n] = true;
+                            }
+
+                            if (data.getString("approved").equals("0")) {
+                                buttons[n] = "0";
+                            } else {
+                                buttons[n] = "1";
+                            }
+                            n++;
+                        }
                     }
                     //   goalid[1]="9";  goals[1]="hjgjg" ; code[1]="0" ;to[1]="7" ;active[1]=true; buttons[1]=false;
-                 /*goalid=new String[]{"4","5"};
-                    goals=new String[]{"4","9"};
-                    code=new String[]{"4","yg"};
-                    to=new String[]{"4","fgtf"};
-                    active=new Boolean[]{true,false};
-                    buttons=new Boolean[]{true,false};*/
-                  for (int i = 0; i < goals.length; i++) {
+
+                    for (int i = 0; i < m; i++) {
                       System.out.println(goalid[0] + goals[0] + code[0] + to[0] + active[0] + "onSuccess");
                       ControlAddGoal disUserControl = new ControlAddGoal(Data[i],goalid[i], code[i], goals[i], to[i], active[i], buttons[i]);
                       disList.add(disUserControl);

@@ -13,9 +13,9 @@ public class ControlAddGoal {
     private String goal;
     private String to;
     private boolean active;
-    private boolean buttons;
+    private String buttons;
 
-    public ControlAddGoal(JSONObject Data,String goalid, String serial1, String goal, String to, boolean active, boolean buttons) {
+    public ControlAddGoal(JSONObject Data,String goalid, String serial1, String goal, String to, boolean active, String buttons) {
         this.Data = Data;
         this.goalid = goalid;
         this.serial1 = serial1;
@@ -68,11 +68,11 @@ public class ControlAddGoal {
         this.active = active;
     }
 
-    public boolean isButtons() {
+    public String getButtons() {
         return buttons;
     }
 
-    public void setButtons(boolean active) {
+    public void setButtons(String buttons) {
         this.buttons = buttons;
     }
 }

@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.example.ok.madicalalatheer.DateFormatein.HajreDate;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
 import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
@@ -18,6 +20,7 @@ import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import cz.msebera.android.httpclient.Header;
 
@@ -35,6 +38,7 @@ public class DetalsAddGoal extends AppCompatActivity {
         TypefaceUtil.overrideFonts(this, v);
         component();
         Intent i = getIntent();
+        HajreDate formate=new HajreDate();
         if (i.getStringExtra("Find").equals("goal")) {
             try {
                 JSONObject Data = new JSONObject(i.getStringExtra("goalData"));
@@ -56,8 +60,11 @@ public class DetalsAddGoal extends AppCompatActivity {
                     egoal3.setText("عام");
                 }else {
                 egoal3.setText(i.getStringExtra("to"));}
-                egoal6.setText(Data.getString("goal_date_from"));
-                egoal7.setText(Data.getString("goal_date_to"));
+
+
+
+                egoal6.setText(formate.Dateout(Data.getString("goal_date_from")));
+                egoal7.setText(formate.Dateout(Data.getString("goal_date_to")));
                 egoal8.setText(Data.getString("goal_measurment"));
                 egoal9.setText(Data.getString("goal_apprev"));
                 egoal10.setText(Data.getString("goal_idea"));

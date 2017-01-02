@@ -13,9 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.ok.madicalalatheer.AddGoal.AddGoal;
@@ -49,11 +51,22 @@ public class Login extends AppCompatActivity {
             LoginFragment f1 = new LoginFragment();
             fragmentTransaction.replace(android.R.id.content, f1);
             fragmentTransaction.commit();
-
+        SharedPreferences sharedPref = getApplication().getSharedPreferences("Data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("screen", screen());
+        editor.commit();
+        System.out.println(screen()+"kghkjdhgjkgdh");
 
 
     }
 
-
+    public int screen() {
+        int out = 0;
+        Display display = ((WindowManager) getSystemService(Login.WINDOW_SERVICE)).getDefaultDisplay();
+        int width = display.getWidth();
+        int height = display.getHeight();
+        out = width;
+        return out;
+    }
 
 }

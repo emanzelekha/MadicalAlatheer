@@ -55,7 +55,15 @@
 
     </LinearLayout>
 
-
+    <TextView
+        android:id="@+id/Done"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/text"
+        android:layout_margin="4dp"/>
     
     <ImageView
         android:id="@+id/item_arrow"
