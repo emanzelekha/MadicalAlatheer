@@ -123,7 +123,13 @@ public class activity_addIdea extends AppCompatActivity {
         });
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
+        SharedPreferences pref = getBaseContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
+        String   id = pref.getString("member_type", "");
 
+        if (!id.equals("1")) {
+            main2.setEnabled(false);
+            main.setEnabled(false);
+        }
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();

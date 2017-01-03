@@ -146,7 +146,11 @@ public class activity_procedure extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new fragement_procedure(), "قائمة البيانات");
-        adapter.addFrag(new InsertProcedure(), "اضافة جديد");
+        SharedPreferences pref = getApplication().getSharedPreferences("Data", Context.MODE_PRIVATE);
+
+       String empId = pref.getString("emp_id", "");
+        if(empId.equals("0")||empId.equals("")) {
+        adapter.addFrag(new InsertProcedure(), "اضافة جديد");}
         viewPager.setAdapter(adapter);
         Intent i = getIntent();
         if (i.getStringExtra("Insertprocedure").equals("1")) {

@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
     public static final int TYPE_PERSON = 1001;
     View context;
     HajreDate dateout = new HajreDate();
+
     public PeopleAdapter(Context context) {
         super(context);
 
@@ -98,7 +100,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
 
             button = buttons + "";
             this.date = date + "";
-    }
+        }
     }
 
     public class HeaderViewHolder extends ExpandableRecyclerAdapter.HeaderViewHolder {
@@ -123,7 +125,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
             } else {
                 Done.setVisibility(View.GONE);
             }
-    }
+        }
     }
 
     public class PersonViewHolder extends ExpandableRecyclerAdapter.ViewHolder {
@@ -150,30 +152,30 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
 
 
                 Editproc.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i=new Intent(context.getContext(),activity_procedure.class);
-                    i.putExtra("Insertprocedure", "1");
-                    i.putExtra("Data",visibleItems.get(position).detals+"");
-                    context.getContext().startActivity(i);
-                }
-            });
-            Deletproc.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(context.getContext(), activity_procedure.class);
+                        i.putExtra("Insertprocedure", "1");
+                        i.putExtra("Data", visibleItems.get(position).detals + "");
+                        context.getContext().startActivity(i);
+                    }
+                });
+                Deletproc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                    try {
-                        RequestParams params = new RequestParams();
-                        params.put("request", "delete_procedure");//هتغير الاسم حسب ما يقولك وهتبعتلة ال id من الshared refrance
-                        params.put("id", visibleItems.get(position).detals.getString("pro_code"));
-                        Load(params);
-                    } catch (Exception ex) {
-                        Toast.makeText(context.getContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
-                }
+                        try {
+                            RequestParams params = new RequestParams();
+                            params.put("request", "delete_procedure");//هتغير الاسم حسب ما يقولك وهتبعتلة ال id من الshared refrance
+                            params.put("id", visibleItems.get(position).detals.getString("pro_code"));
+                            Load(params);
+                        } catch (Exception ex) {
+                            Toast.makeText(context.getContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+                        }
 
-                    System.out.println(visibleItems.get(position).detals + "jhjgyugy");
-                }
-            });
+                        System.out.println(visibleItems.get(position).detals + "jhjgyugy");
+                    }
+                });
             } else {
                 Editproc.setVisibility(View.GONE);
                 Deletproc.setVisibility(View.GONE);
@@ -202,8 +204,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
             }
 
 
-
-    }
+        }
     }
 
     public void Load(RequestParams params) throws JSONException {
@@ -264,12 +265,12 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
 
     }
 
-    private void openChooseImage(int x) {
+    private void openChooseImage(final int x) {
 
-        RadioGroup rr;
+        final RadioGroup rr;
         TextView dialog1;
-        RadioButton r1, r2;
-        EditText notes;
+        final RadioButton r1, r2;
+        final EditText notes;
         Button save;
         final Dialog dialog = new Dialog(context.getContext());
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -292,7 +293,46 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
         notes.setTypeface(Typeface.createFromAsset(context.getContext().getAssets(), "fonts/DroidKufi-Bold.ttf"));
         // dialog.setTitle("اختر صورتك");
 
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int f = 0;
+                if (TextUtils.isEmpty(notes.getText())) {
+                    f = 1;
+                    notes.setError("من فضلك ادخل ملاحظاتك");
+                }
+                if (x == 0) {
+                    //  rr.setVisibility(View.GONE);
+                } else {
+                    //  rr.setVisibility(View.VISIBLE);
+                    if (r1.isChecked() || r2.isChecked()) {
+                        f = 0;
+                    } else {
+                        f = 1;
+                    }
+                }
 
+                if(f==0){
+                    RequestParams params = new RequestParams();
+                    params.put("request", "");
+                    params.put("notes", notes.getText() );
+                    if (x == 1) {
+                        if (r1.isChecked() ) {
+                            params.put("r", notes.getText() );
+                        } else {
+                            params.put("r", notes.getText() );
+                        }
+
+                    }
+                    try {
+                        Load(params);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
         dialog.show();
 
         //dialog.getWindow().setLayout((6*width)/6,(3*height)/6);

@@ -129,7 +129,13 @@ public class AddGoal extends AppCompatActivity {
             }
         });
 
+        SharedPreferences pref = getBaseContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
+        String   id = pref.getString("member_type", "");
 
+        if (!id.equals("1")) {
+            main2.setEnabled(false);
+            main.setEnabled(false);
+        }
         tabLayout = (TabLayout) findViewById(R.id.tabsAddDepartment);
         TypefaceUtil.overrideFonts(getBaseContext(), v);
         tabLayout.setupWithViewPager(viewPager);

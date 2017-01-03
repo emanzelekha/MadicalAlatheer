@@ -108,6 +108,13 @@ Typeface typeface;
             }
         });
         TypefaceUtil.overrideFonts(getBaseContext(), Main);
+        SharedPreferences pref = getBaseContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
+        String   id = pref.getString("member_type", "");
+
+        if (!id.equals("1")) {
+            main2.setEnabled(false);
+            main.setEnabled(false);
+        }
         component();
         click();
     }

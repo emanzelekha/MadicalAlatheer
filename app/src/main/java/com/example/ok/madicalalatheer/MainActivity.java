@@ -26,12 +26,13 @@ import com.example.ok.madicalalatheer.Reportes.MainReport;
 import com.example.ok.madicalalatheer.addIdea.activity_addIdea;
 import com.example.ok.madicalalatheer.procedure.activity_procedure;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     View goal, idea, process, report, padding, activity_main;
     Typeface typeface;
     float width = 0, height = 0;
     double diagonalInches = 0;
-    String id="",empId="";
+    String id = "", empId = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         width = metrics.heightPixels / metrics.ydpi;
         height = metrics.widthPixels / metrics.xdpi;
         diagonalInches = Math.sqrt(height * height + width * width);
-        if (diagonalInches>=6.5) {
-        padding.setPadding(70, 120, 70, 120);}
+        if (diagonalInches >= 6.5) {
+            padding.setPadding(70, 120, 70, 120);
+        }
 
         typeface = Typeface.createFromAsset(getAssets(), "fonts/DroidKufi-Bold.ttf");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView main2 = (TextView) navigationView.findViewById(R.id.main2);
         TextView main3 = (TextView) navigationView.findViewById(R.id.main3);
         TextView main4 = (TextView) navigationView.findViewById(R.id.main4);
-        TextView   main0 = (TextView) navigationView.findViewById(R.id.main0);
+        TextView main0 = (TextView) navigationView.findViewById(R.id.main0);
         main0.setTypeface(typeface);
         main0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, AddGoal.class);
-                i.putExtra("InsertGoal","0");
+                i.putExtra("InsertGoal", "0");
                 startActivity(i);
             }
         });
@@ -125,24 +127,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         SharedPreferences pref = getBaseContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
-         id = pref.getString("member_type", "");
-        empId = pref.getString("emp_id", "");
-       if(!id.equals("1")){
-         goal.setEnabled(false);
-       }
+        id = pref.getString("member_type", "");
+
+        if (!id.equals("1")) {
+            goal.setEnabled(false);
+            idea.setEnabled(false);
+            main2.setEnabled(false);
+            main.setEnabled(false);
+        }
 
 
     }
 
-    public void component(){
+    public void component() {
         padding = findViewById(R.id.padding);
-        idea=findViewById(R.id.idea);
-        goal=findViewById(R.id.goal);
-        process=findViewById(R.id.process);
-        report=findViewById(R.id.report);
+        idea = findViewById(R.id.idea);
+        goal = findViewById(R.id.goal);
+        process = findViewById(R.id.process);
+        report = findViewById(R.id.report);
         activity_main = findViewById(R.id.activity_main);
     }
-    public void Click(){
+
+    public void Click() {
         idea.setOnClickListener(this);
         goal.setOnClickListener(this);
         process.setOnClickListener(this);
@@ -157,15 +163,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.idea:
                 i = new Intent(MainActivity.this, activity_addIdea.class);
-                i.putExtra("InsertIdea","0");
+                i.putExtra("InsertIdea", "0");
                 startActivity(i);
                 break;
             case R.id.goal:
-                if(id.equals("1")){
-                i = new Intent(MainActivity.this, AddGoal.class);
-                i.putExtra("InsertGoal","0");
-                startActivity(i);}else{
-                    Toast.makeText(MainActivity.this,"لا يوجد لديك صلاحية",Toast.LENGTH_LONG).show();
+                if (id.equals("1")) {
+                    i = new Intent(MainActivity.this, AddGoal.class);
+                    i.putExtra("InsertGoal", "0");
+                    startActivity(i);
+                } else {
+                    Toast.makeText(MainActivity.this, "لا يوجد لديك صلاحية", Toast.LENGTH_LONG).show();
                 }
                 break;
 
@@ -178,10 +185,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.report:
                 i = new Intent(MainActivity.this, MainReport.class);
                 startActivity(i);
-                break;}
+                break;
+        }
     }
-
-
 
 
 }
