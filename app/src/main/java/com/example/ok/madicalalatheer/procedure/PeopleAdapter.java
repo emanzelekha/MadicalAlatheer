@@ -41,7 +41,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
     public static final int TYPE_PERSON = 1001;
     View context;
     HajreDate dateout = new HajreDate();
-
+    String id = "", empId = "";
     public PeopleAdapter(Context context) {
         super(context);
 
@@ -80,10 +80,11 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
         public String Text;
         public String txt_last;
         public int sort;
+
         public String date;
         public String button;
         public JSONObject detals;
-        public String ButtonDate1;
+        public String ButtonDate1, statues, ids;
 
         public PeopleListItem(int sort, String group, String ButtonType) {
             super(TYPE_HEADER);
@@ -93,11 +94,12 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
             this.sort = sort;
         }
 
-        public PeopleListItem(String first, String date, JSONObject detals, String buttons) {
+        public PeopleListItem(String first, String date, JSONObject detals, String buttons, String status, String id) {
             super(TYPE_PERSON);
             this.detals = detals;
+            ids = id + "";
             Text = first + "";
-
+            statues = status + "";
             button = buttons + "";
             this.date = date + "";
         }
@@ -130,7 +132,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
 
     public class PersonViewHolder extends ExpandableRecyclerAdapter.ViewHolder {
         TextView procedure, date, Done1;
-        View Editproc, Deletproc, Editproc1, Deletproc1;
+        View Editproc, Deletproc, Editproc1, Deletproc1, Deletproc2;
 
         public PersonViewHolder(View view) {
             super(view);
@@ -140,68 +142,123 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
             Deletproc = view.findViewById(R.id.Deletproc);
             Editproc = view.findViewById(R.id.Editproc);
             Deletproc1 = view.findViewById(R.id.Deletproc1);
+            Deletproc2 = view.findViewById(R.id.Deletproc2);
             Editproc1 = view.findViewById(R.id.Editproc1);
         }
 
         public void bind(final int position) {
             procedure.setText(visibleItems.get(position).Text);
-            date.setText(visibleItems.get(position).date + " هـ ");
-            if (visibleItems.get(position).button.equals("0")) {
+            date.setText(dateout.Dateout(visibleItems.get(position).date) + " هـ ");
+            SharedPreferences pref = context.getContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
+            id = pref.getString("member_type", "");
+            empId = pref.getString("emp_id", "");
+
+            Editproc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context.getContext(), activity_procedure.class);
+                    i.putExtra("Insertprocedure", "1");
+                    i.putExtra("Data", visibleItems.get(position).detals + "");
+                    context.getContext().startActivity(i);
+                }
+            });
+            Deletproc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    try {
+                        RequestParams params = new RequestParams();
+                        params.put("request", "delete_procedure");//هتغير الاسم حسب ما يقولك وهتبعتلة ال id من الshared refrance
+                        params.put("id", visibleItems.get(position).detals.getString("pro_code"));
+                        Load(params);
+                    } catch (Exception ex) {
+                        Toast.makeText(context.getContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
+                    }
+
+                    System.out.println(visibleItems.get(position).detals + "jhjgyugy");
+                }
+            });
+            Deletproc2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Editproc1.setVisibility(View.VISIBLE);
+                    Deletproc1.setVisibility(View.VISIBLE);
+                    Deletproc2.setVisibility(View.GONE);
+                    Editproc.setVisibility(View.GONE);
+                    Deletproc.setVisibility(View.GONE);
+                    Done1.setVisibility(View.GONE);
+                    RequestParams params = new RequestParams();
+                    params.put("request", "cancel_emp_procedure");
+                    params.put("id", visibleItems.get(position).ids);
+                    try {
+                        Load(params);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            Editproc1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openChooseImage(1);
+                }
+            });
+            Deletproc1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openChooseImage(0);
+                }
+            });
+            if ((empId.equals("0") || empId.equals(""))&&visibleItems.get(position).button.equals("0")) {
+
                 Editproc.setVisibility(View.VISIBLE);
                 Deletproc.setVisibility(View.VISIBLE);
+                Editproc1.setVisibility(View.GONE);
+                Deletproc1.setVisibility(View.GONE);
+                Deletproc2.setVisibility(View.GONE);
+                Done1.setVisibility(View.GONE);}
+            else  if ((empId.equals("0") || empId.equals(""))&&visibleItems.get(position).button.equals("1")) {
+                    Editproc.setVisibility(View.GONE);
+                    Deletproc.setVisibility(View.GONE);
+                    Editproc1.setVisibility(View.GONE);
+                    Deletproc1.setVisibility(View.GONE);
+                    Deletproc2.setVisibility(View.GONE);
+                    Done1.setVisibility(View.GONE);
 
 
-                Editproc.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent i = new Intent(context.getContext(), activity_procedure.class);
-                        i.putExtra("Insertprocedure", "1");
-                        i.putExtra("Data", visibleItems.get(position).detals + "");
-                        context.getContext().startActivity(i);
-                    }
-                });
-                Deletproc.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+            }else
 
-                        try {
-                            RequestParams params = new RequestParams();
-                            params.put("request", "delete_procedure");//هتغير الاسم حسب ما يقولك وهتبعتلة ال id من الshared refrance
-                            params.put("id", visibleItems.get(position).detals.getString("pro_code"));
-                            Load(params);
-                        } catch (Exception ex) {
-                            Toast.makeText(context.getContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
-                        }
-
-                        System.out.println(visibleItems.get(position).detals + "jhjgyugy");
-                    }
-                });
-            } else {
-                Editproc.setVisibility(View.GONE);
-                Deletproc.setVisibility(View.GONE);
                 //if(((int) new Date().getTime()/1000)>=Integer.parseInt(visibleItems.get(position).date)){
-                if (true) {
-                    Editproc1.setVisibility(View.VISIBLE);
+                if (dateout.toJulianDate() <= Integer.parseInt(visibleItems.get(position).date)) {
+                    if (visibleItems.get(position).statues.equals("0")) {
+                        Editproc1.setVisibility(View.VISIBLE);
+                        Deletproc1.setVisibility(View.VISIBLE);
+                        Deletproc2.setVisibility(View.GONE);
+                        Done1.setVisibility(View.GONE);
+                        Editproc.setVisibility(View.GONE);
+                        Deletproc.setVisibility(View.GONE);
 
-                    Deletproc1.setVisibility(View.VISIBLE);
-                    Editproc1.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            openChooseImage(1);
-                        }
-                    });
-                    Deletproc1.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            openChooseImage(0);
-                        }
-                    });
+                    } else {
+                        Editproc.setVisibility(View.GONE);
+                        Deletproc.setVisibility(View.GONE);
+                        Editproc1.setVisibility(View.GONE);
+                        Deletproc1.setVisibility(View.GONE);
+                        Done1.setVisibility(View.GONE);
+                        Deletproc2.setVisibility(View.VISIBLE);
+
+                    }
                 } else {
                     Editproc1.setVisibility(View.GONE);
                     Deletproc1.setVisibility(View.GONE);
+                    Done1.setVisibility(View.VISIBLE);
+                    Editproc.setVisibility(View.GONE);
+                    Deletproc.setVisibility(View.GONE);
+                    Editproc1.setVisibility(View.GONE);
+                    Deletproc2.setVisibility(View.GONE);
                 }
 
-            }
+
 
 
         }
@@ -298,7 +355,7 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
             public void onClick(View v) {
                 int f = 0;
                 if (TextUtils.isEmpty(notes.getText())) {
-                    f = 1;
+                    f ++;
                     notes.setError("من فضلك ادخل ملاحظاتك");
                 }
                 if (x == 0) {
@@ -306,29 +363,31 @@ public class PeopleAdapter extends ExpandableRecyclerAdapter<PeopleAdapter.Peopl
                 } else {
                     //  rr.setVisibility(View.VISIBLE);
                     if (r1.isChecked() || r2.isChecked()) {
-                        f = 0;
-                    } else {
-                        f = 1;
+                        f++;
                     }
                 }
 
-                if(f==0){
+                if (f == 0) {
                     RequestParams params = new RequestParams();
-                    params.put("request", "");
-                    params.put("notes", notes.getText() );
+                    params.put("request", "emp_procedure");
+                    params.put("note", notes.getText());
                     if (x == 1) {
-                        if (r1.isChecked() ) {
-                            params.put("r", notes.getText() );
+                        if (r1.isChecked()) {
+                            params.put("status", "3");
                         } else {
-                            params.put("r", notes.getText() );
+                            params.put("status", "2");
                         }
 
+                    } else {
+                        params.put("status", "1");
                     }
                     try {
                         Load(params);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }else {
+                    f=0;
                 }
 
             }

@@ -27,7 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -40,9 +39,10 @@ public class fragement_procedure extends Fragment {
     RecyclerView recycler;
     PeopleAdapter adapter;
     View v;
-    String id="",empId="";
+    String id = "", empId = "";
     List<PeopleAdapter.PeopleListItem> items = new ArrayList<>();
-    HajreDate dateout=new HajreDate();
+    HajreDate dateout = new HajreDate();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class fragement_procedure extends Fragment {
         SharedPreferences pref = getContext().getSharedPreferences("Data", Context.MODE_PRIVATE);
         id = pref.getString("member_type", "");
         empId = pref.getString("emp_id", "");
-        System.out.println(dateout.toJulianDate()+"   jgbhjgfghfghf");
+
         TypefaceUtil.overrideFonts(getContext(), v);
         recycler = (RecyclerView) v.findViewById(R.id.main_recycler);
         try {
@@ -69,7 +69,6 @@ public class fragement_procedure extends Fragment {
 
         return v;
     }
-
 
 
     public void Load(RequestParams params) throws JSONException {
@@ -92,46 +91,43 @@ public class fragement_procedure extends Fragment {
                 Log.e("onSuccess", response.length() + "dghjkdhjhj");
                 try {
                     String t = "";
-                    int m=0;
+                    int m = 0;
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject out = response.getJSONObject(i);
                         if (out.getString("deleted").equals("1")) {
-                        if(empId.equals("0")||empId.equals("")) {
+                            if (empId.equals("0") || empId.equals("")) {
 
                                 if (t.equals("")) {
                                     m++;
                                     t = out.getString("goal_title");
-                                    items.add(new PeopleAdapter.PeopleListItem(m, t,out.getString("date_approved")));
-                                    items.add(new PeopleAdapter.PeopleListItem(out.getString("pro_title"),  dateout.Dateout( out.getString("pro_end_date")), out,out.getString("approved")));
+                                    items.add(new PeopleAdapter.PeopleListItem(m, t, out.getString("date_approved")));
+                                    items.add(new PeopleAdapter.PeopleListItem(out.getString("pro_title"), out.getString("pro_end_date"), out, out.getString("approved"), out.getString("status"), out.getString("id")));
                                 } else if (!out.getString("goal_title").equals(t)) {
                                     m++;
                                     t = out.getString("goal_title");
-                                    items.add(new PeopleAdapter.PeopleListItem(m, t,out.getString("date_approved")));
+                                    items.add(new PeopleAdapter.PeopleListItem(m, t, out.getString("date_approved")));
                                 } else if (out.getString("goal_title").equals(t)) {
-                                    items.add(new PeopleAdapter.PeopleListItem(out.getString("pro_title"),  dateout.Dateout( out.getString("pro_end_date")), out,out.getString("approved")));
+                                    items.add(new PeopleAdapter.PeopleListItem(out.getString("pro_title"), out.getString("pro_end_date"), out, out.getString("approved"), out.getString("status"), out.getString("id")));
                                 }
-                            }else if(empId.equals(out.getString("employee_id"))){
+                            } else if (empId.equals(out.getString("employee_id"))&&out.getString("approved").equals("1")) {
 
 
-                            if (t.equals("")) {
-                                m++;
-                                t = out.getString("goal_title");
-                                items.add(new PeopleAdapter.PeopleListItem(m, t,out.getString("date_approved")));
-                                items.add(new PeopleAdapter.PeopleListItem(out.getString("pro_title"), dateout.Dateout( out.getString("pro_end_date")), out,out.getString("approved")));
-                            } else if (!out.getString("goal_title").equals(t)) {
-                                m++;
-                                t = out.getString("goal_title");
-                                items.add(new PeopleAdapter.PeopleListItem(m, t,out.getString("date_approved")));
-                            } else if (out.getString("goal_title").equals(t)) {
-                                items.add(new PeopleAdapter.PeopleListItem(out.getString("pro_title"), dateout.Dateout( out.getString("pro_end_date")), out,out.getString("approved")));
+                                if (t.equals("")) {
+                                    m++;
+                                    t = out.getString("goal_title");
+                                    items.add(new PeopleAdapter.PeopleListItem(m, t, out.getString("date_approved")));
+                                    items.add(new PeopleAdapter.PeopleListItem(out.getString("pro_title"), out.getString("pro_end_date"), out, out.getString("approved"), out.getString("status"), out.getString("id")));
+                                } else if (!out.getString("goal_title").equals(t)) {
+                                    m++;
+                                    t = out.getString("goal_title");
+                                    items.add(new PeopleAdapter.PeopleListItem(m, t, out.getString("date_approved")));
+                                } else if (out.getString("goal_title").equals(t)) {
+                                    items.add(new PeopleAdapter.PeopleListItem(out.getString("pro_title"), out.getString("pro_end_date"), out, out.getString("approved"), out.getString("status"), out.getString("id")));
+                                }
+
                             }
 
                         }
-
-                        }
-
-
-
 
 
                     }

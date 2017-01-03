@@ -114,7 +114,7 @@ public class DisplayGoal extends Fragment {
                     to = new String[m];
                     goals = new String[m];
                     int n = 0;
-                    System.out.println(m + "bghghfgd");
+                    System.out.println(m + "gjhhtfhftg");
                     for (int i = 0; i < response.length(); i++) {
                        JSONObject data=response.getJSONObject(i);
                         System.out.println(data.getString("deleted") + "gfhgfghdf");

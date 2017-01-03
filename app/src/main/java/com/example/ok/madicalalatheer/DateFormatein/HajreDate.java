@@ -5,17 +5,16 @@ package com.example.ok.madicalalatheer.DateFormatein;
  */
 
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 
 import org.joda.time.Chronology;
 import org.joda.time.LocalDate;
 import org.joda.time.chrono.ISOChronology;
 import org.joda.time.chrono.IslamicChronology;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
+import java.util.TimeZone;
 
 public class HajreDate extends AppCompatActivity {
     public String Dateout(String change) {
@@ -40,9 +39,16 @@ public class HajreDate extends AppCompatActivity {
     }
 
     public Long toJulianDate() {
-        Long unixTime = System.currentTimeMillis() / 1000L;
+        Calendar cal = Calendar.getInstance(); // locale-specific
+        cal.setTime(new Date());
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.setTimeZone(TimeZone.getTimeZone("Etc/GMT"));
+        long time = (cal.getTimeInMillis() / 1000) ;
 
-    return unixTime;
+        return time;
+
     }
 
 }

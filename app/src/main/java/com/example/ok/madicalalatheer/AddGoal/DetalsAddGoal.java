@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.example.ok.madicalalatheer.DateFormatein.HajreDate;
 import com.example.ok.madicalalatheer.Fonts.TypefaceUtil;
 import com.example.ok.madicalalatheer.R;
@@ -18,9 +17,12 @@ import com.example.ok.madicalalatheer.uilit.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -28,20 +30,22 @@ public class DetalsAddGoal extends AppCompatActivity {
     CardView goal, idea;
     TextView close, egoal1, egoal2, egoal3, egoal4, egoal5, egoal6, egoal7, egoal8, egoal9, egoal10, egoal11,eidea1,eidea2,eidea3
             ,eidea4,eidea5,eidea6,eidea7;
-
-
+    JSONObject Data;
+    List<String> items = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detals_add_goal);
         View v = findViewById(R.id.detailesaddgoal);
         TypefaceUtil.overrideFonts(this, v);
+
         component();
         Intent i = getIntent();
         HajreDate formate=new HajreDate();
         if (i.getStringExtra("Find").equals("goal")) {
+
             try {
-                JSONObject Data = new JSONObject(i.getStringExtra("goalData"));
+                Data = new JSONObject(i.getStringExtra("goalData"));
                 System.out.println(Data.getString("goal_title")+" "+Data + "hbyugft");
                 egoal1.setText(Data.getString("goal_title"));
                 if (Data.getString("goal_type").equals("1")) {
@@ -71,6 +75,13 @@ public class DetalsAddGoal extends AppCompatActivity {
                 egoal11.setText(Data.getString("publisher"));
             } catch (JSONException e) {
                 e.printStackTrace();
+            }
+            try {
+                RequestParams params = new RequestParams();
+                params.put("request", "displayprocedure");//هتغير الاسم حسب ما يقولك وهتبعتلة ال id من الshared refrance
+                Load(params);
+            } catch (Exception ex) {
+                Toast.makeText(getApplicationContext(), "Exception" + ex, Toast.LENGTH_LONG).show();
             }
             goal.setVisibility(View.VISIBLE);
            /* try {
@@ -131,6 +142,7 @@ public class DetalsAddGoal extends AppCompatActivity {
 
     }
 
+
     public void Load(RequestParams params) throws JSONException {
 
         AsyncHttpClient.post("", params, new JsonHttpResponseHandler() {
@@ -138,19 +150,54 @@ public class DetalsAddGoal extends AppCompatActivity {
 
             @Override
             public void onStart() {
-                progressDialog = new ProgressDialog(getBaseContext());
+                progressDialog = new ProgressDialog(DetalsAddGoal.this);
                 progressDialog.setCancelable(false);
                 progressDialog.setMessage("جارى البحث...");
                 progressDialog.show();
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 
                 Log.e("onSuccess", response + "");
-                Log.e("onSuccess", response.length() + "");
+                Log.e("onSuccess", response.length() + "dghjkdhjhj");
                 try {
+                    String t = "";
 
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject out = response.getJSONObject(i);
+                        if (out.getString("deleted").equals("1")) {
+
+                            if (out.getString("goal_id").equals(Data.getString("id"))) {
+                                if (t.equals("")) {
+                                    t += out.getString("pro_title");
+                                } else {
+                                    t += "\n" + out.getString("pro_title");
+                                }
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+
+                    egoal2.setText(t);      /* if (t.equals("")) {
+
+                                t = out.getString("goal_title");
+
+                               // items.add(out.getString("pro_title"));
+                            } else if (!out.getString("goal_title").equals(t)) {
+
+                                t = out.getString("goal_title");
+                                items.add(out.getString("pro_title"));
+                               // items.add(new PeopleAdapter.PeopleListItem(m, t, out.getString("date_approved")));
+                            } else if (out.getString("goal_title").equals(t)) {
+                                //items.add(out.getString("pro_title"));
+                            }
+
+                        }
+
+                    }*/
+                    System.out.println(items.size() + "gjhhtfhftg");
 
                 } catch (Exception ex) {
 
@@ -162,9 +209,7 @@ public class DetalsAddGoal extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                Toast.makeText(getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
                 Log.e("onFailure", "----------" + responseString);
-
             }
 
             @Override

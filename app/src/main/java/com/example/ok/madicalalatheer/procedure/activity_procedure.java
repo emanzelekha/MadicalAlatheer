@@ -39,6 +39,7 @@ public class activity_procedure extends AppCompatActivity {
     public int x;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    String empId="";
     public int[] tabIcons = {
             R.drawable.show, R.drawable.add
 
@@ -127,7 +128,8 @@ public class activity_procedure extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
+        SharedPreferences pref = getSharedPreferences("Data", Context.MODE_PRIVATE);
+        empId = pref.getString("emp_id", "");
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
@@ -140,15 +142,16 @@ public class activity_procedure extends AppCompatActivity {
     private void setupTabIcons() {
 
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        if(empId.equals("0")||empId.equals("")) {
+        tabLayout.getTabAt(1).setIcon(tabIcons[1]);}
 
     }
     private void setupViewPager(ViewPager viewPager) {
        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new fragement_procedure(), "قائمة البيانات");
-        SharedPreferences pref = getApplication().getSharedPreferences("Data", Context.MODE_PRIVATE);
 
-       String empId = pref.getString("emp_id", "");
+
+
         if(empId.equals("0")||empId.equals("")) {
         adapter.addFrag(new InsertProcedure(), "اضافة جديد");}
         viewPager.setAdapter(adapter);

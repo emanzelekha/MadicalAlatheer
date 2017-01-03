@@ -185,6 +185,62 @@
                     android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+
+                >
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/Deletproc2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/button"
+                android:clickable="true"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/close"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="تعديل الاجراء"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
+
+
         <TextView
             android:id="@+id/Done2"
             android:text="إنتهت صلاحية الإجراء"
